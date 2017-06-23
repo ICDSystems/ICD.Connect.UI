@@ -8,8 +8,8 @@
     <ProjectGuid>{89BF27D5-374B-4863-AD92-D217924D6D8F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ICD.Connect.UI</RootNamespace>
-    <AssemblyName>ICD.Connect.UI</AssemblyName>
+    <RootNamespace>ICD.Connect.UI_SimplSharp</RootNamespace>
+    <AssemblyName>ICD.Connect.UI_SimplSharp</AssemblyName>
     <ProjectTypeGuids>{0B4745B0-194B-4BB6-8E21-E9057CA92500};{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PlatformFamilyName>WindowsCE</PlatformFamilyName>
     <PlatformID>E2BECB1F-8C8C-41ba-B736-9BE7D946A398</PlatformID>
@@ -133,27 +133,23 @@
     <None Include="Properties\ControlSystem.cfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ICD.Common\ICD.Common_SimplSharp.csproj">
+    <ProjectReference Include="..\..\lib\ICD.Common.Utils\src\ICD.Common\ICD.Common_SimplSharp.csproj">
       <Project>{CB4055C6-D59E-479E-9C56-2C92335A7D9A}</Project>
       <Name>ICD.SimplSharp.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ICD.Connect.Devices\ICD.Connect.Devices_SimplSharp.csproj">
+    <ProjectReference Include="..\..\lib\ICD.Connect.Devices\src\ICD.Connect.Devices\ICD.Connect.Devices_SimplSharp.csproj">
       <Project>{FD46A717-5836-4B73-ADD0-2706639DA8ED}</Project>
       <Name>ICD.Connect.Devices</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ICD.Connect.Panels\ICD.Connect.Panels_SimplSharp.csproj">
+    <ProjectReference Include="..\..\lib\ICD.Connect.Panels\src\ICD.Connect.Panels\ICD.Connect.Panels_SimplSharp.csproj">
       <Project>{A441FE98-6A8E-4EF3-98F0-D17041D2E118}</Project>
       <Name>ICD.Connect.Panels</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ICD.Connect.Protocol\ICD.Connect.Protocol_SimplSharp.csproj">
+    <ProjectReference Include="..\..\lib\ICD.Connect.Protocol\src\ICD.Connect.Protocol\ICD.Connect.Protocol_SimplSharp.csproj">
       <Project>{2E4E01B8-D4EA-4FB1-9FCE-0A0DC8D83C8A}</Project>
       <Name>ICD.Connect.Protocol</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ICD.Connect.Rooms\ICD.Connect.Rooms_SimplSharp.csproj">
-      <Project>{42FB8CF0-6AE6-4C70-AFDD-DF95F07E077F}</Project>
-      <Name>ICD.Connect.Rooms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ICD.Connect.Settings\ICD.Connect.Settings_SimplSharp.csproj">
+    <ProjectReference Include="..\..\lib\ICD.Connect.Settings\src\ICD.Connect.Settings\ICD.Connect.Settings_SimplSharp.csproj">
       <Project>{5B84EB3C-1C3A-4C4D-98C2-69F67CF51D5A}</Project>
       <Name>ICD.Connect.Settings</Name>
     </ProjectReference>
