@@ -2,7 +2,6 @@
 using ICD.Common.EventArguments;
 using ICD.Common.Properties;
 using ICD.Common.Utils.Extensions;
-using ICD.Connect.Panels;
 using ICD.Connect.Panels.EventArguments;
 using ICD.Connect.Protocol.Sigs;
 using ICD.Connect.UI.Controls;
