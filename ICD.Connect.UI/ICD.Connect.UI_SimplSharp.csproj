@@ -70,8 +70,6 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractUserInterfaceFactory.cs" />
-    <Compile Include="AbstractUserInterfaceFactorySettings.cs" />
     <Compile Include="ClientControls\AbstractClientControl.cs" />
     <Compile Include="ClientControls\Buttons\AbstractClientButton.cs" />
     <Compile Include="ClientControls\Buttons\ClientAdvancedButton.cs" />
@@ -90,7 +88,6 @@
     <Compile Include="Controls\Guages\AbstractVtProGuage.cs" />
     <Compile Include="Controls\Guages\VtProGuage.cs" />
     <Compile Include="Controls\IVtProParent.cs" />
-    <Compile Include="Extensions\CoreExtensions.cs" />
     <Compile Include="IIndexed.cs" />
     <Compile Include="Controls\IJoinOffsets.cs" />
     <Compile Include="Controls\Images\VtProDynamicIconObject.cs" />
@@ -115,7 +112,6 @@
     <Compile Include="EventArguments\DPadEventArgs.cs" />
     <Compile Include="EventArguments\SimpleKeypadEventArgs.cs" />
     <None Include="ObfuscationSettings.cs" />
-    <Compile Include="IUserInterfaceFactorySettings.cs" />
     <Compile Include="PanelClients\AbstractPanelClient.cs" />
     <Compile Include="PanelClients\AbstractSigInputOutputClient.cs" />
     <Compile Include="PanelClients\AbstractSmartObjectClient.cs" />
@@ -128,8 +124,6 @@
     <Compile Include="PanelClients\ThinClient\ThinSmartObjectClient.cs" />
     <Compile Include="PanelClients\ThinClient\ThinSmartObjectClientCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Extensions\DeviceFactoryExtensions.cs" />
-    <Compile Include="IUserInterfaceFactory.cs" />
     <Compile Include="Utils\KeypadStringBuilder.cs" />
     <Compile Include="Utils\HtmlUtils.cs" />
     <Compile Include="Widgets\AbstractWidget.cs" />
