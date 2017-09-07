@@ -173,7 +173,7 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void IsMovingChange(object parent, SigAdapterEventArgs args)
+		private void IsMovingChange(object parent, SigInfoEventArgs args)
 		{
 			if (DigitalIsMovingOutputJoin == 0)
 				return;

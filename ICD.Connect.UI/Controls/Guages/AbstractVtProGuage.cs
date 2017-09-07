@@ -175,7 +175,7 @@ namespace ICD.Connect.UI.Controls.Guages
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void AnalogFeedback(object parent, SigAdapterEventArgs args)
+		private void AnalogFeedback(object parent, SigInfoEventArgs args)
 		{
 			if (AnalogFeedbackJoin == 0)
 				return;

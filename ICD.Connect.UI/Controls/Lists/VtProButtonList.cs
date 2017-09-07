@@ -193,7 +193,7 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void ItemClicked(object parent, SigAdapterEventArgs args)
+		private void ItemClicked(object parent, SigInfoEventArgs args)
 		{
 			ushort index = (ushort)(args.Data.GetUShortValue() - 1);
 

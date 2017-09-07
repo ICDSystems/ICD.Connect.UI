@@ -185,7 +185,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void TextInputChange(object parent, SigAdapterEventArgs args)
+		private void TextInputChange(object parent, SigInfoEventArgs args)
 		{
 			if (SerialOutputJoin == 0)
 				return;

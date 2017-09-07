@@ -109,7 +109,7 @@ namespace ICD.Connect.UI.Controls.Keypads
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void UpClicked(object parent, SigAdapterEventArgs args)
+		private void UpClicked(object parent, SigInfoEventArgs args)
 		{
 			Press(DPadEventArgs.eDirection.Up, args);
 		}
@@ -119,7 +119,7 @@ namespace ICD.Connect.UI.Controls.Keypads
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void DownClicked(object parent, SigAdapterEventArgs args)
+		private void DownClicked(object parent, SigInfoEventArgs args)
 		{
 			Press(DPadEventArgs.eDirection.Down, args);
 		}
@@ -129,7 +129,7 @@ namespace ICD.Connect.UI.Controls.Keypads
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void LeftClicked(object parent, SigAdapterEventArgs args)
+		private void LeftClicked(object parent, SigInfoEventArgs args)
 		{
 			Press(DPadEventArgs.eDirection.Left, args);
 		}
@@ -139,7 +139,7 @@ namespace ICD.Connect.UI.Controls.Keypads
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void RightClicked(object parent, SigAdapterEventArgs args)
+		private void RightClicked(object parent, SigInfoEventArgs args)
 		{
 			Press(DPadEventArgs.eDirection.Right, args);
 		}
@@ -149,12 +149,12 @@ namespace ICD.Connect.UI.Controls.Keypads
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void CenterClicked(object parent, SigAdapterEventArgs args)
+		private void CenterClicked(object parent, SigInfoEventArgs args)
 		{
 			Press(DPadEventArgs.eDirection.Center, args);
 		}
 
-		private void Press(DPadEventArgs.eDirection direction, SigAdapterEventArgs args)
+		private void Press(DPadEventArgs.eDirection direction, SigInfoEventArgs args)
 		{
 			if (args.Data.GetBoolValue())
 				Press(direction);

@@ -161,7 +161,7 @@ namespace ICD.Connect.UI.Controls.Keypads
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void ButtonPressed(object parent, SigAdapterEventArgs args)
+		private void ButtonPressed(object parent, SigInfoEventArgs args)
 		{
 			uint number = args.Data.Number;
 

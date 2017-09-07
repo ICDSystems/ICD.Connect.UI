@@ -178,7 +178,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void ButtonPressChange(object parent, SigAdapterEventArgs args)
+		private void ButtonPressChange(object parent, SigInfoEventArgs args)
 		{
 			if (DigitalPressJoin == 0)
 				return;

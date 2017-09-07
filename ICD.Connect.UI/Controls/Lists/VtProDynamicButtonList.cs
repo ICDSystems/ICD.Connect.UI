@@ -309,7 +309,7 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void ItemClickedCallback(object parent, SigAdapterEventArgs args)
+		private void ItemClickedCallback(object parent, SigInfoEventArgs args)
 		{
 			Click((ushort)(args.Data.GetUShortValue() - 1));
 		}
@@ -319,7 +319,7 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void ItemHeldCallback(object parent, SigAdapterEventArgs args)
+		private void ItemHeldCallback(object parent, SigInfoEventArgs args)
 		{
 			Hold((ushort)(args.Data.GetUShortValue() - 1));
 		}

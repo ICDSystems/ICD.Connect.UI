@@ -155,7 +155,7 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void ItemSelectedCallback(object parent, SigAdapterEventArgs args)
+		private void ItemSelectedCallback(object parent, SigInfoEventArgs args)
 		{
 			OnItemSelected.Raise(this, new UShortEventArgs((ushort)(args.Data.GetUShortValue() - 1)));
 		}
