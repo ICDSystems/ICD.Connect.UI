@@ -42,7 +42,7 @@
 		/// <returns></returns>
 		public static ushort GetDigitalJoin(this IJoinOffsets extends, ushort join, IIndexed control)
 		{
-			return (ushort)(join + extends.GetDigitalJoinOffset(control));
+			return join == 0 ? (ushort)0 : (ushort)(join + extends.GetDigitalJoinOffset(control));
 		}
 
 		/// <summary>
@@ -54,7 +54,7 @@
 		/// <returns></returns>
 		public static ushort GetSerialJoin(this IJoinOffsets extends, ushort join, IIndexed control)
 		{
-			return (ushort)(join + extends.GetSerialJoinOffset(control));
+			return join == 0 ? (ushort)0 : (ushort)(join + extends.GetSerialJoinOffset(control));
 		}
 
 		/// <summary>
@@ -66,7 +66,7 @@
 		/// <returns></returns>
 		public static ushort GetAnalogJoin(this IJoinOffsets extends, ushort join, IIndexed control)
 		{
-			return (ushort)(join + extends.GetAnalogJoinOffset(control));
+			return join == 0 ? (ushort)0 : (ushort)(join + extends.GetAnalogJoinOffset(control));
 		}
 	}
 }
