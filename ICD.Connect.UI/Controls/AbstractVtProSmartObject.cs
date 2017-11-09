@@ -1,4 +1,5 @@
-﻿using ICD.Common.Properties;
+﻿using System;
+using ICD.Common.Properties;
 using ICD.Connect.Panels;
 using ICD.Connect.Panels.SmartObjects;
 
@@ -35,6 +36,9 @@ namespace ICD.Connect.UI.Controls
 		protected AbstractVtProSmartObject(uint smartObjectId, IPanelDevice panel, IVtProParent parent)
 			: base(panel, parent)
 		{
+			if (panel == null)
+				throw new ArgumentNullException("panel");
+
 			SmartObject = panel.SmartObjects[smartObjectId];
 			Subscribe(SmartObject);
 		}
