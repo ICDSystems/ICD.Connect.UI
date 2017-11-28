@@ -2,7 +2,7 @@
 
 namespace ICD.Connect.UI.Controls.Buttons
 {
-	public sealed class VtProAdvancedButton : AbstractVtProAdvancedButton
+	public sealed class VtProMultiModeButton : AbstractVtProAdvancedButton
 	{
 		#region Constructors
 
@@ -10,7 +10,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 		/// Constructor.
 		/// </summary>
 		/// <param name="panel"></param>
-		public VtProAdvancedButton(ISigInputOutput panel)
+		public VtProMultiModeButton(ISigInputOutput panel)
 			: this(panel, null)
 		{
 		}
@@ -20,7 +20,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 		/// </summary>
 		/// <param name="panel"></param>
 		/// <param name="parent"></param>
-		public VtProAdvancedButton(ISigInputOutput panel, IVtProParent parent)
+		public VtProMultiModeButton(ISigInputOutput panel, IVtProParent parent)
 			: base(panel, parent)
 		{
 		}

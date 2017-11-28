@@ -73,8 +73,10 @@
     <Compile Include="Controls\AbstractVtProControl.cs" />
     <Compile Include="Controls\AbstractVtProSmartObject.cs" />
     <Compile Include="Controls\Buttons\AbstractVtProButton.cs" />
+    <Compile Include="Controls\Buttons\AbstractVtProAdvancedButton.cs" />
     <Compile Include="Controls\Buttons\VtProAdvancedButton.cs" />
     <Compile Include="Controls\Buttons\VtProButton.cs" />
+    <Compile Include="Controls\Buttons\VtProMultiModeButton.cs" />
     <Compile Include="Controls\Buttons\VtProTabButton.cs" />
     <Compile Include="Controls\Guages\AbstractVtProGuage.cs" />
     <Compile Include="Controls\Guages\VtProGuage.cs" />
