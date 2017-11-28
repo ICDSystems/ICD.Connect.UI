@@ -75,6 +75,7 @@
     <Compile Include="Controls\Buttons\AbstractVtProButton.cs" />
     <Compile Include="Controls\Buttons\VtProAdvancedButton.cs" />
     <Compile Include="Controls\Buttons\VtProButton.cs" />
+    <Compile Include="Controls\Buttons\VtProTabButton.cs" />
     <Compile Include="Controls\Guages\AbstractVtProGuage.cs" />
     <Compile Include="Controls\Guages\VtProGuage.cs" />
     <Compile Include="Controls\IVtProParent.cs" />
