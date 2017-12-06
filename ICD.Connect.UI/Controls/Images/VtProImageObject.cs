@@ -61,7 +61,7 @@ namespace ICD.Connect.UI.Controls.Images
 			try
 			{
 				if (SerialGraphicsJoin == 0)
-					throw new InvalidOperationException();
+					throw new InvalidOperationException("Unable to set image url, join is 0");
 
 				url = url ?? string.Empty;
 				if (url == (m_UrlCache ?? string.Empty))
@@ -82,6 +82,7 @@ namespace ICD.Connect.UI.Controls.Images
 		/// Sets the image mode.
 		/// </summary>
 		/// <param name="mode"></param>
+		[PublicAPI]
 		public void SetMode(ushort mode)
 		{
 			m_SetModeSection.Enter();
@@ -89,7 +90,7 @@ namespace ICD.Connect.UI.Controls.Images
 			try
 			{
 				if (ModeAnalogJoin == 0)
-					throw new InvalidOperationException();
+					throw new InvalidOperationException("Unable to set mode, join is 0");
 
 				if (mode == m_ModeCache)
 					return;

@@ -115,7 +115,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 			try
 			{
 				if (AnalogModeJoin == 0)
-					throw new InvalidOperationException();
+					throw new InvalidOperationException("Unable to set mode, join is 0");
 
 				if (mode == m_CachedMode)
 					return;

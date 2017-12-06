@@ -111,7 +111,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 			try
 			{
 				if (DigitalPressJoin == 0)
-					throw new InvalidOperationException();
+					throw new InvalidOperationException("Unable to set selected state, join is 0");
 
 				if (state == m_SelectedCache)
 					return;

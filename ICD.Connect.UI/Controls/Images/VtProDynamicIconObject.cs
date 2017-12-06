@@ -54,6 +54,7 @@ namespace ICD.Connect.UI.Controls.Images
 		/// Sets the icon.
 		/// </summary>
 		/// <param name="icon"></param>
+		[PublicAPI]
 		public void SetIcon(string icon)
 		{
 			m_SetIconSection.Enter();
@@ -61,7 +62,7 @@ namespace ICD.Connect.UI.Controls.Images
 			try
 			{
 				if (DynamicIconSerialJoin == 0)
-					throw new InvalidOperationException();
+					throw new InvalidOperationException("Unable to set icon, join is 0");
 
 				icon = icon ?? string.Empty;
 				if (icon == (m_IconCache ?? string.Empty))
@@ -82,6 +83,7 @@ namespace ICD.Connect.UI.Controls.Images
 		/// Sets the icon from the given path.
 		/// </summary>
 		/// <param name="path"></param>
+		[PublicAPI]
 		public void SetIconPath(string path)
 		{
 			m_SetIconPathSection.Enter();
@@ -89,7 +91,7 @@ namespace ICD.Connect.UI.Controls.Images
 			try
 			{
 				if (IndirectGraphicsPathSerialJoin == 0)
-					throw new InvalidOperationException();
+					throw new InvalidOperationException("Unable to set icon path, join is 0");
 
 				path = path ?? string.Empty;
 				if (path == (m_IconPathCache ?? string.Empty))

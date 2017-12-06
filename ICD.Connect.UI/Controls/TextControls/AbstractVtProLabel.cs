@@ -99,6 +99,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 		/// </summary>
 		/// <param name="join"></param>
 		/// <param name="text"></param>
+		[PublicAPI]
 		public void SetLabelTextAtJoin(ushort join, string text)
 		{
 			m_SerialSection.Enter();
@@ -106,7 +107,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 			try
 			{
 				if (join == 0)
-					throw new InvalidOperationException();
+					throw new InvalidOperationException("Unable to set label text at join 0");
 
 				join = Parent == null ? join : Parent.GetSerialJoin(join, this);
 
@@ -131,6 +132,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 		/// </summary>
 		/// <param name="join"></param>
 		/// <param name="value"></param>
+		[PublicAPI]
 		public void SetLabelTextAtJoin(ushort join, ushort value)
 		{
 			m_AnalogSection.Enter();
@@ -138,7 +140,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 			try
 			{
 				if (join == 0)
-					throw new InvalidOperationException();
+					throw new InvalidOperationException("Unable to set label text at join 0");
 
 				join = Parent == null ? join : Parent.GetAnalogJoin(join, this);
 
@@ -160,6 +162,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 		/// </summary>
 		/// <param name="join"></param>
 		/// <param name="value"></param>
+		[PublicAPI]
 		public void SetLabelTextAtJoin(ushort join, bool value)
 		{
 			m_DigitalSection.Enter();
@@ -167,7 +170,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 			try
 			{
 				if (join == 0)
-					throw new InvalidOperationException();
+					throw new InvalidOperationException("Unable to set label text at join 0");
 
 				join = Parent == null ? join : Parent.GetDigitalJoin(join, this);
 

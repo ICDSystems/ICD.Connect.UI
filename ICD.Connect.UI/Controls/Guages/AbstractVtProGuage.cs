@@ -87,7 +87,7 @@ namespace ICD.Connect.UI.Controls.Guages
 			try
 			{
 				if (AnalogFeedbackJoin == 0)
-					throw new InvalidOperationException();
+					throw new InvalidOperationException("Unable to set value, join is 0");
 
 				if (value == m_ValueCache)
 					return;

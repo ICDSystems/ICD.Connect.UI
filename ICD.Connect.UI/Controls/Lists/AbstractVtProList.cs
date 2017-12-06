@@ -75,7 +75,7 @@ namespace ICD.Connect.UI.Controls.Lists
 		public void ScrollToItem(ushort item)
 		{
 			if (AnalogScrollToItemJoin == 0)
-				throw new InvalidOperationException();
+				throw new InvalidOperationException("Unable to scroll to item, join is 0");
 
 			ushort join = Parent == null ? AnalogScrollToItemJoin : Parent.GetAnalogJoin(AnalogScrollToItemJoin, this);
 
@@ -93,7 +93,7 @@ namespace ICD.Connect.UI.Controls.Lists
 			try
 			{
 				if (AnalogNumberOfItemsJoin == 0)
-					throw new InvalidOperationException();
+					throw new InvalidOperationException("Unable to set number of items, join is 0");
 
 				if (count == m_ItemCountCache)
 					return;
