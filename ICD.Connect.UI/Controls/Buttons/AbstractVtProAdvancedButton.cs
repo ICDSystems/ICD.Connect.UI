@@ -20,7 +20,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 		/// Constructor.
 		/// </summary>
 		/// <param name="panel"></param>
-		public AbstractVtProAdvancedButton(ISigInputOutput panel)
+		protected AbstractVtProAdvancedButton(ISigInputOutput panel)
 			: this(panel, null)
 		{
 		}
@@ -30,7 +30,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 		/// </summary>
 		/// <param name="panel"></param>
 		/// <param name="parent"></param>
-		public AbstractVtProAdvancedButton(ISigInputOutput panel, IVtProParent parent)
+		protected AbstractVtProAdvancedButton(ISigInputOutput panel, IVtProParent parent)
 			: base(panel, parent)
 		{
 			m_ModeSection = new SafeCriticalSection();
