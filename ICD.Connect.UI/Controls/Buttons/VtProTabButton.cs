@@ -113,7 +113,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 		{
 			base.Subscribe(smartObject);
 
-			smartObject.OnAnyOutput -= SmartObjectOnAnyOutput;
+			smartObject.OnAnyOutput += SmartObjectOnAnyOutput;
 		}
 
 		/// <summary>
@@ -124,7 +124,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 		{
 			base.Unsubscribe(smartObject);
 
-			smartObject.OnAnyOutput += SmartObjectOnAnyOutput;
+			smartObject.OnAnyOutput -= SmartObjectOnAnyOutput;
 		}
 
 		/// <summary>
