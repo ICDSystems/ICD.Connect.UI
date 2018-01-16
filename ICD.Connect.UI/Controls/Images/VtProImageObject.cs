@@ -2,10 +2,11 @@
 using ICD.Common.Properties;
 using ICD.Common.Utils;
 using ICD.Connect.Panels;
+using ICD.Connect.UI.Controls.Buttons;
 
 namespace ICD.Connect.UI.Controls.Images
 {
-	public sealed class VtProImageObject : AbstractVtProControl<ISigInputOutput>
+	public sealed class VtProImageObject : AbstractVtProButton
 	{
 		private readonly SafeCriticalSection m_SetImageSection;
 		private readonly SafeCriticalSection m_SetModeSection;
