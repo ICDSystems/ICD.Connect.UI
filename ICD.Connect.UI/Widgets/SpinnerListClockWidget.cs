@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using ICD.Common.Utils.EventArguments;
 using ICD.Common.Utils;
+using ICD.Common.Utils.EventArguments;
 using ICD.Common.Utils.Extensions;
 using ICD.Connect.Panels;
 using ICD.Connect.UI.Controls;
@@ -69,7 +69,7 @@ namespace ICD.Connect.UI.Widgets
 		/// <param name="panel"></param>
 		/// <param name="parent"></param>
 		public SpinnerListClockWidget(ushort hoursSmartObject, ushort minutesSmartObject, ushort amPmSmartObject,
-									  IPanelDevice panel, IVtProParent parent)
+		                              IPanelDevice panel, IVtProParent parent)
 			: base(panel, parent)
 		{
 			m_HourList = new VtProSpinnerList(hoursSmartObject, panel, parent);

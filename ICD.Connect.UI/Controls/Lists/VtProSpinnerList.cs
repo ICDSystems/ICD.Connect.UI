@@ -1,6 +1,6 @@
 ﻿using System;
-using ICD.Common.Utils.EventArguments;
 using ICD.Common.Properties;
+using ICD.Common.Utils.EventArguments;
 using ICD.Common.Utils.Extensions;
 using ICD.Connect.Panels;
 using ICD.Connect.Panels.EventArguments;
