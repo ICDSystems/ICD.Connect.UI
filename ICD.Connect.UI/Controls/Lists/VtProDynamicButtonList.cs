@@ -161,7 +161,7 @@ namespace ICD.Connect.UI.Controls.Lists
 
 			try
 			{
-				if (visible == m_VisibilityCache.GetDefault(index, false))
+				if (m_VisibilityCache.ContainsKey(index) && visible == m_VisibilityCache[index])
 					return;
 
 				ushort key = (ushort)(START_VISIBLE_JOIN + index);
@@ -187,7 +187,7 @@ namespace ICD.Connect.UI.Controls.Lists
 
 			try
 			{
-				if (enabled == m_EnabledCache.GetDefault(index, false))
+				if (m_EnabledCache.ContainsKey(index) && enabled == m_EnabledCache[index])
 					return;
 
 				ushort key = (ushort)(START_ENABLED_JOIN + index);
@@ -212,7 +212,7 @@ namespace ICD.Connect.UI.Controls.Lists
 
 			try
 			{
-				if (selected == m_SelectedCache.GetDefault(index, false))
+				if (m_SelectedCache.ContainsKey(index) && selected == m_SelectedCache[index])
 					return;
 
 				ushort key = (ushort)(START_SELECTED_JOIN + index);
@@ -237,7 +237,7 @@ namespace ICD.Connect.UI.Controls.Lists
 
 			try
 			{
-				if (text == m_LabelCache.GetDefault(index, null))
+				if (m_LabelCache.ContainsKey(index) && text == m_LabelCache[index])
 					return;
 
 				ushort key = (ushort)(START_TEXT_JOIN + index);
@@ -262,7 +262,7 @@ namespace ICD.Connect.UI.Controls.Lists
 
 			try
 			{
-				if (icon == m_IconCache.GetDefault(index, null))
+				if (m_IconCache.ContainsKey(index) && icon == m_IconCache[index])
 					return;
 
 				ushort key = (ushort)(START_ICON_JOIN + index);
