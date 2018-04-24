@@ -2,6 +2,7 @@
 using ICD.Common.Properties;
 using ICD.Common.Utils;
 using ICD.Common.Utils.Extensions;
+using ICD.Common.Utils.Timers;
 using ICD.Connect.Panels;
 using ICD.Connect.Panels.EventArguments;
 using ICD.Connect.Protocol.Sigs;
@@ -21,6 +22,12 @@ namespace ICD.Connect.UI.Controls.Buttons
 		/// </summary>
 		public event EventHandler OnReleased;
 
+		/// <summary>
+		/// Raised when the user holds the button.
+		/// </summary>
+		public event EventHandler OnHeld;
+
+		private readonly SafeTimer m_HoldTimer;
 		private readonly SafeCriticalSection m_SelectSection;
 
 		private ushort m_DigitalPressJoin;
@@ -48,6 +55,12 @@ namespace ICD.Connect.UI.Controls.Buttons
 			}
 		}
 
+		/// <summary>
+		/// Gets/sets the hold duration in milliseconds.
+		/// </summary>
+		[PublicAPI]
+		public long HoldDuration { get; set; }
+
 		#endregion
 
 		#region Constructors
@@ -69,6 +82,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 		protected AbstractVtProButton(ISigInputOutput panel, IVtProParent parent)
 			: base(panel, parent)
 		{
+			m_HoldTimer = SafeTimer.Stopped(Hold);
 			m_SelectSection = new SafeCriticalSection();
 		}
 
@@ -83,6 +97,9 @@ namespace ICD.Connect.UI.Controls.Buttons
 		{
 			OnPressed = null;
 			OnReleased = null;
+			OnHeld = null;
+
+			m_HoldTimer.Dispose();
 
 			base.Dispose();
 		}
@@ -93,6 +110,10 @@ namespace ICD.Connect.UI.Controls.Buttons
 		[PublicAPI]
 		public void Press()
 		{
+			long holdDuration = HoldDuration;
+			if (holdDuration > 0)
+				m_HoldTimer.Reset(holdDuration);
+
 			if (IsVisibleRecursive)
 				OnPressed.Raise(this);
 		}
@@ -103,8 +124,21 @@ namespace ICD.Connect.UI.Controls.Buttons
 		[PublicAPI]
 		public void Release()
 		{
+			m_HoldTimer.Stop();
+
 			if (IsVisibleRecursive)
 				OnReleased.Raise(this);
+		}
+
+		/// <summary>
+		/// Simulates the button being held.
+		/// </summary>
+		public void Hold()
+		{
+			m_HoldTimer.Stop();
+
+			if (IsVisibleRecursive)
+				OnHeld.Raise(this);
 		}
 
 		/// <summary>
