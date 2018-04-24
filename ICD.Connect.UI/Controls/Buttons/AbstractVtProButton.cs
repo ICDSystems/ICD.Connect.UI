@@ -133,6 +133,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 		/// <summary>
 		/// Simulates the button being held.
 		/// </summary>
+		[PublicAPI]
 		public void Hold()
 		{
 			m_HoldTimer.Stop();
