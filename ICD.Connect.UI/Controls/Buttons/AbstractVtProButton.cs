@@ -11,7 +11,14 @@ namespace ICD.Connect.UI.Controls.Buttons
 {
 	public abstract class AbstractVtProButton : AbstractVtProLabel
 	{
+		/// <summary>
+		/// Raised when the user presses the button.
+		/// </summary>
 		public event EventHandler OnPressed;
+
+		/// <summary>
+		/// Raised when the user releases the button.
+		/// </summary>
 		public event EventHandler OnReleased;
 
 		private readonly SafeCriticalSection m_SelectSection;
