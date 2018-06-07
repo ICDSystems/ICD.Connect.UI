@@ -1,5 +1,7 @@
 ﻿using System;
+using ICD.Common.Properties;
 using ICD.Common.Utils.EventArguments;
+using ICD.Common.Utils.Extensions;
 
 namespace ICD.Connect.UI.Utils
 {
@@ -10,6 +12,7 @@ namespace ICD.Connect.UI.Utils
 	{
 		public event EventHandler<StringEventArgs> OnStringChanged;
 
+		[NotNull]
 		private string m_Output;
 
 		/// <summary>
@@ -34,7 +37,7 @@ namespace ICD.Connect.UI.Utils
 
 			m_Output = value;
 
-			RaiseOnStringChanged();
+			OnStringChanged.Raise(this, new StringEventArgs(m_Output));
 		}
 
 		/// <summary>
@@ -67,6 +70,7 @@ namespace ICD.Connect.UI.Utils
 		/// Clears the builder and returns the contents.
 		/// </summary>
 		/// <returns></returns>
+		[NotNull]
 		public string Pop()
 		{
 			string output = ToString();
@@ -78,21 +82,12 @@ namespace ICD.Connect.UI.Utils
 		/// Gets the resulting string.
 		/// </summary>
 		/// <returns></returns>
+		[NotNull]
 		public override string ToString()
 		{
 			return m_Output;
 		}
 
 		#endregion
-
-		/// <summary>
-		/// Raises the OnStringChanged event.
-		/// </summary>
-		private void RaiseOnStringChanged()
-		{
-			EventHandler<StringEventArgs> handler = OnStringChanged;
-			if (handler != null)
-				handler(this, new StringEventArgs(m_Output));
-		}
 	}
 }
