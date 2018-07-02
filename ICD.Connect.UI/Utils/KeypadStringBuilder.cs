@@ -10,6 +10,9 @@ namespace ICD.Connect.UI.Utils
 	/// </summary>
 	public sealed class KeypadStringBuilder
 	{
+		/// <summary>
+		/// Raised when the string value changes.
+		/// </summary>
 		public event EventHandler<StringEventArgs> OnStringChanged;
 
 		[NotNull]
