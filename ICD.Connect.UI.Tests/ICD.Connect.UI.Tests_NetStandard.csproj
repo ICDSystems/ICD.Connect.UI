@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ICD.Connect.Panels\ICD.Connect.Panels.Mock\ICD.Connect.Panels.Mock_NetStandard.csproj" />
     <ProjectReference Include="..\ICD.Connect.UI\ICD.Connect.UI_NetStandard.csproj" />
   </ItemGroup>
 
