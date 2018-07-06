@@ -18,29 +18,21 @@ namespace ICD.Connect.UI.Tests.Controls
 
             T instance = Instantiate(0, panel, null);
 
-            instance.DigitalVisibilityJoin = 100;
+            instance.VisibilityDigitalJoin = 100;
 
-            Assert.AreEqual(100, instance.DigitalVisibilityJoin);
+            Assert.AreEqual(100, instance.VisibilityDigitalJoin);
         }
 
-        /// <summary>
-        /// Subscribe to the smart object events.
-        /// </summary>
-        /// <param name="smartObject"></param>
         [Test]
-        public void Subscribe()
+        public void DisposeTest()
         {
-            Assert.Inconclusive();
-        }
+            MockPanelDevice panel = new MockPanelDevice();
 
-        /// <summary>
-        /// Unsubscribe from the smart object events.
-        /// </summary>
-        /// <param name="smartObject"></param>
-        [Test]
-        public void Unsubscribe()
-        {
-            Assert.Inconclusive();
+            T instance = Instantiate(0, panel, null);
+
+            instance.Dispose();
+
+            Assert.Pass();
         }
     }
 }

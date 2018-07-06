@@ -18,8 +18,28 @@ namespace ICD.Connect.UI.Tests.Controls
         /// <returns></returns>
         protected abstract TControl Instantiate(ushort smartObjectId, TPanel panel, IVtProParent parent);
 
+        protected abstract TControl Instantiate(ushort smartObjectId, TPanel panel);
+
+        [Test]
+        public void InstanceWithParentTest()
+        {
+            MockPanelDevice panel = new MockPanelDevice();
+            TControl instance = Instantiate(0, panel as TPanel, null);
+
+            Assert.NotNull(instance);
+        }
+
+        [Test]
+        public void InstanceTest()
+        {
+            MockPanelDevice panel = new MockPanelDevice();
+            TControl instance = Instantiate(0, panel as TPanel);
+
+            Assert.NotNull(instance);
+        }
+
         [TestCase((ushort) 100)]
-        public void DigitalVisibilityJoin(ushort join)
+        public void DigitalVisibilityJoinTest(ushort join)
         {
             MockPanelDevice panel = new MockPanelDevice();
             TControl instance = Instantiate(0, panel as TPanel, null);
@@ -30,7 +50,7 @@ namespace ICD.Connect.UI.Tests.Controls
         }
 
         [TestCase((ushort)100)]
-        public void DigitalEnableJoin(ushort join)
+        public void DigitalEnableJoinTest(ushort join)
         {
             MockPanelDevice panel = new MockPanelDevice();
             TControl instance = Instantiate(0, panel as TPanel, null);
@@ -41,22 +61,12 @@ namespace ICD.Connect.UI.Tests.Controls
         }
 
         /// <summary>
-        /// Returns true if this control, and all parent controls are visible.
-        /// </summary>
-        [Test]
-        public void IsVisibleRecursive()
-        {
-            //get { return IsVisible && (m_Parent == null || m_Parent.IsVisibleRecursive); }
-            Assert.Inconclusive();
-        }
-
-        /// <summary>
         /// Enables/disables the button. Throws InvalidOperationException if there is no enable join.
         /// </summary>
         /// <param name="state"></param>
         [TestCase(true)]
         [TestCase(false)]
-        public void Enable(bool state)
+        public void EnableTest(bool state)
         {
             MockPanelDevice panel = new MockPanelDevice();
             TControl instance = Instantiate(0, panel as TPanel, null);
@@ -76,7 +86,7 @@ namespace ICD.Connect.UI.Tests.Controls
         /// <param name="state"></param>
         [TestCase(true)]
         [TestCase(false)]
-        public void Show(bool state)
+        public void ShowTest(bool state)
         {
             MockPanelDevice panel = new MockPanelDevice();
             TControl instance = Instantiate(0, panel as TPanel, null);

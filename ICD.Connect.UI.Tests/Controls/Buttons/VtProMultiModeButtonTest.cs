@@ -13,5 +13,10 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             return new VtProMultiModeButton(panel, parent);
         }
+
+        protected override VtProMultiModeButton Instantiate(ushort smartObjectId, ISigInputOutput panel)
+        {
+            return new VtProMultiModeButton(panel);
+        }
     }
 }

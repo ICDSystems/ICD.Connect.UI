@@ -6,13 +6,18 @@ using NUnit.Framework;
 
 namespace ICD.Connect.UI.Tests.Controls.Buttons
 {
-    
+
     [TestFixture]
     public sealed class VtProButtonTest : AbstractVtProButtonTest<VtProButton>
     {
         protected override VtProButton Instantiate(ushort smartObjectId, ISigInputOutput panel, IVtProParent parent)
         {
             return new VtProButton(panel, parent);
+        }
+
+        protected override VtProButton Instantiate(ushort smartObjectId, ISigInputOutput panel)
+        {
+            return new VtProButton(panel);
         }
     }
 }

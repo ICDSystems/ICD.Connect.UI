@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
 using ICD.Common.Utils;
 using ICD.Connect.Panels.Mock;
 using ICD.Connect.Protocol.Sigs;
@@ -88,6 +87,11 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
             MockPanelDevice panel = new MockPanelDevice();
 
             T instance = Instantiate(0, panel, null);
+
+            instance.DigitalPressJoin = 1;
+
+            Assert.AreEqual(instance.DigitalPressJoin, 1);
+
             instance.DigitalPressJoin = join;
 
             Assert.AreEqual(instance.DigitalPressJoin, join);
@@ -103,10 +107,14 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
             panel.RaiseOutputSigChange(new SigInfo(100, 0, false));
 
             Assert.AreEqual(4, callbacks.Count);
+
+            instance.DigitalPressJoin = join;
+
+            Assert.AreEqual(instance.DigitalPressJoin, join);
         }
 
         [Test]
-        public void Press()
+        public void PressTest()
         {
             MockPanelDevice panel = new MockPanelDevice();
 
@@ -122,7 +130,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         }
 
         [Test]
-        public void Release()
+        public void ReleaseTest()
         {
             MockPanelDevice panel = new MockPanelDevice();
 
@@ -138,7 +146,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         }
 
         [Test]
-        public void Hold()
+        public void HoldTest()
         {
             MockPanelDevice panel = new MockPanelDevice();
 
@@ -155,7 +163,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SetSelected(bool state)
+        public void SetSelectedTest(bool state)
         {
             MockPanelDevice panel = new MockPanelDevice();
 
@@ -165,6 +173,29 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
             instance.SetSelected(state);
 
             Assert.AreEqual(state, panel.BooleanInput[100].GetBoolValue());
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void SetSelectedTestException(bool state)
+        {
+            MockPanelDevice panel = new MockPanelDevice();
+
+            T instance = Instantiate(0, panel, null);
+
+            Assert.Throws<InvalidOperationException>(() => instance.SetSelected(state));
+        }
+
+        [Test]
+        public void DisposeTest()
+        {
+            MockPanelDevice panel = new MockPanelDevice();
+
+            T instance = Instantiate(0, panel, null);
+
+            instance.Dispose();
+
+            Assert.Pass();
         }
     }
 }

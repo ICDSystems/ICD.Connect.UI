@@ -2,6 +2,7 @@
 using ICD.Connect.Protocol.Sigs;
 using ICD.Connect.UI.Controls.Buttons;
 using NUnit.Framework;
+using System;
 
 namespace ICD.Connect.UI.Tests.Controls.Buttons
 {
@@ -13,7 +14,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         /// </summary>
         /// <param name="mode"></param>
         [TestCase((ushort) 100)]
-        public void SetMode(ushort mode)
+        public void SetModeTest(ushort mode)
         {
             MockPanelDevice panel = new MockPanelDevice();
 
@@ -23,6 +24,20 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
             instance.SetMode(mode);
 
             Assert.AreEqual(mode, panel.UShortInput[10].GetValue());
+
+            instance.SetMode(mode);
+
+            Assert.AreEqual(mode, panel.UShortInput[10].GetValue());
+        }
+
+        [TestCase((ushort)100)]
+        public void SetModeExceptionTest(ushort mode)
+        {
+            MockPanelDevice panel = new MockPanelDevice();
+
+            T instance = Instantiate(0, panel, null);
+
+            Assert.Throws<InvalidOperationException>(() => instance.SetMode(mode));
         }
     }
 }

@@ -14,5 +14,9 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         {
             return new VtProFormattedText(panel, parent);
         }
+        protected override VtProFormattedText Instantiate(ushort smartObjectId, ISigInputOutput panel)
+        {
+            return new VtProFormattedText(panel);
+        }
     }
 }

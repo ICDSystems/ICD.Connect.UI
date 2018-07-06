@@ -13,5 +13,9 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             return new VtProAdvancedButton(panel, parent);
         }
+        protected override VtProAdvancedButton Instantiate(ushort smartObjectId, ISigInputOutput panel)
+        {
+            return new VtProAdvancedButton(panel);
+        }
     }
 }
