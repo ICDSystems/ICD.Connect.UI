@@ -1,5 +1,6 @@
 ﻿using ICD.Connect.Panels;
 using ICD.Connect.Panels.Mock;
+using ICD.Connect.Protocol.Sigs;
 using ICD.Connect.UI.Controls;
 using NUnit.Framework;
 
@@ -77,6 +78,7 @@ namespace ICD.Connect.UI.Tests.Controls
 
             instance.Enable(state);
 
+            Assert.AreEqual(state, panel.BooleanInput[100].GetValue());
             Assert.AreEqual(state, instance.IsEnabled);
         }
 
@@ -97,6 +99,7 @@ namespace ICD.Connect.UI.Tests.Controls
 
             instance.Show(state);
 
+            Assert.AreEqual(state, panel.BooleanInput[100].GetValue());
             Assert.AreEqual(state, instance.IsVisible);
         }
     }
