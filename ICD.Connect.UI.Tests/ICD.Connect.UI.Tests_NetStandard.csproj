@@ -25,11 +25,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ICD.Connect.Panels\ICD.Connect.Panels.Mock\ICD.Connect.Panels.Mock_NetStandard.csproj" />
     <ProjectReference Include="..\ICD.Connect.UI\ICD.Connect.UI_NetStandard.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controls\Guages\" />
+    <Folder Include="Controls\Keypads\" />
+    <Folder Include="Controls\Images\" />
+    <Folder Include="Controls\Lists\" />
+    <Folder Include="Controls\Pages\" />
   </ItemGroup>
 
 </Project>

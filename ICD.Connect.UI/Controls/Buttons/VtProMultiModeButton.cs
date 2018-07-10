@@ -11,7 +11,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 		/// </summary>
 		/// <param name="panel"></param>
 		public VtProMultiModeButton(ISigInputOutput panel)
-			: this(panel, null)
+			: base(panel)
 		{
 		}
 
