@@ -51,15 +51,15 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// </summary>
 		public event EventHandler<UShortEventArgs> OnButtonHeld;
 
-		/// <summary>
-		/// Gets the join number for settings the number of items in the list.
-		/// </summary>
-		protected override ushort AnalogNumberOfItemsJoin { get { return NUMBER_OF_ITEMS_JOIN; } }
+        /// <summary>
+        /// Gets the join number for settings the number of items in the list.
+        /// </summary>
+        protected override ushort AnalogNumberOfItemsJoin { get { return NUMBER_OF_ITEMS_JOIN; } }
 
-		/// <summary>
-		/// Gets the join number for scrolling to an item in the list.
-		/// </summary>
-		protected override ushort AnalogScrollToItemJoin { get { return SCROLL_TO_ITEM_JOIN; } }
+        /// <summary>
+        /// Gets the join number for scrolling to an item in the list.
+        /// </summary>
+        protected override ushort AnalogScrollToItemJoin { get { return SCROLL_TO_ITEM_JOIN; } }
 
 		/// <summary>
 		/// Gets the join number for getting the moving state of the list.
