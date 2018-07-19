@@ -31,7 +31,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            var instance = Instantiate(0, panel, null);
+            var instance = Instantiate(1, panel, null);
 
             instance.Dispose();
 
@@ -46,7 +46,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            var instance = Instantiate(0, panel, null);
+            var instance = Instantiate(1, panel, null);
             instance.AnalogModeJoin = 10;
 
             List<EventArgs> callbacks = new List<EventArgs>();
@@ -67,7 +67,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            var instance = Instantiate(0, panel, null);
+            var instance = Instantiate(1, panel, null);
 
             Assert.Throws<InvalidOperationException>(() => instance.SetMode(mode));
 
@@ -86,7 +86,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         public void EnterKeyPressJoinTest(ushort join)
         {
             MockPanelDevice panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel, null);
+            var instance = Instantiate(1, panel, null);
 
             instance.EnterKeyPressJoin = join;
 
@@ -97,7 +97,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         public void EscKeyPressJoinTest(ushort join)
         {
             MockPanelDevice panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel, null);
+            var instance = Instantiate(1, panel, null);
 
             instance.EscKeyPressJoin = join;
 
@@ -108,7 +108,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         public void AnalogModeJoinTest(ushort join)
         {
             MockPanelDevice panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel, null);
+            var instance = Instantiate(1, panel, null);
 
             instance.AnalogModeJoin = join;
 
@@ -119,7 +119,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         public void SetFocusJoinOnTest(ushort join)
         {
             MockPanelDevice panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel, null);
+            var instance = Instantiate(1, panel, null);
 
             instance.SetFocusJoinOn = join;
 
@@ -130,7 +130,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         public void SetFocusJoinOffTest(ushort join)
         {
             MockPanelDevice panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel, null);
+            var instance = Instantiate(1, panel, null);
 
             instance.SetFocusJoinOff = join;
 
@@ -141,7 +141,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         public void HasFocusJoinTest(ushort join)
         {
             MockPanelDevice panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel, null);
+            var instance = Instantiate(1, panel, null);
 
             instance.HasFocusJoin = join;
 
@@ -152,7 +152,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         public void SerialOutputJoinTest(ushort join)
         {
             MockPanelDevice panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel, null);
+            var instance = Instantiate(1, panel, null);
 
             instance.SerialOutputJoin = join;
 

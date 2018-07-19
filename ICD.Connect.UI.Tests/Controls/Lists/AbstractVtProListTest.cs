@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ICD.Common.Utils.EventArguments;
-using ICD.Common.Utils.Extensions;
-using ICD.Connect.Panels;
-using ICD.Connect.Panels.EventArguments;
 using ICD.Connect.Panels.Mock;
 using ICD.Connect.Protocol.Sigs;
 using ICD.Connect.UI.Controls.Lists;
@@ -12,7 +8,6 @@ using NUnit.Framework;
 
 namespace ICD.Connect.UI.Tests.Controls.Lists
 {
-    [TestFixture]
     public abstract class AbstractVtProListTest<T> : AbstractVtProSmartObjectTest<T>
     where T : AbstractVtProList
     {
@@ -23,7 +18,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         private void Dispose()
         {
             var panel = new MockPanelDevice();
-            T instance = Instantiate(0, panel);
+            T instance = Instantiate(1, panel);
             instance.Dispose();
 
             Assert.Pass();
@@ -37,7 +32,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void ScrollToItem(ushort item)
         {
             var panel = new MockPanelDevice();
-            T instance = Instantiate(0, panel);
+            T instance = Instantiate(1, panel);
 
             instance.ScrollToItem(item);
 
@@ -56,7 +51,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void SetNumberOfItems(ushort count)
         {
             var panel = new MockPanelDevice();
-            T instance = Instantiate(0, panel);
+            T instance = Instantiate(1, panel);
 
             instance.SetNumberOfItems(count);
 
@@ -78,7 +73,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
             var callbackArgs = new List<BoolEventArgs>();
 
             var panel = new MockPanelDevice();
-            T instance = Instantiate(0, panel);
+            T instance = Instantiate(1, panel);
 
             instance.OnIsMovingChanged += (sender, args) => callbackArgs.Add(args);
 

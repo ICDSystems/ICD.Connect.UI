@@ -1,13 +1,10 @@
 ﻿using System.Linq;
-using ICD.Common.Utils.Extensions;
 using ICD.Connect.Panels.Mock;
-using ICD.Connect.Protocol.Sigs;
 using ICD.Connect.UI.Controls.Lists;
 using NUnit.Framework;
 
 namespace ICD.Connect.UI.Tests.Controls.Lists
 {
-    [TestFixture]
     public abstract class AbstractVtProButtonListTest<T> : AbstractVtProListTest<T>
     where T : AbstractVtProButtonList
     {
@@ -19,7 +16,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void SetItemLabels(params string[] labels)
         {
             var panel = new MockPanelDevice();
-            T instance = Instantiate(0, panel);
+            T instance = Instantiate(1, panel);
 
             instance.SetItemLabels(labels);
 
@@ -38,7 +35,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void SetItemIcons(params string[] icons)
         {
             var panel = new MockPanelDevice();
-            T instance = Instantiate(0, panel);
+            T instance = Instantiate(1, panel);
 
             instance.SetItemIcons(icons);
 

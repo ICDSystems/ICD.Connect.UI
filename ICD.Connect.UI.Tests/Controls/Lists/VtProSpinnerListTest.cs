@@ -28,7 +28,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void SetNumberOfItems(ushort count)
         {
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.SetNumberOfItems(count);
 
@@ -47,7 +47,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void SelectItem(ushort item)
         {
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.SelectItem(item);
 
@@ -65,7 +65,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void NextItem()
         {
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.NextItem();
 
@@ -83,7 +83,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void PreviousItem()
         {
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.PreviousItem();
 
@@ -104,7 +104,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void SetItemVisible(ushort item, bool visible)
         {
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.SetItemVisible(item, visible);
 
@@ -124,7 +124,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void SetItemLabel(ushort item, string label)
         {
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.SetItemLabel(item, label);
 
@@ -143,7 +143,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void SetItemLabels(params string[] labels)
         {
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.SetItemLabels(labels);
 

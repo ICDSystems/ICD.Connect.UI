@@ -16,7 +16,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             instance.SerialLabelJoins.Add(100);
 
@@ -28,7 +28,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             instance.AnalogLabelJoins.Add(100);
 
@@ -40,7 +40,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             instance.DigitalLabelJoins.Add(100);
 
@@ -52,7 +52,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             instance.IndirectTextJoin = 100;
 
@@ -71,7 +71,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             instance.SetLabelTextAtJoin(join, text);
 
@@ -92,7 +92,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             instance.SetLabelTextAtJoin(join, value);
 
@@ -114,7 +114,7 @@ namespace ICD.Connect.UI.Tests.Controls.TextControls
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             instance.SetLabelTextAtJoin(join, value);
 

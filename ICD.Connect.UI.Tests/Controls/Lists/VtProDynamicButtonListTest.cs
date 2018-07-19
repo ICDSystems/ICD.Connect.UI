@@ -31,7 +31,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
 		public void Dispose()
         {
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.Dispose();
 
@@ -47,7 +47,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         {
             var callbacks = new List<UShortEventArgs>();
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.OnButtonReleased += (sender, args) => callbacks.Add(args);
 
@@ -71,7 +71,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         {
             var callbacks = new List<UShortEventArgs>();
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.OnButtonClicked += (sender, args) => callbacks.Add(args);
 
@@ -95,7 +95,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         {
             var callbacks = new List<UShortEventArgs>();
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.OnButtonHeld += (sender, args) => callbacks.Add(args);
 
@@ -120,7 +120,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void SetItemVisible(ushort index, bool visible)
         {
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.SetItemVisible(index, visible);
 
@@ -141,7 +141,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void SetItemEnabled(ushort index, bool enabled)
         {
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.SetItemEnabled(index, enabled);
 
@@ -162,7 +162,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void SetItemSelected(ushort index, bool selected)
         {
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.SetItemSelected(index, selected);
 
@@ -182,7 +182,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void SetItemLabel(ushort index, string text)
         {
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.SetItemIcon(index, text);
 
@@ -202,7 +202,7 @@ namespace ICD.Connect.UI.Tests.Controls.Lists
         public void SetItemIcon(ushort index, string icon)
         {
             var panel = new MockPanelDevice();
-            var instance = Instantiate(0, panel);
+            var instance = Instantiate(1, panel);
 
             instance.SetItemIcon(index, icon);
 
