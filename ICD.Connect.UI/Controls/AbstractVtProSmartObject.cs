@@ -39,6 +39,9 @@ namespace ICD.Connect.UI.Controls
 			if (panel == null)
 				throw new ArgumentNullException("panel");
 
+			if (smartObjectId == 0)
+				throw new ArgumentException("SmartObject Id 0 is invalid", "smartObjectId");
+
 			SmartObject = panel.SmartObjects[smartObjectId];
 			Subscribe(SmartObject);
 		}

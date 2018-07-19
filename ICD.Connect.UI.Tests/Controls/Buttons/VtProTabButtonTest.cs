@@ -30,7 +30,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            VtProTabButton instance = Instantiate(0, panel, null);
+            VtProTabButton instance = Instantiate(1, panel, null);
 
             List<EventArgs> callbacks = new List<EventArgs>();
 
@@ -48,7 +48,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            VtProTabButton instance = Instantiate(0, panel, null);
+            VtProTabButton instance = Instantiate(1, panel, null);
 
             List<EventArgs> callbacks = new List<EventArgs>();
 
@@ -70,7 +70,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            VtProTabButton instance = Instantiate(0, panel, null);
+            VtProTabButton instance = Instantiate(1, panel, null);
 
             List<EventArgs> callbacks = new List<EventArgs>();
 
@@ -92,7 +92,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            VtProTabButton instance = Instantiate(0, panel, null);
+            VtProTabButton instance = Instantiate(1, panel, null);
 
             List<EventArgs> callbacks = new List<EventArgs>();
 
@@ -118,7 +118,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
 
             MockPanelDevice panel = new MockPanelDevice();
 
-            VtProTabButton instance = Instantiate(0, panel, null);
+            VtProTabButton instance = Instantiate(1, panel, null);
 
             instance.SetItemSelected(index, selected);
 
@@ -137,7 +137,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
 
             MockPanelDevice panel = new MockPanelDevice();
 
-            VtProTabButton instance = Instantiate(0, panel, null);
+            VtProTabButton instance = Instantiate(1, panel, null);
 
             List<SigInfoEventArgs> callbackArgs = new List<SigInfoEventArgs>();
 

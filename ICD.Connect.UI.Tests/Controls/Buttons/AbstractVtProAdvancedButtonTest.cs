@@ -18,7 +18,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
             instance.AnalogModeJoin = 10;
 
             instance.SetMode(mode);
@@ -35,7 +35,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             Assert.Throws<InvalidOperationException>(() => instance.SetMode(mode));
         }

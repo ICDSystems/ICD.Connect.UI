@@ -25,7 +25,7 @@ namespace ICD.Connect.UI.Tests.Controls
         public void InstanceWithParentTest()
         {
             MockPanelDevice panel = new MockPanelDevice();
-            TControl instance = Instantiate(0, panel as TPanel, null);
+            TControl instance = Instantiate(1, panel as TPanel, null);
 
             Assert.NotNull(instance);
         }
@@ -34,7 +34,7 @@ namespace ICD.Connect.UI.Tests.Controls
         public void InstanceTest()
         {
             MockPanelDevice panel = new MockPanelDevice();
-            TControl instance = Instantiate(0, panel as TPanel);
+            TControl instance = Instantiate(1, panel as TPanel);
 
             Assert.NotNull(instance);
         }
@@ -43,7 +43,7 @@ namespace ICD.Connect.UI.Tests.Controls
         public void DigitalVisibilityJoinTest(ushort join)
         {
             MockPanelDevice panel = new MockPanelDevice();
-            TControl instance = Instantiate(0, panel as TPanel, null);
+            TControl instance = Instantiate(1, panel as TPanel, null);
 
             instance.DigitalVisibilityJoin = join;
 
@@ -54,7 +54,7 @@ namespace ICD.Connect.UI.Tests.Controls
         public void DigitalEnableJoinTest(ushort join)
         {
             MockPanelDevice panel = new MockPanelDevice();
-            TControl instance = Instantiate(0, panel as TPanel, null);
+            TControl instance = Instantiate(1, panel as TPanel, null);
 
             instance.DigitalEnableJoin = join;
 
@@ -70,7 +70,7 @@ namespace ICD.Connect.UI.Tests.Controls
         public void EnableTest(bool state)
         {
             MockPanelDevice panel = new MockPanelDevice();
-            TControl instance = Instantiate(0, panel as TPanel, null);
+            TControl instance = Instantiate(1, panel as TPanel, null);
 
             Assert.AreEqual(true, instance.IsEnabled);
 
@@ -91,7 +91,7 @@ namespace ICD.Connect.UI.Tests.Controls
         public void ShowTest(bool state)
         {
             MockPanelDevice panel = new MockPanelDevice();
-            TControl instance = Instantiate(0, panel as TPanel, null);
+            TControl instance = Instantiate(1, panel as TPanel, null);
 
             Assert.AreEqual(true, instance.IsVisible);
 

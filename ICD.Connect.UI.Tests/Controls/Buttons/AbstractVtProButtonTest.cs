@@ -17,7 +17,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
             instance.DigitalPressJoin = 100;
 
             List<EventArgs> callbacks = new List<EventArgs>();
@@ -37,7 +37,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
             instance.DigitalPressJoin = 100;
 
             List<EventArgs> callbacks = new List<EventArgs>();
@@ -57,7 +57,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
             instance.DigitalPressJoin = 100;
             instance.HoldDuration = 500;
 
@@ -86,7 +86,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             instance.DigitalPressJoin = 1;
 
@@ -118,7 +118,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             List<EventArgs> callbacks = new List<EventArgs>();
 
@@ -134,7 +134,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             List<EventArgs> callbacks = new List<EventArgs>();
 
@@ -150,7 +150,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             List<EventArgs> callbacks = new List<EventArgs>();
 
@@ -167,7 +167,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
             instance.DigitalPressJoin = 100;
 
             instance.SetSelected(state);
@@ -181,7 +181,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             Assert.Throws<InvalidOperationException>(() => instance.SetSelected(state));
         }
@@ -191,7 +191,7 @@ namespace ICD.Connect.UI.Tests.Controls.Buttons
         {
             MockPanelDevice panel = new MockPanelDevice();
 
-            T instance = Instantiate(0, panel, null);
+            T instance = Instantiate(1, panel, null);
 
             instance.Dispose();
 

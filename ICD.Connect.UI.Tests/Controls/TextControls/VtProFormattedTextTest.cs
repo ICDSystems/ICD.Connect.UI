@@ -1,5 +1,4 @@
 ﻿using ICD.Connect.Panels;
-using ICD.Connect.Panels.Mock;
 using ICD.Connect.UI.Controls;
 using ICD.Connect.UI.Controls.TextControls;
 using NUnit.Framework;
