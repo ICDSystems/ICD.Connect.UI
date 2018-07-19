@@ -49,9 +49,9 @@ namespace ICD.Connect.UI.Controls.Lists
 
 		[PublicAPI]
 		public ushort StartItemEnabledJoin { get; set; }
-		
+
 		protected override ushort AnalogNumberOfItemsJoin { get { return NUMBER_OF_ITEMS_JOIN; } }
-		
+
 		/// <summary>
 		/// Gets the join number for scrolling to an item in the list.
 		/// </summary>

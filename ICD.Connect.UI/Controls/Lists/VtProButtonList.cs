@@ -20,12 +20,12 @@ namespace ICD.Connect.UI.Controls.Lists
 		private readonly SafeCriticalSection m_SetItemSelectedSection;
 
 		protected override ushort AnalogNumberOfItemsJoin { get { throw new NotImplementedException(); } }
-		
+
 		/// <summary>
 		/// Gets the join number for scrolling to an item in the list.
 		/// </summary>
 		protected override ushort AnalogScrollToItemJoin { get { throw new NotImplementedException(); } }
-		
+
 		/// <summary>
 		/// Gets the join number for getting the moving state of the list.
 		/// </summary>
