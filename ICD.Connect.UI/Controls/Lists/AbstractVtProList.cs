@@ -27,16 +27,16 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// </summary>
 		public ushort MaxSize { get; set; }
 
-        /// <summary>
-        /// Gets the join number for setting the number of items.
-        /// </summary>
-        protected abstract ushort AnalogNumberOfItemsJoin { get; }
-
-        /// <summary>
-        /// Gets the join number for scrolling to an item in the list.
-        /// </summary>
-        protected abstract ushort AnalogScrollToItemJoin { get; }
-
+		/// <summary>
+		/// Gets the join number for setting the number of items.
+		/// </summary>
+		protected abstract ushort AnalogNumberOfItemsJoin { get; }
+		
+		/// <summary>
+		/// Gets the join number for scrolling to an item in the list.
+		/// </summary>
+		protected abstract ushort AnalogScrollToItemJoin { get; }
+		
 		/// <summary>
 		/// Gets the join number for getting the moving state of the list.
 		/// </summary>
