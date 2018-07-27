@@ -109,16 +109,18 @@ namespace ICD.Connect.UI.Controls.TextControls
 				if (join == 0)
 					throw new InvalidOperationException("Unable to set label text at join 0");
 
+				text = text ?? string.Empty;
 				join = Parent == null ? join : Parent.GetSerialJoin(join, this);
-
-				// Replace newline chars with html
-				text = Regex.Replace(text ?? string.Empty, @"\n\r|\r\n|\n|\r", HtmlUtils.NEWLINE);
 
 				string cache = SerialLabelsCache.GetDefault(join, string.Empty);
 				if (text == cache)
 					return;
 
 				SerialLabelsCache[join] = text;
+
+				// Replace newline chars with html
+				text = Regex.Replace(text, @"\n\r|\r\n|\n|\r", HtmlUtils.NEWLINE);
+
 				Panel.SendInputSerial(join, text);
 			}
 			finally
