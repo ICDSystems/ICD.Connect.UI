@@ -64,14 +64,13 @@ namespace ICD.Connect.UI.Controls.Images
 				if (SerialGraphicsJoin == 0)
 					throw new InvalidOperationException("Unable to set image url, join is 0");
 
-				url = url ?? string.Empty;
-				if (url == (m_UrlCache ?? string.Empty))
+				if (url == m_UrlCache)
 					return;
 
-				ushort join = Parent == null ? SerialGraphicsJoin : Parent.GetSerialJoin(SerialGraphicsJoin, this);
+				ushort join = GetSerialJoinWithParentOffset(SerialGraphicsJoin);
 
 				m_UrlCache = url;
-				Panel.SendInputSerial(join, m_UrlCache);
+				Panel.SendInputSerial(join, m_UrlCache ?? string.Empty);
 			}
 			finally
 			{
@@ -96,7 +95,7 @@ namespace ICD.Connect.UI.Controls.Images
 				if (mode == m_ModeCache)
 					return;
 
-				ushort join = Parent == null ? ModeAnalogJoin : Parent.GetAnalogJoin(ModeAnalogJoin, this);
+				ushort join = GetAnalogJoinWithParentOffset(ModeAnalogJoin);
 
 				m_ModeCache = mode;
 				Panel.SendInputAnalog(join, m_ModeCache);

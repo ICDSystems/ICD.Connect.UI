@@ -120,7 +120,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 				if (mode == m_CachedMode)
 					return;
 
-				ushort join = Parent == null ? AnalogModeJoin : Parent.GetAnalogJoin(AnalogModeJoin, this);
+				ushort join = GetAnalogJoinWithParentOffset(AnalogModeJoin);
 
 				m_CachedMode = mode;
 				Panel.SendInputAnalog(join, m_CachedMode);
@@ -172,7 +172,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 		{
 			UnsubscribeSerialFeedback();
 
-			m_SubscribedSerialOutputJoin = Parent == null ? SerialOutputJoin : Parent.GetSerialJoin(SerialOutputJoin, this);
+			m_SubscribedSerialOutputJoin = GetSerialJoinWithParentOffset(SerialOutputJoin);
 
 			if (m_SubscribedSerialOutputJoin == 0)
 				return;

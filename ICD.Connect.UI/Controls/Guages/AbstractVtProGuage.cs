@@ -92,7 +92,7 @@ namespace ICD.Connect.UI.Controls.Guages
 				if (value == m_ValueCache)
 					return;
 
-				ushort join = Parent == null ? AnalogFeedbackJoin : Parent.GetAnalogJoin(AnalogFeedbackJoin, this);
+				ushort join = GetAnalogJoinWithParentOffset(AnalogFeedbackJoin);
 
 				m_ValueCache = value;
 				Panel.SendInputAnalog(join, m_ValueCache);
@@ -165,7 +165,7 @@ namespace ICD.Connect.UI.Controls.Guages
 		{
 			UnsubscribeAnalogFeedback();
 
-			m_SubscribedAnalogFeedbackJoin = Parent == null ? AnalogFeedbackJoin : Parent.GetAnalogJoin(AnalogFeedbackJoin, this);
+			m_SubscribedAnalogFeedbackJoin = GetAnalogJoinWithParentOffset(AnalogFeedbackJoin);
 			if (m_SubscribedAnalogFeedbackJoin != 0)
 				Panel.RegisterOutputSigChangeCallback(m_SubscribedAnalogFeedbackJoin, eSigType.Analog, AnalogFeedback);
 		}

@@ -195,10 +195,7 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// <returns></returns>
 		public ushort GetDigitalJoinOffset(IIndexed control)
 		{
-			ushort output = (ushort)(StartDigitalJoin - 1);
-			output += (ushort)(control.Index * DigitalJoinIncrement);
-
-			return output;
+			return (ushort)((StartDigitalJoin - 1) + (control.Index * DigitalJoinIncrement));
 		}
 
 		/// <summary>
@@ -208,10 +205,7 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// <returns></returns>
 		public ushort GetAnalogJoinOffset(IIndexed control)
 		{
-			ushort output = (ushort)(StartAnalogJoin - 1);
-			output += (ushort)(control.Index * AnalogJoinIncrement);
-
-			return output;
+			return (ushort)((StartAnalogJoin - 1) + (control.Index * AnalogJoinIncrement));
 		}
 
 		/// <summary>
@@ -221,10 +215,7 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// <returns></returns>
 		public ushort GetSerialJoinOffset(IIndexed control)
 		{
-			ushort output = (ushort)(StartSerialJoin - 1);
-			output += (ushort)(control.Index * SerialJoinIncrement);
-
-			return output;
+			return (ushort)((StartSerialJoin - 1) + (control.Index * SerialJoinIncrement));
 		}
 
 		#endregion

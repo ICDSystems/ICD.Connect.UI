@@ -55,7 +55,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 				if (mode == m_ModeCache)
 					return;
 
-				ushort join = Parent == null ? AnalogModeJoin : Parent.GetAnalogJoin(AnalogModeJoin, this);
+				ushort join = GetAnalogJoinWithParentOffset(AnalogModeJoin);
 
 				m_ModeCache = mode;
 				Panel.SendInputAnalog(join, m_ModeCache);

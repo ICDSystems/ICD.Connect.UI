@@ -135,7 +135,7 @@ namespace ICD.Connect.UI.Controls
 				if (state == IsEnabled)
 					return;
 
-				ushort join = Parent == null ? DigitalEnableJoin : Parent.GetDigitalJoin(DigitalEnableJoin, this);
+				ushort join = GetDigitalJoinWithParentOffset(DigitalEnableJoin);
 
 				m_CachedEnabled = state;
 				Panel.SendInputDigital(join, m_CachedEnabled);
@@ -162,7 +162,7 @@ namespace ICD.Connect.UI.Controls
 				if (state == IsVisible)
 					return;
 
-				ushort join = Parent == null ? DigitalVisibilityJoin : Parent.GetDigitalJoin(DigitalVisibilityJoin, this);
+				ushort join = GetDigitalJoinWithParentOffset(DigitalVisibilityJoin);
 
 				m_CachedVisibility = state;
 				Panel.SendInputDigital(join, m_CachedVisibility);
@@ -171,6 +171,21 @@ namespace ICD.Connect.UI.Controls
 			{
 				m_VisibilitySection.Leave();
 			}
+		}
+
+		protected ushort GetSerialJoinWithParentOffset(ushort join)
+		{
+			return Parent == null ? join : Parent.GetSerialJoinWithOffset(join, this);
+		}
+
+		protected ushort GetAnalogJoinWithParentOffset(ushort join)
+		{
+			return Parent == null ? join : Parent.GetAnalogJoinWithOffset(join, this);
+		}
+
+		protected ushort GetDigitalJoinWithParentOffset(ushort join)
+		{
+			return Parent == null ? join : Parent.GetDigitalJoinWithOffset(join, this);
 		}
 
 		#endregion

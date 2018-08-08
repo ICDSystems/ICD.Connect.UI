@@ -158,7 +158,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 				if (state == m_SelectedCache)
 					return;
 
-				ushort join = Parent == null ? DigitalPressJoin : Parent.GetDigitalJoin(DigitalPressJoin, this);
+				ushort join = GetDigitalJoinWithParentOffset(DigitalPressJoin);
 
 				m_SelectedCache = state;
 				Panel.SendInputDigital(join, m_SelectedCache);
@@ -210,7 +210,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 		{
 			UnsubscribeDigitalFeedback();
 
-			m_SubscribedDigitalPressJoin = Parent == null ? DigitalPressJoin : Parent.GetDigitalJoin(DigitalPressJoin, this);
+			m_SubscribedDigitalPressJoin = GetDigitalJoinWithParentOffset(DigitalPressJoin);
 			if (m_SubscribedDigitalPressJoin != 0)
 				Panel.RegisterOutputSigChangeCallback(m_SubscribedDigitalPressJoin, eSigType.Digital, ButtonPressChange);
 		}

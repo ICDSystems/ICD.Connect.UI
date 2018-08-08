@@ -40,7 +40,7 @@
 		/// <param name="join"></param>
 		/// <param name="control"></param>
 		/// <returns></returns>
-		public static ushort GetDigitalJoin(this IJoinOffsets extends, ushort join, IIndexed control)
+		public static ushort GetDigitalJoinWithOffset(this IJoinOffsets extends, ushort join, IIndexed control)
 		{
 			return join == 0 ? (ushort)0 : (ushort)(join + extends.GetDigitalJoinOffset(control));
 		}
@@ -52,7 +52,7 @@
 		/// <param name="join"></param>
 		/// <param name="control"></param>
 		/// <returns></returns>
-		public static ushort GetSerialJoin(this IJoinOffsets extends, ushort join, IIndexed control)
+		public static ushort GetSerialJoinWithOffset(this IJoinOffsets extends, ushort join, IIndexed control)
 		{
 			return join == 0 ? (ushort)0 : (ushort)(join + extends.GetSerialJoinOffset(control));
 		}
@@ -64,7 +64,7 @@
 		/// <param name="join"></param>
 		/// <param name="control"></param>
 		/// <returns></returns>
-		public static ushort GetAnalogJoin(this IJoinOffsets extends, ushort join, IIndexed control)
+		public static ushort GetAnalogJoinWithOffset(this IJoinOffsets extends, ushort join, IIndexed control)
 		{
 			return join == 0 ? (ushort)0 : (ushort)(join + extends.GetAnalogJoinOffset(control));
 		}

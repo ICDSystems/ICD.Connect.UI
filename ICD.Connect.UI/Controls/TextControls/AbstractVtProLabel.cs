@@ -109,8 +109,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 				if (join == 0)
 					throw new InvalidOperationException("Unable to set label text at join 0");
 
-				text = text ?? string.Empty;
-				join = Parent == null ? join : Parent.GetSerialJoin(join, this);
+				join = GetSerialJoinWithParentOffset(join);
 
 				string cache = SerialLabelsCache.GetDefault(join, string.Empty);
 				if (text == cache)
@@ -119,7 +118,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 				SerialLabelsCache[join] = text;
 
 				// Replace newline chars with html
-				text = Regex.Replace(text, @"\n\r|\r\n|\n|\r", HtmlUtils.NEWLINE);
+				text = Regex.Replace(text ?? string.Empty, @"\n\r|\r\n|\n|\r", HtmlUtils.NEWLINE);
 
 				Panel.SendInputSerial(join, text);
 			}
@@ -144,7 +143,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 				if (join == 0)
 					throw new InvalidOperationException("Unable to set label text at join 0");
 
-				join = Parent == null ? join : Parent.GetAnalogJoin(join, this);
+				join = GetAnalogJoinWithParentOffset(join);
 
 				ushort cache = AnalogLabelsCache.GetDefault(join, (ushort)0);
 				if (value == cache)
@@ -174,7 +173,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 				if (join == 0)
 					throw new InvalidOperationException("Unable to set label text at join 0");
 
-				join = Parent == null ? join : Parent.GetDigitalJoin(join, this);
+				join = GetDigitalJoinWithParentOffset(join);
 
 				bool cache = DigitalLabelsCache.GetDefault(join, false);
 				if (value == cache)
