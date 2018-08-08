@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using ICD.Common.Properties;
 using ICD.Common.Utils;
 using ICD.Common.Utils.Extensions;
 using ICD.Connect.Panels;
-using ICD.Connect.UI.Utils;
 
 namespace ICD.Connect.UI.Controls.TextControls
 {
@@ -111,16 +109,13 @@ namespace ICD.Connect.UI.Controls.TextControls
 
 				join = GetSerialJoinWithParentOffset(join);
 
-				string cache = SerialLabelsCache.GetDefault(join, string.Empty);
+				string cache = SerialLabelsCache.GetDefault(join);
 				if (text == cache)
 					return;
 
 				SerialLabelsCache[join] = text;
 
-				// Replace newline chars with html
-				text = Regex.Replace(text ?? string.Empty, @"\n\r|\r\n|\n|\r", HtmlUtils.NEWLINE);
-
-				Panel.SendInputSerial(join, text);
+				Panel.SendInputSerial(join, text ?? string.Empty);
 			}
 			finally
 			{
@@ -145,7 +140,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 
 				join = GetAnalogJoinWithParentOffset(join);
 
-				ushort cache = AnalogLabelsCache.GetDefault(join, (ushort)0);
+				ushort cache = AnalogLabelsCache.GetDefault(join);
 				if (value == cache)
 					return;
 
@@ -175,7 +170,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 
 				join = GetDigitalJoinWithParentOffset(join);
 
-				bool cache = DigitalLabelsCache.GetDefault(join, false);
+				bool cache = DigitalLabelsCache.GetDefault(join);
 				if (value == cache)
 					return;
 
