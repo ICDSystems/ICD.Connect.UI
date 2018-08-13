@@ -18,7 +18,7 @@
 		/// <returns></returns>
 		public static string FormatColoredText(string text, string colorHex)
 		{
-			return string.Format("<FONT color=\"{0}\">{1}</FONT>", colorHex, text);
+			return string.IsNullOrEmpty(text) ? text : string.Format("<FONT color=\"{0}\">{1}</FONT>", colorHex, text);
 		}
 	}
 }
