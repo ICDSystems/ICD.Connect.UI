@@ -19,9 +19,6 @@ namespace ICD.Connect.UI.Utils
 		private bool m_IsRefreshing;
 		private bool m_QueuedRefresh;
 
-		[UsedImplicitly]
-		private object m_RefreshHandle;
-
 		/// <summary>
 		/// Gets/sets the refresh action.
 		/// </summary>
@@ -71,7 +68,7 @@ namespace ICD.Connect.UI.Utils
 				m_StateSection.Leave();
 			}
 
-			m_RefreshHandle = ThreadingUtils.SafeInvoke(Refresh);
+			ThreadingUtils.SafeInvoke(Refresh);
 		}
 
 		private void Refresh()
