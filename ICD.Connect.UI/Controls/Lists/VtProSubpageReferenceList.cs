@@ -122,25 +122,6 @@ namespace ICD.Connect.UI.Controls.Lists
 		}
 
 		/// <summary>
-		/// Gets the visibility of the item at the given index.
-		/// </summary>
-		/// <param name="index"></param>
-		/// <returns></returns>
-		public bool GetItemVisible(ushort index)
-		{
-			m_VisibleSection.Enter();
-
-			try
-			{
-				return m_VisibleItemsCache.ContainsKey(index) && m_VisibleItemsCache[index];
-			}
-			finally
-			{
-				m_VisibleSection.Leave();
-			}
-		}
-
-		/// <summary>
 		/// Sets the enabled state for the item at the given index.
 		/// </summary>
 		/// <param name="index"></param>
@@ -166,22 +147,23 @@ namespace ICD.Connect.UI.Controls.Lists
 		}
 
 		/// <summary>
+		/// Gets the visibility of the item at the given index.
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		public bool GetItemVisible(ushort index)
+		{
+			return m_VisibleSection.Execute(() => m_VisibleItemsCache.GetDefault(index));
+		}
+
+		/// <summary>
 		/// Gets the enabled state of the item at the given index.
 		/// </summary>
 		/// <param name="index"></param>
 		/// <returns></returns>
 		public bool GetItemEnabled(ushort index)
 		{
-			m_EnabledSection.Enter();
-
-			try
-			{
-				return m_EnabledItemsCache.ContainsKey(index) && m_EnabledItemsCache[index];
-			}
-			finally
-			{
-				m_EnabledSection.Leave();
-			}
+			return m_EnabledSection.Execute(() => m_EnabledItemsCache.GetDefault(index));
 		}
 
 		#endregion
