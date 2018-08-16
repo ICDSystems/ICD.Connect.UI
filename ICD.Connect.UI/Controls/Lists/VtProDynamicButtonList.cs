@@ -161,7 +161,8 @@ namespace ICD.Connect.UI.Controls.Lists
 
 			try
 			{
-				if (m_VisibilityCache.ContainsKey(index) && visible == m_VisibilityCache[index])
+				bool cache;
+				if (m_VisibilityCache.TryGetValue(index, out cache) && visible == cache)
 					return;
 
 				ushort key = (ushort)(START_VISIBLE_JOIN + index);
@@ -187,7 +188,8 @@ namespace ICD.Connect.UI.Controls.Lists
 
 			try
 			{
-				if (m_EnabledCache.ContainsKey(index) && enabled == m_EnabledCache[index])
+				bool cache;
+				if (m_EnabledCache.TryGetValue(index, out cache) && enabled == cache)
 					return;
 
 				ushort key = (ushort)(START_ENABLED_JOIN + index);
@@ -212,7 +214,8 @@ namespace ICD.Connect.UI.Controls.Lists
 
 			try
 			{
-				if (m_SelectedCache.ContainsKey(index) && selected == m_SelectedCache[index])
+				bool cache;
+				if (m_SelectedCache.TryGetValue(index, out cache) && selected == cache)
 					return;
 
 				ushort key = (ushort)(START_SELECTED_JOIN + index);
@@ -237,7 +240,10 @@ namespace ICD.Connect.UI.Controls.Lists
 
 			try
 			{
-				if (m_LabelCache.ContainsKey(index) && text == m_LabelCache[index])
+				text = text ?? string.Empty;
+
+				string cache;
+				if (m_LabelCache.TryGetValue(index, out cache) && text == cache)
 					return;
 
 				ushort key = (ushort)(START_TEXT_JOIN + index);
@@ -262,7 +268,10 @@ namespace ICD.Connect.UI.Controls.Lists
 
 			try
 			{
-				if (m_IconCache.ContainsKey(index) && icon == m_IconCache[index])
+				icon = icon ?? string.Empty;
+
+				string cache;
+				if (m_IconCache.TryGetValue(index, out cache) && icon == cache)
 					return;
 
 				ushort key = (ushort)(START_ICON_JOIN + index);

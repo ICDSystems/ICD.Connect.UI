@@ -33,7 +33,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 		private ushort m_DigitalPressJoin;
 		private ushort m_SubscribedDigitalPressJoin;
 
-		private bool m_SelectedCache;
+		private bool? m_SelectedCache;
 
 		#region Properties
 
@@ -161,7 +161,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 				ushort join = GetDigitalJoinWithParentOffset(DigitalPressJoin);
 
 				m_SelectedCache = state;
-				Panel.SendInputDigital(join, m_SelectedCache);
+				Panel.SendInputDigital(join, state);
 			}
 			finally
 			{

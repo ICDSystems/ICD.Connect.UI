@@ -19,7 +19,7 @@ namespace ICD.Connect.UI.Controls.Guages
 		private ushort m_AnalogFeedbackJoin;
 		private ushort m_SubscribedAnalogFeedbackJoin;
 
-		private ushort m_ValueCache;
+		private ushort? m_ValueCache;
 
 		/// <summary>
 		/// Gets the analog touch join.
@@ -95,7 +95,7 @@ namespace ICD.Connect.UI.Controls.Guages
 				ushort join = GetAnalogJoinWithParentOffset(AnalogFeedbackJoin);
 
 				m_ValueCache = value;
-				Panel.SendInputAnalog(join, m_ValueCache);
+				Panel.SendInputAnalog(join, value);
 			}
 			finally
 			{

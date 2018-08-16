@@ -87,7 +87,8 @@ namespace ICD.Connect.UI.Controls.Buttons
 
 			try
 			{
-				if (selected == m_SelectionCache.GetDefault(index, false))
+				bool cache;
+				if (m_SelectionCache.TryGetValue(index, out cache) && selected == cache)
 					return;
 
 				m_SelectionCache[index] = selected;

@@ -18,8 +18,8 @@ namespace ICD.Connect.UI.Controls
 		private readonly SafeCriticalSection m_VisibilitySection;
 		private readonly SafeCriticalSection m_EnabledSection;
 
-		private bool m_CachedVisibility;
-		private bool m_CachedEnabled;
+		private bool? m_CachedVisibility;
+		private bool? m_CachedEnabled;
 
 		#region Properties
 
@@ -43,7 +43,7 @@ namespace ICD.Connect.UI.Controls
 		/// <summary>
 		/// Gets the visibility state of the control.
 		/// </summary>
-		public virtual bool IsVisible { get { return DigitalVisibilityJoin == 0 || m_CachedVisibility; } }
+		public virtual bool IsVisible { get { return DigitalVisibilityJoin == 0 || (m_CachedVisibility ?? false); } }
 
 		/// <summary>
 		/// Returns true if this control, and all parent controls are visible.
@@ -53,7 +53,7 @@ namespace ICD.Connect.UI.Controls
 		/// <summary>
 		/// Gets the enabled state of the control.
 		/// </summary>
-		public virtual bool IsEnabled { get { return DigitalEnableJoin == 0 || m_CachedEnabled; } }
+		public virtual bool IsEnabled { get { return DigitalEnableJoin == 0 || (m_CachedEnabled ?? false); } }
 
 		/// <summary>
 		/// Gets the index of the control in a list.
@@ -138,7 +138,7 @@ namespace ICD.Connect.UI.Controls
 				ushort join = GetDigitalJoinWithParentOffset(DigitalEnableJoin);
 
 				m_CachedEnabled = state;
-				Panel.SendInputDigital(join, m_CachedEnabled);
+				Panel.SendInputDigital(join, state);
 			}
 			finally
 			{
@@ -165,7 +165,7 @@ namespace ICD.Connect.UI.Controls
 				ushort join = GetDigitalJoinWithParentOffset(DigitalVisibilityJoin);
 
 				m_CachedVisibility = state;
-				Panel.SendInputDigital(join, m_CachedVisibility);
+				Panel.SendInputDigital(join, state);
 			}
 			finally
 			{

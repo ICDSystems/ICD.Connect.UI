@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ICD.Common.Properties;
 using ICD.Common.Utils;
+using ICD.Common.Utils.Extensions;
 using ICD.Connect.Panels;
 
 namespace ICD.Connect.UI.Controls.Lists
@@ -107,7 +108,8 @@ namespace ICD.Connect.UI.Controls.Lists
 
 			try
 			{
-				if (visible == GetItemVisible(index))
+				bool cache;
+				if (m_VisibleItemsCache.TryGetValue(index, out cache) && visible == cache)
 					return;
 
 				ushort key = (ushort)(VISIBLE_START_JOIN + index);
@@ -132,7 +134,8 @@ namespace ICD.Connect.UI.Controls.Lists
 
 			try
 			{
-				if (enabled == GetItemEnabled(index))
+				bool cache;
+				if (m_EnabledItemsCache.TryGetValue(index, out cache) && enabled == cache)
 					return;
 
 				ushort key = (ushort)(ENABLE_START_JOIN + index);

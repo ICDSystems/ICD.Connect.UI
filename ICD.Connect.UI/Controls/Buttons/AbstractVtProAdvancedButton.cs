@@ -9,7 +9,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 	{
 		private readonly SafeCriticalSection m_ModeSection;
 
-		private ushort m_ModeCache;
+		private ushort? m_ModeCache;
 
 		[PublicAPI]
 		public ushort AnalogModeJoin { get; set; }
@@ -58,7 +58,7 @@ namespace ICD.Connect.UI.Controls.Buttons
 				ushort join = GetAnalogJoinWithParentOffset(AnalogModeJoin);
 
 				m_ModeCache = mode;
-				Panel.SendInputAnalog(join, m_ModeCache);
+				Panel.SendInputAnalog(join, mode);
 			}
 			finally
 			{

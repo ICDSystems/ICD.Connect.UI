@@ -18,7 +18,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 		private ushort m_SerialOutputJoin;
 		private ushort m_SubscribedSerialOutputJoin;
 
-		private ushort m_CachedMode;
+		private ushort? m_CachedMode;
 
 		#region Properties
 
@@ -123,7 +123,7 @@ namespace ICD.Connect.UI.Controls.TextControls
 				ushort join = GetAnalogJoinWithParentOffset(AnalogModeJoin);
 
 				m_CachedMode = mode;
-				Panel.SendInputAnalog(join, m_CachedMode);
+				Panel.SendInputAnalog(join, mode);
 			}
 			finally
 			{

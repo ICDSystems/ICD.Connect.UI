@@ -18,7 +18,7 @@ namespace ICD.Connect.UI.Controls.Lists
 
 		private readonly SafeCriticalSection m_NumberOfItemsSection;
 
-		private ushort m_ItemCountCache;
+		private ushort? m_ItemCountCache;
 
 		#region Properties
 
@@ -101,7 +101,7 @@ namespace ICD.Connect.UI.Controls.Lists
 				ushort join = GetAnalogJoinWithParentOffset(AnalogNumberOfItemsJoin);
 
 				m_ItemCountCache = count;
-				SmartObject.SendInputAnalog(join, m_ItemCountCache);
+				SmartObject.SendInputAnalog(join, count);
 
 				// Fixes scrolling issues (list appearing empty) after clearing and then repopulating list
 				if (m_ItemCountCache == 0)

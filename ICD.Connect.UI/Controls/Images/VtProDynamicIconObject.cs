@@ -64,13 +64,15 @@ namespace ICD.Connect.UI.Controls.Images
 				if (DynamicIconSerialJoin == 0)
 					throw new InvalidOperationException("Unable to set icon, join is 0");
 
+				icon = icon ?? string.Empty;
+
 				if (icon == m_IconCache)
 					return;
 
 				ushort join = GetSerialJoinWithParentOffset(DynamicIconSerialJoin);
 
 				m_IconCache = icon;
-				Panel.SendInputSerial(join, m_IconCache ?? string.Empty);
+				Panel.SendInputSerial(join, icon);
 			}
 			finally
 			{
@@ -92,13 +94,15 @@ namespace ICD.Connect.UI.Controls.Images
 				if (IndirectGraphicsPathSerialJoin == 0)
 					throw new InvalidOperationException("Unable to set icon path, join is 0");
 
+				path = path ?? string.Empty;
+
 				if (path == m_IconPathCache)
 					return;
 
 				ushort join = GetSerialJoinWithParentOffset(IndirectGraphicsPathSerialJoin);
 
 				m_IconPathCache = path;
-				Panel.SendInputSerial(join, path ?? string.Empty);
+				Panel.SendInputSerial(join, path);
 			}
 			finally
 			{

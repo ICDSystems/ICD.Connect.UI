@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using ICD.Common.Properties;
 using ICD.Common.Utils;
-using ICD.Common.Utils.Extensions;
 using ICD.Connect.Panels;
 
 namespace ICD.Connect.UI.Controls.TextControls
@@ -108,14 +107,15 @@ namespace ICD.Connect.UI.Controls.TextControls
 					throw new InvalidOperationException("Unable to set label text at join 0");
 
 				join = GetSerialJoinWithParentOffset(join);
+				text = text ?? string.Empty;
 
-				string cache = SerialLabelsCache.GetDefault(join);
-				if (text == cache)
+				string cache;
+				if (SerialLabelsCache.TryGetValue(join, out cache) && text == cache)
 					return;
 
 				SerialLabelsCache[join] = text;
 
-				Panel.SendInputSerial(join, text ?? string.Empty);
+				Panel.SendInputSerial(join, text);
 			}
 			finally
 			{
@@ -140,8 +140,8 @@ namespace ICD.Connect.UI.Controls.TextControls
 
 				join = GetAnalogJoinWithParentOffset(join);
 
-				ushort cache = AnalogLabelsCache.GetDefault(join);
-				if (value == cache)
+				ushort cache;
+				if (AnalogLabelsCache.TryGetValue(join, out cache) && value == cache)
 					return;
 
 				AnalogLabelsCache[join] = value;
@@ -170,8 +170,8 @@ namespace ICD.Connect.UI.Controls.TextControls
 
 				join = GetDigitalJoinWithParentOffset(join);
 
-				bool cache = DigitalLabelsCache.GetDefault(join);
-				if (value == cache)
+				bool cache;
+				if (DigitalLabelsCache.TryGetValue(join, out cache) && value == cache)
 					return;
 
 				DigitalLabelsCache[join] = value;

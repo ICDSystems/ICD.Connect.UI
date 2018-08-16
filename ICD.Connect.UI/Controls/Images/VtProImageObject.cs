@@ -12,7 +12,7 @@ namespace ICD.Connect.UI.Controls.Images
 		private readonly SafeCriticalSection m_SetModeSection;
 
 		private string m_UrlCache;
-		private ushort m_ModeCache;
+		private ushort? m_ModeCache;
 
 		#region Properties
 
@@ -64,13 +64,15 @@ namespace ICD.Connect.UI.Controls.Images
 				if (SerialGraphicsJoin == 0)
 					throw new InvalidOperationException("Unable to set image url, join is 0");
 
+				url = url ?? string.Empty;
+
 				if (url == m_UrlCache)
 					return;
 
 				ushort join = GetSerialJoinWithParentOffset(SerialGraphicsJoin);
 
 				m_UrlCache = url;
-				Panel.SendInputSerial(join, m_UrlCache ?? string.Empty);
+				Panel.SendInputSerial(join, url);
 			}
 			finally
 			{
@@ -98,7 +100,7 @@ namespace ICD.Connect.UI.Controls.Images
 				ushort join = GetAnalogJoinWithParentOffset(ModeAnalogJoin);
 
 				m_ModeCache = mode;
-				Panel.SendInputAnalog(join, m_ModeCache);
+				Panel.SendInputAnalog(join, mode);
 			}
 			finally
 			{
