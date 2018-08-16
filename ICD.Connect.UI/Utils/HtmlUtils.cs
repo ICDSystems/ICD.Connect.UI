@@ -1,24 +1,29 @@
-﻿namespace ICD.Connect.UI.Utils
+﻿using System;
+
+namespace ICD.Connect.UI.Utils
 {
 	/// <summary>
-	/// Utility methods for UIs.
+	/// HTML formatting utils for .
 	/// </summary>
 	public static class HtmlUtils
 	{
 		/// <summary>
 		/// Newline HTML for labels.
 		/// </summary>
-		public const string NEWLINE = "<br>";
+		public const string LINE_BREAK = "<br />";
 
 		/// <summary>
-		/// Formats the text to the given color.
+		/// Wraps the text with a font element with a color attribute.
 		/// </summary>
 		/// <param name="text"></param>
-		/// <param name="colorHex">String in the format #FFFFFF</param>
+		/// <param name="color"></param>
 		/// <returns></returns>
-		public static string FormatColoredText(string text, string colorHex)
+		public static string FormatColoredText(string text, string color)
 		{
-			return string.IsNullOrEmpty(text) ? text : string.Format("<FONT color=\"{0}\">{1}</FONT>", colorHex, text);
+			if (string.IsNullOrEmpty("color"))
+				throw new ArgumentException("Color is null or empty", "color");
+
+			return string.IsNullOrEmpty(text) ? text : string.Format("<font color=\"{0}\">{1}</font>", color, text);
 		}
 	}
 }
