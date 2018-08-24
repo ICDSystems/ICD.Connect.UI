@@ -14,7 +14,14 @@ namespace ICD.Connect.UI.Controls.Keypads
 		private const ushort SIG_RANGE_START = 1;
 		private const ushort SIG_RANGE_END = 12;
 
+		/// <summary>
+		/// Raised when the user presses a button.
+		/// </summary>
 		public event EventHandler<SimpleKeypadEventArgs> OnButtonPressed;
+
+		/// <summary>
+		/// Raised when the user releases a button.
+		/// </summary>
 		public event EventHandler<SimpleKeypadEventArgs> OnButtonReleased;
 
 		// Defaults from VTPro
