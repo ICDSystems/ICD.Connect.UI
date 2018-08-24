@@ -13,16 +13,55 @@ namespace ICD.Connect.UI.Controls.Lists
 {
 	public sealed class VtProDynamicButtonList : AbstractVtProButtonList
 	{
-		private const ushort SCROLL_TO_ITEM_JOIN = 3;
-		private const ushort NUMBER_OF_ITEMS_JOIN = 4;
-		private const ushort ITEM_CLICKED_JOIN = 1;
-		private const ushort ITEM_HELD_JOIN = 2;
+		/// <summary>
+		/// Input sig to tell the list to scroll to the item at the given analog index.
+		/// </summary>
+		private const ushort ANALOG_SCROLL_TO_ITEM_JOIN = 3;
+
+		/// <summary>
+		/// Input sig to tell the list to show up to the given analog number of items.
+		/// </summary>
+		private const ushort ANALOG_NUMBER_OF_ITEMS_JOIN = 4;
+
+		/// <summary>
+		/// Output sig describing which item was clicked by analog index.
+		/// </summary>
+		private const ushort ANALOG_ITEM_CLICKED_JOIN = 1;
+
+		/// <summary>
+		/// Output sig describing which item was held by analog index.
+		/// </summary>
+		private const ushort ANALOG_ITEM_HELD_JOIN = 2;
+
+		/// <summary>
+		/// Output sig describing if the list is scrolling or stopped.
+		/// </summary>
 		private const ushort DIGITAL_IS_MOVING_JOIN = 2;
-		private const ushort START_SELECTED_JOIN = 11;
-		private const ushort START_ENABLED_JOIN = 2011;
-		private const ushort START_VISIBLE_JOIN = 4011;
-		private const ushort START_TEXT_JOIN = 11;
-		private const ushort START_ICON_JOIN = 2011;
+
+		/// <summary>
+		/// Input sig to set the digital selected state of a button true or false. (11 + index).
+		/// </summary>
+		private const ushort DIGITAL_START_SELECTED_JOIN = 11;
+
+		/// <summary>
+		/// Input sig to set the digital enabled state of a button true or false. (2011 + index).
+		/// </summary>
+		private const ushort DIGITAL_START_ENABLED_JOIN = 2011;
+
+		/// <summary>
+		/// Input sig to set the digital visibility state of a button true or false. (4011 + index).
+		/// </summary>
+		private const ushort DIGITAL_START_VISIBLE_JOIN = 4011;
+
+		/// <summary>
+		/// Input sig to set the serial label text of a button. (11 + index).
+		/// </summary>
+		private const ushort SERIAL_START_TEXT_JOIN = 11;
+
+		/// <summary>
+		/// Input sig to set the serial icon of a button. (2011 + index).
+		/// </summary>
+		private const ushort SERIAL_START_ICON_JOIN = 2011;
 
 		private readonly Dictionary<ushort, bool> m_VisibilityCache;
 		private readonly Dictionary<ushort, bool> m_EnabledCache;
@@ -54,12 +93,12 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// <summary>
 		/// Gets the join number for settings the number of items in the list.
 		/// </summary>
-		protected override ushort AnalogNumberOfItemsJoin { get { return NUMBER_OF_ITEMS_JOIN; } }
+		protected override ushort AnalogNumberOfItemsJoin { get { return ANALOG_NUMBER_OF_ITEMS_JOIN; } }
 
 		/// <summary>
 		/// Gets the join number for scrolling to an item in the list.
 		/// </summary>
-		protected override ushort AnalogScrollToItemJoin { get { return SCROLL_TO_ITEM_JOIN; } }
+		protected override ushort AnalogScrollToItemJoin { get { return ANALOG_SCROLL_TO_ITEM_JOIN; } }
 
 		/// <summary>
 		/// Gets the join number for getting the moving state of the list.
@@ -165,7 +204,7 @@ namespace ICD.Connect.UI.Controls.Lists
 				if (m_VisibilityCache.TryGetValue(index, out cache) && visible == cache)
 					return;
 
-				ushort key = (ushort)(START_VISIBLE_JOIN + index);
+				ushort key = (ushort)(DIGITAL_START_VISIBLE_JOIN + index);
 				SmartObject.SendInputDigital(key, visible);
 
 				m_VisibilityCache[index] = visible;
@@ -192,7 +231,7 @@ namespace ICD.Connect.UI.Controls.Lists
 				if (m_EnabledCache.TryGetValue(index, out cache) && enabled == cache)
 					return;
 
-				ushort key = (ushort)(START_ENABLED_JOIN + index);
+				ushort key = (ushort)(DIGITAL_START_ENABLED_JOIN + index);
 				SmartObject.SendInputDigital(key, enabled);
 
 				m_EnabledCache[index] = enabled;
@@ -218,7 +257,7 @@ namespace ICD.Connect.UI.Controls.Lists
 				if (m_SelectedCache.TryGetValue(index, out cache) && selected == cache)
 					return;
 
-				ushort key = (ushort)(START_SELECTED_JOIN + index);
+				ushort key = (ushort)(DIGITAL_START_SELECTED_JOIN + index);
 				SmartObject.SendInputDigital(key, selected);
 
 				m_SelectedCache[index] = selected;
@@ -246,7 +285,7 @@ namespace ICD.Connect.UI.Controls.Lists
 				if (m_LabelCache.TryGetValue(index, out cache) && text == cache)
 					return;
 
-				ushort key = (ushort)(START_TEXT_JOIN + index);
+				ushort key = (ushort)(SERIAL_START_TEXT_JOIN + index);
 				SmartObject.SendInputSerial(key, text);
 
 				m_LabelCache[index] = text;
@@ -274,7 +313,7 @@ namespace ICD.Connect.UI.Controls.Lists
 				if (m_IconCache.TryGetValue(index, out cache) && icon == cache)
 					return;
 
-				ushort key = (ushort)(START_ICON_JOIN + index);
+				ushort key = (ushort)(SERIAL_START_ICON_JOIN + index);
 				SmartObject.SendInputSerial(key, icon);
 
 				m_IconCache[index] = icon;
@@ -297,8 +336,8 @@ namespace ICD.Connect.UI.Controls.Lists
 		{
 			base.Subscribe(smartObject);
 
-			smartObject.RegisterOutputSigChangeCallback(ITEM_CLICKED_JOIN, eSigType.Analog, ItemClickedCallback);
-			smartObject.RegisterOutputSigChangeCallback(ITEM_HELD_JOIN, eSigType.Analog, ItemHeldCallback);
+			smartObject.RegisterOutputSigChangeCallback(ANALOG_ITEM_CLICKED_JOIN, eSigType.Analog, ItemClickedCallback);
+			smartObject.RegisterOutputSigChangeCallback(ANALOG_ITEM_HELD_JOIN, eSigType.Analog, ItemHeldCallback);
 		}
 
 		/// <summary>
@@ -309,8 +348,8 @@ namespace ICD.Connect.UI.Controls.Lists
 		{
 			base.Unsubscribe(smartObject);
 
-			smartObject.UnregisterOutputSigChangeCallback(ITEM_CLICKED_JOIN, eSigType.Analog, ItemClickedCallback);
-			smartObject.UnregisterOutputSigChangeCallback(ITEM_HELD_JOIN, eSigType.Analog, ItemHeldCallback);
+			smartObject.UnregisterOutputSigChangeCallback(ANALOG_ITEM_CLICKED_JOIN, eSigType.Analog, ItemClickedCallback);
+			smartObject.UnregisterOutputSigChangeCallback(ANALOG_ITEM_HELD_JOIN, eSigType.Analog, ItemHeldCallback);
 		}
 
 		/// <summary>
