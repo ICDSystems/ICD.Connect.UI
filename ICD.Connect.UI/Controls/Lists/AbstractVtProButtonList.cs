@@ -1,6 +1,7 @@
 ﻿using ICD.Common.Properties;
 using ICD.Common.Utils;
 using ICD.Connect.Panels;
+using ICD.Connect.Panels.Devices;
 
 namespace ICD.Connect.UI.Controls.Lists
 {
