@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ICD.Connect.Panels;
+using ICD.Connect.Panels.Devices;
 using ICD.Connect.Panels.Mock;
 using ICD.Connect.UI.Controls;
 using ICD.Connect.UI.Controls.Lists;
