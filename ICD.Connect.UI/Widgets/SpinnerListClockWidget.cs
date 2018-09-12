@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using ICD.Common.Utils;
 using ICD.Common.Utils.EventArguments;
 using ICD.Common.Utils.Extensions;
-using ICD.Connect.Panels;
 using ICD.Connect.Panels.Devices;
 using ICD.Connect.UI.Controls;
 using ICD.Connect.UI.Controls.Lists;

@@ -1,5 +1,4 @@
 ﻿using ICD.Common.Properties;
-using ICD.Connect.Panels;
 using ICD.Connect.Panels.Devices;
 
 namespace ICD.Connect.UI.Controls.Pages
