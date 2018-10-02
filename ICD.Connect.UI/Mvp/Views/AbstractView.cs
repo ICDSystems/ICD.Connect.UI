@@ -104,7 +104,7 @@ namespace ICD.Connect.UI.Mvp.Views
 			catch (Exception e)
 			{
 				string error = string.Format("Unable to show {0} - {1}", GetType().Name, e.Message);
-				throw new Exception(error, e);
+				throw new InvalidOperationException(error, e);
 			}
 
 			OnVisibilityChanged.Raise(this, new BoolEventArgs(visible));
@@ -126,7 +126,7 @@ namespace ICD.Connect.UI.Mvp.Views
 			catch (Exception e)
 			{
 				string error = string.Format("Unable to enable {0} - {1}", GetType().Name, e.Message);
-				throw new Exception(error, e);
+				throw new InvalidOperationException(error, e);
 			}
 
 			OnEnabledChanged.Raise(this, new BoolEventArgs(enabled));
