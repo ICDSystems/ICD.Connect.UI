@@ -28,6 +28,8 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		private readonly INavigationController m_Navigation;
 		private readonly IViewFactory m_ViewFactory;
 
+		private ILoggerService m_CachedLogger;
+
 		private T m_View;
 
 		[UsedImplicitly] private object m_AsyncRefreshHandle;
@@ -54,7 +56,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// </summary>
 		public abstract bool IsComponent { get; }
 
-		protected ILoggerService Logger { get { return ServiceProvider.TryGetService<ILoggerService>(); } }
+		protected ILoggerService Logger { get { return m_CachedLogger ?? (m_CachedLogger = ServiceProvider.TryGetService<ILoggerService>()); } }
 
 		#endregion
 
