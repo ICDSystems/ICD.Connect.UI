@@ -13,12 +13,12 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 		#region Private Methods
 
 		/// <summary>
-		/// Called when a descendant presenter changes visibility.
+		/// Called when a descendant presenter is about to change visibility.
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="presenter"></param>
 		/// <param name="visibility"></param>
-		protected override void NodeOnChildVisibilityChanged(IVisibilityNode parent, IPresenter presenter, bool visibility)
+		protected override void NodeOnChildPreVisibilityChanged(IVisibilityNode parent, IPresenter presenter, bool visibility)
 		{
 			if (presenter.IsViewVisible)
 			{
@@ -26,15 +26,15 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 				HideExcept(parent);
 			}
 
-			base.NodeOnChildVisibilityChanged(parent, presenter, visibility);
+			base.NodeOnChildPreVisibilityChanged(parent, presenter, visibility);
 		}
 
 		/// <summary>
-		/// Called when a child presenter visibility changes.
+		/// Called when a child presenter visibility is about to change.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
-		protected override void PresenterOnVisibilityChanged(object sender, BoolEventArgs args)
+		protected override void PresenterOnPreVisibilityChanged(object sender, BoolEventArgs args)
 		{
 			IPresenter presenter = sender as IPresenter;
 
@@ -44,7 +44,7 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 				HideExcept(null as IVisibilityNode);
 			}
 
-			base.PresenterOnVisibilityChanged(sender, args);
+			base.PresenterOnPreVisibilityChanged(sender, args);
 		}
 
 		/// <summary>

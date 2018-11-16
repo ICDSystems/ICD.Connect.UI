@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ICD.Common.Utils;
 using ICD.Common.Utils.Collections;
@@ -12,6 +13,14 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 	/// </summary>
 	public abstract class AbstractVisibilityNode : IVisibilityNode
 	{
+		/// <summary>
+		/// Raised when a child's visibility is about to change.
+		/// </summary>
+		public event ChildVisibilityChangedCallback OnChildPreVisibilityChanged;
+
+		/// <summary>
+		/// Raised when a child's visibility changes.
+		/// </summary>
 		public event ChildVisibilityChangedCallback OnChildVisibilityChanged;
 
 		private readonly IcdHashSet<IVisibilityNode> m_Nodes;
@@ -106,6 +115,7 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 		/// <param name="presenter"></param>
 		private void Subscribe(IPresenter presenter)
 		{
+			presenter.OnViewPreVisibilityChanged += PresenterOnPreVisibilityChanged;
 			presenter.OnViewVisibilityChanged += PresenterOnVisibilityChanged;
 		}
 
@@ -115,7 +125,21 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 		/// <param name="node"></param>
 		private void Subscribe(IVisibilityNode node)
 		{
+			node.OnChildPreVisibilityChanged += NodeOnChildPreVisibilityChanged;
 			node.OnChildVisibilityChanged += NodeOnChildVisibilityChanged;
+		}
+
+		/// <summary>
+		/// Called when a descendant presenter is about to change visibility.
+		/// </summary>
+		/// <param name="parent"></param>
+		/// <param name="presenter"></param>
+		/// <param name="visibility"></param>
+		protected virtual void NodeOnChildPreVisibilityChanged(IVisibilityNode parent, IPresenter presenter, bool visibility)
+		{
+			ChildVisibilityChangedCallback handler = OnChildPreVisibilityChanged;
+			if (handler != null)
+				handler(parent, presenter, visibility);
 		}
 
 		/// <summary>
@@ -126,8 +150,25 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 		/// <param name="visibility"></param>
 		protected virtual void NodeOnChildVisibilityChanged(IVisibilityNode parent, IPresenter presenter, bool visibility)
 		{
-			if (OnChildVisibilityChanged != null)
-				OnChildVisibilityChanged(parent, presenter, visibility);
+			ChildVisibilityChangedCallback handler = OnChildVisibilityChanged;
+			if (handler != null)
+				handler(parent, presenter, visibility);
+		}
+
+		/// <summary>
+		/// Called when a child presenter visibility is about to change.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="args"></param>
+		protected virtual void PresenterOnPreVisibilityChanged(object sender, BoolEventArgs args)
+		{
+			IPresenter presenter = sender as IPresenter;
+			if (presenter == null)
+				return;
+
+			ChildVisibilityChangedCallback handler = OnChildPreVisibilityChanged;
+			if (handler != null)
+				handler(this, presenter, args.Data);
 		}
 
 		/// <summary>
@@ -141,8 +182,9 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 			if (presenter == null)
 				return;
 
-			if (OnChildVisibilityChanged != null)
-				OnChildVisibilityChanged(this, presenter, presenter.IsViewVisible);
+			ChildVisibilityChangedCallback handler = OnChildVisibilityChanged;
+			if (handler != null)
+				handler(this, presenter, args.Data);
 		}
 
 		#endregion

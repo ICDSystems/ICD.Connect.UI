@@ -7,6 +7,11 @@ namespace ICD.Connect.UI.Mvp.Presenters
 	public interface IPresenter : IDisposable
 	{
 		/// <summary>
+		/// Raised when the view visibility is about to change.
+		/// </summary>
+		event EventHandler<BoolEventArgs> OnViewPreVisibilityChanged;
+
+		/// <summary>
 		/// Raised when the view visibility changes.
 		/// </summary>
 		event EventHandler<BoolEventArgs> OnViewVisibilityChanged;

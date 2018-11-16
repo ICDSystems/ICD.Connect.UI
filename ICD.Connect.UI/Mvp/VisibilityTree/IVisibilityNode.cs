@@ -8,6 +8,14 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 
 	public interface IVisibilityNode
 	{
+		/// <summary>
+		/// Raised when a child's visibility is about to change.
+		/// </summary>
+		event ChildVisibilityChangedCallback OnChildPreVisibilityChanged;
+
+		/// <summary>
+		/// Raised when a child's visibility changes.
+		/// </summary>
 		event ChildVisibilityChangedCallback OnChildVisibilityChanged;
 
 		/// <summary>
