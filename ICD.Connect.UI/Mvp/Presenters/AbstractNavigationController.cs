@@ -28,10 +28,19 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <summary>
 		/// Release resources.
 		/// </summary>
-		public void Dispose()
+		public virtual void Dispose()
 		{
 			m_Cache.Values.ForEach(p => p.Dispose());
 			m_Cache.Clear();
+		}
+
+		/// <summary>
+		/// Gets the instantiated presenters.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<IPresenter> GetPresenters()
+		{
+			return m_CacheSection.Execute(() => m_Cache.Values.ToArray(m_Cache.Count));
 		}
 
 		/// <summary>

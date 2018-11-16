@@ -99,7 +99,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// </summary>
 		/// <returns></returns>
 		[CanBeNull]
-		private T GetView()
+		public T GetView()
 		{
 			return GetView(!IsComponent);
 		}
