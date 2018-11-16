@@ -258,6 +258,9 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <param name="args"></param>
 		protected virtual void ViewOnPreVisibilityChanged(object sender, BoolEventArgs args)
 		{
+			if (args.Data)
+				Refresh();
+
 			OnViewPreVisibilityChanged.Raise(this, new BoolEventArgs(args.Data));
 		}
 
@@ -268,8 +271,6 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <param name="args"></param>
 		protected virtual void ViewOnVisibilityChanged(object sender, BoolEventArgs args)
 		{
-			RefreshIfVisible();
-
 			OnViewVisibilityChanged.Raise(this, new BoolEventArgs(args.Data));
 		}
 
