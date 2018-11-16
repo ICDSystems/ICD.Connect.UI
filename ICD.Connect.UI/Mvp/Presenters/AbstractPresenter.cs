@@ -49,6 +49,11 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// </summary>
 		public bool IsViewVisible { get { return m_View != null && m_View.IsVisible; } }
 
+		/// <summary>
+		/// Returns true if this presenter is part of a collection of components.
+		/// </summary>
+		public abstract bool IsComponent { get; }
+
 		protected ILoggerService Logger { get { return ServiceProvider.TryGetService<ILoggerService>(); } }
 
 		#endregion
@@ -91,9 +96,10 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// Gets the view for this presenter.
 		/// </summary>
 		/// <returns></returns>
-		protected T GetView()
+		[CanBeNull]
+		private T GetView()
 		{
-			return GetView(true);
+			return GetView(!IsComponent);
 		}
 
 		/// <summary>
@@ -101,7 +107,8 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// </summary>
 		/// <param name="instantiate">When true instantiates a new view if the current view is null.</param>
 		/// <returns></returns>
-		protected T GetView(bool instantiate)
+		[CanBeNull]
+		private T GetView(bool instantiate)
 		{
 			// Get default view from the factory
 			if (m_View == null && instantiate)
@@ -117,8 +124,12 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// Override to control how views are instantiated.
 		/// </summary>
 		/// <returns></returns>
-		protected virtual T InstantiateView()
+		[NotNull]
+		private T InstantiateView()
 		{
+			if (IsComponent)
+				throw new InvalidOperationException(string.Format("{0} can not create its own view.", GetType().Name));
+
 			return m_ViewFactory.GetNewView<T>();
 		}
 
@@ -138,6 +149,10 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		{
 			if (view == m_View)
 				return;
+
+			// Special case - Can't set an SRL count to 0 (yay) so hide when cleaning up items.
+			if (view == null && m_View != null)
+				ShowView(false);
 
 			if (m_View != null)
 				Unsubscribe(m_View);
@@ -178,7 +193,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		[PublicAPI]
 		public virtual void Refresh()
 		{
-			T view = GetView(true);
+			T view = GetView();
 
 			// Don't refresh if we currently have no view.
 			if (view != null)
