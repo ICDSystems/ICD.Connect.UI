@@ -15,7 +15,19 @@ namespace ICD.Connect.UI.Mvp.Views
 	/// </summary>
 	public abstract class AbstractView : IView
 	{
+		/// <summary>
+		/// Raised when the view is about to be shown or hidden.
+		/// </summary>
+		public event EventHandler<BoolEventArgs> OnPreVisibilityChanged;
+
+		/// <summary>
+		/// Raised when the view is shown or hidden.
+		/// </summary>
 		public event EventHandler<BoolEventArgs> OnVisibilityChanged;
+
+		/// <summary>
+		/// Raised when the view enabled state changes.
+		/// </summary>
 		public event EventHandler<BoolEventArgs> OnEnabledChanged;
 
 		private readonly ISigInputOutput m_Panel;
@@ -43,6 +55,9 @@ namespace ICD.Connect.UI.Mvp.Views
 			}
 		}
 
+		/// <summary>
+		/// Gets the wrapped panel.
+		/// </summary>
 		public ISigInputOutput Panel { get { return m_Panel; } }
 
 		#region Constructors
@@ -96,6 +111,8 @@ namespace ICD.Connect.UI.Mvp.Views
 		{
 			if (visible == IsVisible)
 				return;
+
+			OnPreVisibilityChanged.Raise(this, new BoolEventArgs(visible));
 
 			try
 			{

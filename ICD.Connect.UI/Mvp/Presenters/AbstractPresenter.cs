@@ -16,6 +16,11 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		where T : class, IView
 	{
 		/// <summary>
+		/// Raised when the view visibility is about to change.
+		/// </summary>
+		public event EventHandler<BoolEventArgs> OnViewPreVisibilityChanged;
+
+		/// <summary>
 		/// Raised when the view visibility changes.
 		/// </summary>
 		public event EventHandler<BoolEventArgs> OnViewVisibilityChanged;
@@ -232,6 +237,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <param name="view"></param>
 		protected virtual void Subscribe(T view)
 		{
+			view.OnPreVisibilityChanged += ViewOnPreVisibilityChanged;
 			view.OnVisibilityChanged += ViewOnVisibilityChanged;
 		}
 
@@ -241,7 +247,18 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <param name="view"></param>
 		protected virtual void Unsubscribe(T view)
 		{
+			view.OnPreVisibilityChanged -= ViewOnPreVisibilityChanged;
 			view.OnVisibilityChanged -= ViewOnVisibilityChanged;
+		}
+
+		/// <summary>
+		/// Called when the view visibility is about to change.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="args"></param>
+		protected virtual void ViewOnPreVisibilityChanged(object sender, BoolEventArgs args)
+		{
+			OnViewPreVisibilityChanged.Raise(this, new BoolEventArgs(args.Data));
 		}
 
 		/// <summary>

@@ -9,6 +9,11 @@ namespace ICD.Connect.UI.Mvp.Views
 	public interface IView : IDisposable
 	{
 		/// <summary>
+		/// Raised when the view is about to be shown or hidden.
+		/// </summary>
+		event EventHandler<BoolEventArgs> OnPreVisibilityChanged;
+
+		/// <summary>
 		/// Raised when the view is shown or hidden.
 		/// </summary>
 		event EventHandler<BoolEventArgs> OnVisibilityChanged;
