@@ -129,7 +129,27 @@ namespace ICD.Connect.UI.Mvp.Presenters
 
 		#endregion
 
-		#region Virtual Methods
+		#region Protected Methods
+
+		/// <summary>
+		/// Gets all of the presenters inside and outside of the pool.
+		/// </summary>
+		/// <returns></returns>
+		protected IEnumerable<TPresenter> GetAllPresenters()
+		{
+			m_CacheSection.Enter();
+
+			try
+			{
+				return m_PresenterPool.SelectMany(kvp => kvp.Value)
+				                      .Concat(m_Presenters)
+				                      .ToArray();
+			}
+			finally
+			{
+				m_CacheSection.Leave();
+			}
+		}
 
 		/// <summary>
 		/// Binds the model and view to the presenter.
