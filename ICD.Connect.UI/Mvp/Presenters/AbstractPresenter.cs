@@ -32,8 +32,6 @@ namespace ICD.Connect.UI.Mvp.Presenters
 
 		private T m_View;
 
-		[UsedImplicitly] private object m_AsyncRefreshHandle;
-
 		#region Properties
 
 		/// <summary>
@@ -84,8 +82,8 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// </summary>
 		public virtual void Dispose()
 		{
+			OnViewPreVisibilityChanged = null;
 			OnViewVisibilityChanged = null;
-			m_AsyncRefreshHandle = null;
 
 			if (m_View == null)
 				return;
@@ -102,37 +100,6 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		public T GetView()
 		{
 			return GetView(!IsComponent);
-		}
-
-		/// <summary>
-		/// Gets the view for the presenter.
-		/// </summary>
-		/// <param name="instantiate">When true instantiates a new view if the current view is null.</param>
-		/// <returns></returns>
-		[CanBeNull]
-		private T GetView(bool instantiate)
-		{
-			// Get default view from the factory
-			if (m_View == null && instantiate)
-			{
-				T view = InstantiateView();
-				SetView(view);
-			}
-
-			return m_View;
-		}
-
-		/// <summary>
-		/// Override to control how views are instantiated.
-		/// </summary>
-		/// <returns></returns>
-		[NotNull]
-		private T InstantiateView()
-		{
-			if (IsComponent)
-				throw new InvalidOperationException(string.Format("{0} can not create its own view.", GetType().Name));
-
-			return m_ViewFactory.GetNewView<T>();
 		}
 
 		/// <summary>
@@ -242,6 +209,41 @@ namespace ICD.Connect.UI.Mvp.Presenters
 				RefreshAsync();
 			else
 				Refresh();
+		}
+
+		#endregion
+
+		#region Private Methods
+
+		/// <summary>
+		/// Gets the view for the presenter.
+		/// </summary>
+		/// <param name="instantiate">When true instantiates a new view if the current view is null.</param>
+		/// <returns></returns>
+		[CanBeNull]
+		private T GetView(bool instantiate)
+		{
+			// Get default view from the factory
+			if (m_View == null && instantiate)
+			{
+				T view = InstantiateView();
+				SetView(view);
+			}
+
+			return m_View;
+		}
+
+		/// <summary>
+		/// Override to control how views are instantiated.
+		/// </summary>
+		/// <returns></returns>
+		[NotNull]
+		private T InstantiateView()
+		{
+			if (IsComponent)
+				throw new InvalidOperationException(string.Format("{0} can not create its own view.", GetType().Name));
+
+			return m_ViewFactory.GetNewView<T>();
 		}
 
 		#endregion
