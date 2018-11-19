@@ -24,6 +24,11 @@ namespace ICD.Connect.UI.Mvp.Views
 		bool IsVisible { get; }
 
 		/// <summary>
+		/// Needs to be called after instantiation to create the child controls.
+		/// </summary>
+		void Initialize();
+
+		/// <summary>
 		/// Sets the visibility of the view.
 		/// </summary>
 		/// <param name="visible"></param>

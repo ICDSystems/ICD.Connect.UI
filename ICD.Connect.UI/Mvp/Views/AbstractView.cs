@@ -31,6 +31,8 @@ namespace ICD.Connect.UI.Mvp.Views
 		public event EventHandler<BoolEventArgs> OnEnabledChanged;
 
 		private readonly ISigInputOutput m_Panel;
+		private readonly IVtProParent m_Parent;
+		private readonly ushort m_Index;
 
 		private IVtProControl m_CachedPage;
 
@@ -80,14 +82,22 @@ namespace ICD.Connect.UI.Mvp.Views
 		protected AbstractView(ISigInputOutput panel, IVtProParent parent, ushort index)
 		{
 			m_Panel = panel;
-
-			InstantiateControls(panel, parent, index);
-			SubscribeControls();
+			m_Parent = parent;
+			m_Index = index;
 		}
 
 		#endregion
 
 		#region Methods
+
+		/// <summary>
+		/// Needs to be called after instantiation to create the child controls.
+		/// </summary>
+		public void Initialize()
+		{
+			InstantiateControls(m_Panel, m_Parent, m_Index);
+			SubscribeControls();
+		}
 
 		/// <summary>
 		/// Release resources.
@@ -180,7 +190,11 @@ namespace ICD.Connect.UI.Mvp.Views
 		                                                 List<T> viewList, ushort count)
 			where T : class, IView
 		{
-			return factory.GetNewSrlViews(subpageReferenceList, viewList, count);
+			foreach (T view in factory.GetNewSrlViews(subpageReferenceList, viewList, count))
+			{
+				view.Initialize();
+				yield return view;
+			}
 		}
 
 		/// <summary>
