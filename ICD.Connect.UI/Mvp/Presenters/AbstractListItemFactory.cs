@@ -26,7 +26,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 	{
 		private readonly Dictionary<Type, Queue<TPresenter>> m_PresenterPool;
 
-		private readonly List<TPresenter> m_Presenters; 
+		private readonly List<TPresenter> m_Presenters;
 		private readonly List<TModel> m_Models;
 
 		private readonly SafeCriticalSection m_CacheSection;
@@ -34,14 +34,23 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		private readonly INavigationController m_NavigationController;
 		private readonly ListItemFactory<TView> m_ViewFactory;
 
+		private readonly Action<TPresenter> m_Subscribe;
+		private readonly Action<TPresenter> m_Unsubscribe;
+
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="navigationController"></param>
 		/// <param name="viewFactory"></param>
-		protected AbstractListItemFactory(INavigationController navigationController, ListItemFactory<TView> viewFactory)
+		/// <param name="subscribe">Called for each new presenter taken from the pool.</param>
+		/// <param name="unsubscribe">Called for each presenter put back into the pool.</param>
+		protected AbstractListItemFactory(INavigationController navigationController, ListItemFactory<TView> viewFactory,
+		                                  Action<TPresenter> subscribe, Action<TPresenter> unsubscribe)
 		{
 			m_PresenterPool = new Dictionary<Type, Queue<TPresenter>>();
+
+			m_Subscribe = subscribe;
+			m_Unsubscribe = unsubscribe;
 
 			m_Presenters = new List<TPresenter>();
 			m_Models = new List<TModel>();
@@ -74,19 +83,11 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// Generates the presenters and views for the given sequence of models.
 		/// </summary>
 		/// <param name="models"></param>
-		/// <param name="subscribe">Called for each new presenter taken from the pool.</param>
-		/// <param name="unsubscribe">Called for each presenter put back into the pool.</param>
 		[PublicAPI]
-		public IEnumerable<TPresenter> BuildChildren(IEnumerable<TModel> models, Action<TPresenter> subscribe, Action<TPresenter> unsubscribe)
+		public IEnumerable<TPresenter> BuildChildren(IEnumerable<TModel> models)
 		{
 			if (models == null)
 				throw new ArgumentNullException("models");
-
-			if (subscribe == null)
-				throw new ArgumentNullException("subscribeAction");
-
-			if (unsubscribe == null)
-				throw new ArgumentNullException("unsubscribeAction");
 
 			m_CacheSection.Enter();
 
@@ -99,9 +100,9 @@ namespace ICD.Connect.UI.Mvp.Presenters
 				// Build the views (may be fewer than models due to list max size)
 				IEnumerable<TView> views = m_ViewFactory((ushort)m_Models.Count);
 				IList<TView> viewsArray = views as IList<TView> ?? views.ToArray();
-				
+
 				// Return presenters that are outside of the current view count back to the pool
-				ReturnPresentersToPool(viewsArray.Count, unsubscribe);
+				ReturnPresentersToPool(viewsArray.Count);
 
 				// Build the presenters
 				for (int index = 0; index < viewsArray.Count; index++)
@@ -110,10 +111,10 @@ namespace ICD.Connect.UI.Mvp.Presenters
 
 					// Get the model
 					TModel model = m_Models[index];
-					
+
 					// Get the presenter
 					Type key = GetPresenterTypeForModel(model);
-					TPresenter presenter = LazyLoadPresenterFromPool(key, index, subscribe, unsubscribe);
+					TPresenter presenter = LazyLoadPresenterFromPool(key, index);
 
 					// Bind
 					BindMvpTriad(model, presenter, view);
@@ -207,22 +208,14 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// </summary>
 		/// <param name="presenterType"></param>
 		/// <param name="index"></param>
-		/// <param name="subscribe">Called for each item put into the presenter cache.</param>
-		/// <param name="unsubscribe">Called for each item put into the pool.</param>
 		/// <returns></returns>
-		private TPresenter LazyLoadPresenterFromPool(Type presenterType, int index, Action<TPresenter> subscribe, Action<TPresenter> unsubscribe)
+		private TPresenter LazyLoadPresenterFromPool(Type presenterType, int index)
 		{
 			if (presenterType == null)
 				throw new ArgumentNullException("presenterType");
 
 			if (index < 0)
 				throw new ArgumentOutOfRangeException("index");
-
-			if (subscribe == null)
-				throw new ArgumentNullException("subscribe");
-
-			if (unsubscribe == null)
-				throw new ArgumentNullException("unsubscribe");
 
 			m_CacheSection.Enter();
 
@@ -235,7 +228,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 
 				// Return the existing presenter of the wrong type to the pool
 				if (existing != null)
-					ReturnPresenterToPool(index, unsubscribe);
+					ReturnPresenterToPool(index);
 
 				// Get the pool for the given type
 				Queue<TPresenter> pool;
@@ -255,7 +248,8 @@ namespace ICD.Connect.UI.Mvp.Presenters
 				m_Presenters.Insert(index, presenter);
 
 				// Call the subscription action
-				subscribe(presenter);
+				if (m_Subscribe != null)
+					m_Subscribe(presenter);
 
 				return presenter;
 			}
@@ -269,20 +263,17 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// Loops over the presenters starting at the given index, clears the views and moves the
 		/// presenters from the cache to the pool.
 		/// </summary>
-		private void ReturnPresentersToPool(int startIndex, Action<TPresenter> unsubscribe)
+		private void ReturnPresentersToPool(int startIndex)
 		{
 			if (startIndex < 0)
 				throw new ArgumentOutOfRangeException("startIndex");
-
-			if (unsubscribe == null)
-				throw new ArgumentNullException("unsubscribeAction");
 
 			m_CacheSection.Enter();
 
 			try
 			{
 				for (int index = m_Presenters.Count - 1; index >= startIndex; index--)
-					ReturnPresenterToPool(index, unsubscribe);
+					ReturnPresenterToPool(index);
 			}
 			finally
 			{
@@ -294,12 +285,8 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// Removes the presenter at the given index and puts it back into the pool.
 		/// </summary>
 		/// <param name="index"></param>
-		/// <param name="unsubscribe"></param>
-		private void ReturnPresenterToPool(int index, Action<TPresenter> unsubscribe)
+		private void ReturnPresenterToPool(int index)
 		{
-			if (unsubscribe == null)
-				throw new ArgumentNullException("unsubscribe");
-
 			m_CacheSection.Enter();
 
 			try
@@ -309,7 +296,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 
 				TPresenter presenter = m_Presenters[index];
 
-				ReturnPresenterToPool(presenter, unsubscribe);
+				ReturnPresenterToPool(presenter);
 
 				m_Presenters.RemoveAt(index);
 			}
@@ -323,16 +310,14 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// Puts the presenter back into the pool.
 		/// </summary>
 		/// <param name="presenter"></param>
-		/// <param name="unsubscribe"></param>
-		private void ReturnPresenterToPool(TPresenter presenter, Action<TPresenter> unsubscribe)
+		private void ReturnPresenterToPool(TPresenter presenter)
 		{
 			if (presenter == null)
 				throw new ArgumentNullException("presenter");
 
-			if (unsubscribe == null)
-				throw new ArgumentNullException("unsubscribe");
+			if (m_Unsubscribe != null)
+				m_Unsubscribe(presenter);
 
-			unsubscribe(presenter);
 			presenter.ClearView();
 
 			Type key = presenter.GetType();
