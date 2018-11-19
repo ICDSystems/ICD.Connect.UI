@@ -129,8 +129,8 @@ namespace ICD.Connect.UI.Controls
 
 			try
 			{
-				if (DigitalEnableJoin == 0)
-					throw new InvalidOperationException("Unable to set enabled state, join is 0");
+				if (!state && DigitalEnableJoin == 0)
+					throw new InvalidOperationException(string.Format("Unable to disable {0}, join is 0", GetType().Name));
 
 				if (state == IsEnabled)
 					return;
@@ -156,8 +156,8 @@ namespace ICD.Connect.UI.Controls
 
 			try
 			{
-				if (DigitalVisibilityJoin == 0)
-					throw new InvalidOperationException("Unable to set visibility, join is 0");
+				if (!state && DigitalVisibilityJoin == 0)
+					throw new InvalidOperationException(string.Format("Unable to hide {0}, join is 0", GetType().Name));
 
 				if (state == IsVisible)
 					return;
