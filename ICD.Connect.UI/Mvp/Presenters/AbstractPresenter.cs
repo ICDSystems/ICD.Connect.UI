@@ -277,10 +277,11 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <param name="args"></param>
 		protected virtual void ViewOnPreVisibilityChanged(object sender, BoolEventArgs args)
 		{
+			OnViewPreVisibilityChanged.Raise(this, new BoolEventArgs(args.Data));
+
+			// Refresh after OnViewPreVisibilityChanged event triggers updates
 			if (args.Data)
 				Refresh();
-
-			OnViewPreVisibilityChanged.Raise(this, new BoolEventArgs(args.Data));
 		}
 
 		/// <summary>
