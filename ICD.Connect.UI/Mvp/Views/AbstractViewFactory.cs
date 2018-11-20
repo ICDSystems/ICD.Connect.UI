@@ -26,12 +26,19 @@ namespace ICD.Connect.UI.Mvp.Views
 			m_Panel = panel;
 		}
 
+		#region Methods
+
 		/// <summary>
 		/// Instantiates a new view of the given type.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public abstract T GetNewView<T>() where T : class, IView;
+		public T GetNewView<T>() where T : class, IView
+		{
+			T view = InstantiateView<T>();
+			view.Initialize();
+			return view;
+		}
 
 		/// <summary>
 		/// Instantiates a view of the given type.
@@ -41,7 +48,13 @@ namespace ICD.Connect.UI.Mvp.Views
 		/// <param name="parent"></param>
 		/// <param name="index"></param>
 		/// <returns></returns>
-		public abstract T GetNewView<T>(ISmartObject smartObject, IVtProParent parent, ushort index) where T : class, IView;
+		public T GetNewView<T>(ISmartObject smartObject, IVtProParent parent, ushort index)
+			where T : class, IView
+		{
+			T view = InstantiateView<T>(smartObject, parent, index);
+			view.Initialize();
+			return view;
+		}
 
 		/// <summary>
 		/// Creates views for the given subpage reference list.
@@ -51,7 +64,7 @@ namespace ICD.Connect.UI.Mvp.Views
 		/// <param name="childViews"></param>
 		/// <param name="count"></param>
 		/// <returns></returns>
-		public IEnumerable<T> GetNewSrlViews<T>(VtProSubpageReferenceList list, List<T> childViews, ushort count)
+		public IEnumerable<T> LazyLoadSrlViews<T>(VtProSubpageReferenceList list, List<T> childViews, ushort count)
 			where T : class, IView
 		{
 			count = Math.Min(count, list.MaxSize);
@@ -67,5 +80,28 @@ namespace ICD.Connect.UI.Mvp.Views
 
 			return childViews.Take(count);
 		}
+
+		#endregion
+
+		#region Protected Methods
+
+		/// <summary>
+		/// Instantiates a new view of the given type.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		protected abstract T InstantiateView<T>() where T : class, IView;
+
+		/// <summary>
+		/// Instantiates a view of the given type.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="smartObject"></param>
+		/// <param name="parent"></param>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		protected abstract T InstantiateView<T>(ISmartObject smartObject, IVtProParent parent, ushort index) where T : class, IView;
+
+		#endregion
 	}
 }

@@ -29,6 +29,6 @@ namespace ICD.Connect.UI.Mvp.Views
 		/// <param name="childViews"></param>
 		/// <param name="count"></param>
 		/// <returns></returns>
-		IEnumerable<T> GetNewSrlViews<T>(VtProSubpageReferenceList list, List<T> childViews, ushort count) where T : class, IView;
+		IEnumerable<T> LazyLoadSrlViews<T>(VtProSubpageReferenceList list, List<T> childViews, ushort count) where T : class, IView;
 	}
 }

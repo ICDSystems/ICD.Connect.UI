@@ -190,11 +190,8 @@ namespace ICD.Connect.UI.Mvp.Views
 		                                                 List<T> viewList, ushort count)
 			where T : class, IView
 		{
-			foreach (T view in factory.GetNewSrlViews(subpageReferenceList, viewList, count))
-			{
-				view.Initialize();
+			foreach (T view in factory.LazyLoadSrlViews(subpageReferenceList, viewList, count))
 				yield return view;
-			}
 		}
 
 		/// <summary>

@@ -244,7 +244,6 @@ namespace ICD.Connect.UI.Mvp.Presenters
 				throw new InvalidOperationException(string.Format("{0} can not create its own view.", GetType().Name));
 
 			T view = m_ViewFactory.GetNewView<T>();
-			view.Initialize();
 			return view;
 		}
 
