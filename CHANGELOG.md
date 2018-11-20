@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.0.0] - 2018-11-20
+### Added
+ - Added pre-visibility change events for better UX
+
+### Changed
+ - Better view control initialization
+ - Caching presenter loggers for micro-optimization
+ - AbstractListItemFactory takes subscribe/unsubscribe actions via constructor
+ - No longer throwing exceptions when trying to show/enable controls with a join of 0
+
+### Removed
+ - Removed component presenter and view
+
 ## [4.2.0] - 2018-09-14
 ### Changed
  - Various performance improvements
