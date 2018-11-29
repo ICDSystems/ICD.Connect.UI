@@ -7,9 +7,6 @@ namespace ICD.Connect.UI.Controls
 {
 	public abstract class AbstractVtProSmartObject : AbstractVtProControl<IPanelDevice>
 	{
-		[PublicAPI]
-		public ushort VisibilityDigitalJoin { get { return DigitalVisibilityJoin; } set { DigitalVisibilityJoin = value; } }
-
 		/// <summary>
 		/// Gets the smart object.
 		/// </summary>
