@@ -1,5 +1,4 @@
-﻿using ICD.Connect.Panels;
-using ICD.Connect.Panels.Devices;
+﻿using ICD.Connect.Panels.Devices;
 using ICD.Connect.Panels.Mock;
 using ICD.Connect.UI.Controls;
 using NUnit.Framework;
@@ -16,9 +15,9 @@ namespace ICD.Connect.UI.Tests.Controls
 
             T instance = Instantiate(1, panel, null);
 
-            instance.VisibilityDigitalJoin = 100;
+            instance.DigitalVisibilityJoin = 100;
 
-            Assert.AreEqual(100, instance.VisibilityDigitalJoin);
+            Assert.AreEqual(100, instance.DigitalVisibilityJoin);
         }
 
         [Test]
