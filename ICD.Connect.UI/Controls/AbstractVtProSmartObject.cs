@@ -1,5 +1,4 @@
 ﻿using System;
-using ICD.Common.Properties;
 using ICD.Connect.Panels.Devices;
 using ICD.Connect.Panels.SmartObjects;
 
