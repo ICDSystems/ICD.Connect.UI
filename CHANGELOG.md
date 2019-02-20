@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+ - Added view/presenter bindings for automatically mapping interfaces to concretes
+
 ## [5.0.0] - 2018-11-20
 ### Added
  - Added pre-visibility change events for better UX
