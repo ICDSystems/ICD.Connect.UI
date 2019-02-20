@@ -20,6 +20,8 @@ namespace ICD.Connect.UI.Mvp.Views
 		/// </summary>
 		public IPanelDevice Panel { get { return m_Panel; } }
 
+		#region Constructors
+
 		/// <summary>
 		/// Static constructor.
 		/// </summary>
@@ -36,6 +38,8 @@ namespace ICD.Connect.UI.Mvp.Views
 		{
 			m_Panel = panel;
 		}
+
+		#endregion
 
 		#region Methods
 

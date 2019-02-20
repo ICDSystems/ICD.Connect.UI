@@ -2,15 +2,26 @@
 using System.Collections.Generic;
 using ICD.Common.Utils;
 using ICD.Common.Utils.Extensions;
+using ICD.Connect.UI.Attributes;
 
 namespace ICD.Connect.UI.Mvp.Presenters
 {
 	public abstract class AbstractNavigationController : INavigationController
 	{
+		private static readonly BindingMap<PresenterBindingAttribute> s_InterfaceToConcrete;
+
 		private readonly Dictionary<Type, IPresenter> m_Cache;
 		private readonly SafeCriticalSection m_CacheSection;
 
 		#region Constructors
+
+		/// <summary>
+		/// Static constructor.
+		/// </summary>
+		static AbstractNavigationController()
+		{
+			s_InterfaceToConcrete = new BindingMap<PresenterBindingAttribute>();
+		}
 
 		/// <summary>
 		/// Constructor.
@@ -79,6 +90,17 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <param name="type"></param>
 		/// <returns></returns>
 		public abstract IPresenter GetNewPresenter(Type type);
+
+		/// <summary>
+		/// Instantiates a new presenter of the given type.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="parameters"></param>
+		/// <returns></returns>
+		protected IPresenter GetNewPresenter(Type type, params object[] parameters)
+		{
+			return (IPresenter)s_InterfaceToConcrete.CreateInstance(type, parameters);
+		}
 
 		#endregion
 	}
