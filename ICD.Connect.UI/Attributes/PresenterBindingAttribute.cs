@@ -1,9 +1,8 @@
 ﻿using System;
-using ICD.Connect.UI.Mvp.Presenters;
 
 namespace ICD.Connect.UI.Attributes
 {
-	public sealed class PresenterBindingAttribute : AbstractUiBindingAttribute<IPresenter>
+	public sealed class PresenterBindingAttribute : AbstractUiBindingAttribute
 	{
 		/// <summary>
 		/// Constructor.

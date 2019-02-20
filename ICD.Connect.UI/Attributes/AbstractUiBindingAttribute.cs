@@ -1,12 +1,11 @@
 ﻿using System;
 using ICD.Common.Properties;
-using ICD.Common.Utils.Extensions;
 
 namespace ICD.Connect.UI.Attributes
 {
 	[MeansImplicitUse]
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-	public abstract class AbstractUiBindingAttribute<T> : AbstractUiAttribute, IUiBindingAttribute
+	public abstract class AbstractUiBindingAttribute : AbstractUiAttribute, IUiBindingAttribute
 	{
 		private readonly Type m_InterfaceBinding;
 
@@ -23,9 +22,6 @@ namespace ICD.Connect.UI.Attributes
 		{
 			if (interfaceBinding == null)
 				throw new ArgumentNullException("interfaceBinding");
-
-			if (!interfaceBinding.IsAssignableTo<T>())
-				throw new ArgumentException("Unexpected type", "interfaceBinding");
 
 			m_InterfaceBinding = interfaceBinding;
 		}

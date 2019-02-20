@@ -1,9 +1,8 @@
 ﻿using System;
-using ICD.Connect.UI.Mvp.Views;
 
 namespace ICD.Connect.UI.Attributes
 {
-	public sealed class ViewBindingAttribute : AbstractUiBindingAttribute<IView>
+	public sealed class ViewBindingAttribute : AbstractUiBindingAttribute
 	{
 		/// <summary>
 		/// Constructor.
