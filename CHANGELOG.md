@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
  - Added view/presenter bindings for automatically mapping interfaces to concretes
+ - Added view/presenter interface binding cache
+ - AbstractViewFactory provides a default method for instantiating a view by interface
 
 ## [5.0.0] - 2018-11-20
 ### Added

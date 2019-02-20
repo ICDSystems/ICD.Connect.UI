@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ICD.Connect.Panels.Devices;
 using ICD.Connect.Panels.SmartObjects;
+using ICD.Connect.UI.Attributes;
 using ICD.Connect.UI.Controls;
 using ICD.Connect.UI.Controls.Lists;
 
@@ -10,12 +11,22 @@ namespace ICD.Connect.UI.Mvp.Views
 {
 	public abstract class AbstractViewFactory : IViewFactory
 	{
+		private static readonly BindingMap<ViewBindingAttribute> s_InterfaceToConcrete;
+
 		private readonly IPanelDevice m_Panel;
 
 		/// <summary>
 		/// Gets the panel for this view factory.
 		/// </summary>
 		public IPanelDevice Panel { get { return m_Panel; } }
+
+		/// <summary>
+		/// Static constructor.
+		/// </summary>
+		static AbstractViewFactory()
+		{
+			s_InterfaceToConcrete = new BindingMap<ViewBindingAttribute>();
+		}
 
 		/// <summary>
 		/// Constructor.
@@ -101,6 +112,17 @@ namespace ICD.Connect.UI.Mvp.Views
 		/// <param name="index"></param>
 		/// <returns></returns>
 		protected abstract T InstantiateView<T>(ISmartObject smartObject, IVtProParent parent, ushort index) where T : class, IView;
+
+		/// <summary>
+		/// Instantiates the view bound to the given type passing the given parameters.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="parameters"></param>
+		/// <returns></returns>
+		protected T InstantiateView<T>(params object[] parameters)
+		{
+			return s_InterfaceToConcrete.CreateInstance<T>(parameters);
+		}
 
 		#endregion
 	}

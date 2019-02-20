@@ -6,7 +6,7 @@ namespace ICD.Connect.UI.Attributes
 {
 	[MeansImplicitUse]
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-	public abstract class AbstractUiBindingAttribute<T> : AbstractUiAttribute
+	public abstract class AbstractUiBindingAttribute<T> : AbstractUiAttribute, IUiBindingAttribute
 	{
 		private readonly Type m_InterfaceBinding;
 

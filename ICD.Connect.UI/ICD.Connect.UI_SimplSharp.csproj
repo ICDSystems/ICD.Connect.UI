@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Attributes\AbstractUiAttribute.cs" />
     <Compile Include="Attributes\AbstractUiBindingAttribute.cs" />
+    <Compile Include="Attributes\IUiBindingAttribute.cs" />
     <Compile Include="Attributes\PresenterBindingAttribute.cs" />
     <Compile Include="Attributes\ViewBindingAttribute.cs" />
     <Compile Include="Controls\AbstractVtProControl.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="EventArguments\DPadEventArgs.cs" />
     <Compile Include="EventArguments\SimpleKeypadEventArgs.cs" />
     <None Include="ObfuscationSettings.cs" />
+    <Compile Include="Mvp\BindingMap.cs" />
     <Compile Include="Mvp\Presenters\AbstractNavigationController.cs" />
     <Compile Include="Mvp\Presenters\INavigationController.cs" />
     <Compile Include="Mvp\Presenters\IPresenter.cs" />
