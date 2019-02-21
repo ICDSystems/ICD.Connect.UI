@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [6.0.0] - 2019-02-21
 ### Added
  - Added view/presenter bindings for automatically mapping interfaces to concretes
  - Added view/presenter interface binding cache
