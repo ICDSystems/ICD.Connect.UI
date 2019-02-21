@@ -113,7 +113,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 			if (type == null)
 				throw new ArgumentNullException("type");
 
-			return s_InterfaceToConcrete.GetAssignableTypes(type)
+			return s_InterfaceToConcrete.GetAssignableInterfaces(type)
 			                            .Select(presenterType => LazyLoadPresenter(presenterType));
 		}
 
