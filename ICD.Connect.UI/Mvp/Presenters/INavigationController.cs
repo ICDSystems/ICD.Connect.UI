@@ -9,6 +9,13 @@ namespace ICD.Connect.UI.Mvp.Presenters
 	public interface INavigationController : IDisposable
 	{
 		/// <summary>
+		/// Instantiates a new presenter of the given type.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		IPresenter GetNewPresenter(Type type);
+
+		/// <summary>
 		/// Instantiates or returns an existing presenter of the given type.
 		/// </summary>
 		/// <param name="type"></param>
@@ -16,11 +23,17 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		IPresenter LazyLoadPresenter(Type type);
 
 		/// <summary>
-		/// Instantiates a new presenter of the given type.
+		/// Instantiates or returns an existing presenter for every presenter that can be assigned to the given type.
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		IPresenter GetNewPresenter(Type type);
+		IEnumerable<IPresenter> LazyLoadPresenters(Type type);
+
+		/// <summary>
+		/// Instantiates or returns an existing presenter for every presenter that can be assigned to the given type.
+		/// </summary>
+		/// <returns></returns>
+		IEnumerable<T> LazyLoadPresenters<T>() where T : IPresenter;
 	}
 
 	/// <summary>

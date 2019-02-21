@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ICD.Common.Utils;
 using ICD.Common.Utils.Extensions;
 using ICD.Connect.UI.Attributes;
@@ -56,6 +57,22 @@ namespace ICD.Connect.UI.Mvp
 
 			Type concrete = GetConcreteType(boundInterface);
 			return ReflectionUtils.CreateInstance(concrete, parameters);
+		}
+
+		/// <summary>
+		/// Gets all of the concrete types that are assignable to the given type.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public IEnumerable<Type> GetAssignableInterfaces(Type type)
+		{
+			if (type == null)
+				throw new ArgumentNullException("type");
+
+			Assembly assembly = type.GetAssembly();
+			CacheAssembly(assembly);
+
+			return m_InterfaceToConcrete.Keys.Where(k => k.IsAssignableTo(type));
 		}
 
 		#endregion

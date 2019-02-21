@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ICD.Common.Utils;
 using ICD.Common.Utils.Extensions;
 using ICD.Connect.UI.Attributes;
@@ -55,6 +56,24 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		}
 
 		/// <summary>
+		/// Instantiates a new presenter of the given type.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public abstract IPresenter GetNewPresenter(Type type);
+
+		/// <summary>
+		/// Instantiates a new presenter of the given type.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="parameters"></param>
+		/// <returns></returns>
+		protected IPresenter GetNewPresenter(Type type, params object[] parameters)
+		{
+			return (IPresenter)s_InterfaceToConcrete.CreateInstance(type, parameters);
+		}
+
+		/// <summary>
 		/// Instantiates or returns an existing presenter of the given type.
 		/// </summary>
 		/// <param name="type"></param>
@@ -85,21 +104,27 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		}
 
 		/// <summary>
-		/// Instantiates a new presenter of the given type.
+		/// Instantiates or returns an existing presenter for every presenter that can be assigned to the given type.
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		public abstract IPresenter GetNewPresenter(Type type);
+		public IEnumerable<IPresenter> LazyLoadPresenters(Type type)
+		{
+			if (type == null)
+				throw new ArgumentNullException("type");
+
+			return s_InterfaceToConcrete.GetAssignableTypes(type)
+			                            .Select(presenterType => LazyLoadPresenter(presenterType));
+		}
 
 		/// <summary>
-		/// Instantiates a new presenter of the given type.
+		/// Instantiates or returns an existing presenter for every presenter that can be assigned to the given type.
 		/// </summary>
-		/// <param name="type"></param>
-		/// <param name="parameters"></param>
 		/// <returns></returns>
-		protected IPresenter GetNewPresenter(Type type, params object[] parameters)
+		public IEnumerable<T> LazyLoadPresenters<T>()
+			where T : IPresenter
 		{
-			return (IPresenter)s_InterfaceToConcrete.CreateInstance(type, parameters);
+			return LazyLoadPresenters(typeof(T)).Cast<T>();
 		}
 
 		#endregion
