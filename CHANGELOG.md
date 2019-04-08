@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.1.0] - 2019-04-05
+### Added
+ - Added method to replace newlines with HTML line breaks
+ 
+### Changed
+ - Small optimization when calculating VisibilityNode visibility
+
 ## [5.0.0] - 2018-11-20
 ### Added
  - Added pre-visibility change events for better UX

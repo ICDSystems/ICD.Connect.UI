@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using ICD.Connect.UI.Mvp.Presenters;
 
 namespace ICD.Connect.UI.Mvp.VisibilityTree
@@ -17,6 +16,11 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 		/// Raised when a child's visibility changes.
 		/// </summary>
 		event ChildVisibilityChangedCallback OnChildVisibilityChanged;
+
+		/// <summary>
+		/// Returns true if any of the children are visible.
+		/// </summary>
+		bool IsVisible { get; }
 
 		/// <summary>
 		/// Adds the node to the tree.
@@ -60,38 +64,6 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 				node.Hide();
 			foreach (IPresenter presenter in extends.GetPresenters())
 				presenter.ShowView(false);
-		}
-
-		/// <summary>
-		/// Returns true if any of the child nodes in the hierarchy are visible.
-		/// </summary>
-		/// <returns></returns>
-		/// <param name="extends"></param>
-		public static bool GetIsVisible(this IVisibilityNode extends)
-		{
-			return extends.GetPresenters().Any(c => c.IsViewVisible) || extends.GetNodes().Any(n => n.GetIsVisible());
-		}
-
-		/// <summary>
-		/// Adds the nodes as children.
-		/// </summary>
-		/// <param name="extends"></param>
-		/// <param name="nodes"></param>
-		public static void AddNodes(this IVisibilityNode extends, IEnumerable<IVisibilityNode> nodes)
-		{
-			foreach (IVisibilityNode node in nodes)
-				extends.AddNode(node);
-		}
-
-		/// <summary>
-		/// Adds the presenters as children.
-		/// </summary>
-		/// <param name="extends"></param>
-		/// <param name="presenters"></param>
-		public static void AddPresenters(this IVisibilityNode extends, IEnumerable<IPresenter> presenters)
-		{
-			foreach (IPresenter presenter in presenters)
-				extends.AddPresenter(presenter);
 		}
 	}
 }
