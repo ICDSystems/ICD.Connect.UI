@@ -47,6 +47,29 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 		#region Methods
 
 		/// <summary>
+		/// Returns true if any of the children are visible.
+		/// </summary>
+		public bool IsVisible
+		{
+			get
+			{
+				m_NodesSection.Enter();
+				m_PresentersSection.Enter();
+
+				try
+				{
+					return m_Presenters.Any(p => p.IsViewVisible) ||
+						   m_Nodes.Any(n => n.IsVisible);
+				}
+				finally
+				{
+					m_NodesSection.Leave();
+					m_PresentersSection.Leave();
+				}
+			}
+		}
+
+		/// <summary>
 		/// Adds the node to the tree.
 		/// </summary>
 		/// <param name="node"></param>

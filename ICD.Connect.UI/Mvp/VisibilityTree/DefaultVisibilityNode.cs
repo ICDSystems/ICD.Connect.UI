@@ -65,7 +65,7 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 			if (sender == m_DefaultPresenter)
 				return;
 
-			if (!args.Data && !this.GetIsVisible())
+			if (!args.Data && !IsVisible)
 				m_DefaultPresenter.ShowView(true);
 		}
 
@@ -79,7 +79,7 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 		{
 			base.NodeOnChildVisibilityChanged(parent, presenter, visibility);
 
-			if (!visibility && !this.GetIsVisible())
+			if (!visibility && !IsVisible)
 				m_DefaultPresenter.ShowView(true);
 		}
 	}
