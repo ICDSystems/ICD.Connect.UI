@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ICD.Common.Properties;
 
 namespace ICD.Connect.UI.Mvp.Presenters
 {
@@ -13,6 +14,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
+		[NotNull]
 		IPresenter GetNewPresenter(Type type);
 
 		/// <summary>
@@ -20,6 +22,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
+		[NotNull]
 		IPresenter LazyLoadPresenter(Type type);
 
 		/// <summary>
@@ -46,52 +49,30 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
+		[NotNull]
 		public static T LazyLoadPresenter<T>(this INavigationController extends)
 			where T : class, IPresenter
 		{
-			IPresenter presenter = extends.LazyLoadPresenter(typeof(T));
-			T output = presenter as T;
-
-			if (output == null)
-				throw new InvalidCastException(string.Format("Failed to cast {0} to {1}", presenter, typeof(T).Name));
-
-			return output;
+			return extends.LazyLoadPresenter<T>(typeof(T));
 		}
 
 		/// <summary>
-		/// Instantiates a new presenter of the given type.
+		/// Instantiates or returns an existing presenter of the given type.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <returns></returns>
-		public static T GetNewPresenter<T>(this INavigationController extends)
-			where T : class, IPresenter
-		{
-			IPresenter presenter = extends.GetNewPresenter(typeof(T));
-			T output = presenter as T;
-
-			if (output == null)
-				throw new InvalidCastException(string.Format("Failed to cast {0} to {1}", presenter, typeof(T).Name));
-
-			return output;
-		}
-
-		/// <summary>
-		/// Generates new presenters if count exceeds the cache size, returns the given number of items from the cache.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
 		/// <param name="extends"></param>
-		/// <param name="cache"></param>
-		/// <param name="count"></param>
+		/// <param name="type"></param>
 		/// <returns></returns>
-		public static IEnumerable<T> GetNewPresenters<T>(this INavigationController extends, List<T> cache, int count)
+		[NotNull]
+		public static T LazyLoadPresenter<T>(this INavigationController extends, Type type)
 			where T : class, IPresenter
 		{
-			for (int index = 0; index < count; index++)
-			{
-				if (index >= cache.Count)
-					cache.Add(extends.GetNewPresenter<T>());
-				yield return cache[index];
-			}
+			IPresenter presenter = extends.LazyLoadPresenter(type);
+			T output = presenter as T;
+
+			if (output == null)
+				throw new InvalidCastException(string.Format("Failed to cast {0} to {1}", presenter, typeof(T).Name));
+
+			return output;
 		}
 
 		/// <summary>
@@ -100,6 +81,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <typeparam name="T"></typeparam>
 		/// <param name="extends"></param>
 		/// <returns></returns>
+		[NotNull]
 		public static T NavigateTo<T>(this INavigationController extends)
 			where T : class, IPresenter
 		{
