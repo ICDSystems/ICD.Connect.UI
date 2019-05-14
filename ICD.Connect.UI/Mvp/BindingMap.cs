@@ -96,7 +96,7 @@ namespace ICD.Connect.UI.Mvp
 			if (m_InterfaceToConcrete.TryGetValue(boundInterface, out concrete))
 				return concrete;
 
-			string message = string.Format("No binding found for {1}", boundInterface.Name);
+			string message = string.Format("No binding found for {0}", boundInterface.Name);
 			throw new KeyNotFoundException(message);
 		}
 
