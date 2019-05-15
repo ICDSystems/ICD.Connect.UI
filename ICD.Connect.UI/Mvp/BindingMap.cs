@@ -21,6 +21,7 @@ namespace ICD.Connect.UI.Mvp
 	{
 		private readonly Dictionary<Type, Type> m_InterfaceToConcrete;
 		private readonly IcdHashSet<Assembly> m_CachedAssemblies;
+		private readonly SafeCriticalSection m_CacheSection;
 
 		/// <summary>
 		/// Constructor.
@@ -29,6 +30,7 @@ namespace ICD.Connect.UI.Mvp
 		{
 			m_InterfaceToConcrete = new Dictionary<Type, Type>();
 			m_CachedAssemblies = new IcdHashSet<Assembly>();
+			m_CacheSection = new SafeCriticalSection();
 		}
 
 		#region Methods
@@ -69,10 +71,19 @@ namespace ICD.Connect.UI.Mvp
 			if (type == null)
 				throw new ArgumentNullException("type");
 
-			Assembly assembly = type.GetAssembly();
-			CacheAssembly(assembly);
+			m_CacheSection.Enter();
 
-			return m_InterfaceToConcrete.Keys.Where(k => k.IsAssignableTo(type));
+			try
+			{
+				Assembly assembly = type.GetAssembly();
+				CacheAssembly(assembly);
+
+				return m_InterfaceToConcrete.Keys.Where(k => k.IsAssignableTo(type));
+			}
+			finally
+			{
+				m_CacheSection.Leave();
+			}
 		}
 
 		#endregion
@@ -88,13 +99,22 @@ namespace ICD.Connect.UI.Mvp
 			if (boundInterface == null)
 				throw new ArgumentNullException("boundInterface");
 
-			Assembly assembly = boundInterface.GetAssembly();
-			if (!m_CachedAssemblies.Contains(assembly))
-				CacheAssembly(assembly);
+			m_CacheSection.Enter();
 
-			Type concrete;
-			if (m_InterfaceToConcrete.TryGetValue(boundInterface, out concrete))
-				return concrete;
+			try
+			{
+				Assembly assembly = boundInterface.GetAssembly();
+				if (!m_CachedAssemblies.Contains(assembly))
+					CacheAssembly(assembly);
+
+				Type concrete;
+				if (m_InterfaceToConcrete.TryGetValue(boundInterface, out concrete))
+					return concrete;
+			}
+			finally
+			{
+				m_CacheSection.Leave();
+			}
 
 			string message = string.Format("No binding found for {0}", boundInterface.Name);
 			throw new KeyNotFoundException(message);
@@ -105,17 +125,26 @@ namespace ICD.Connect.UI.Mvp
 			if (assembly == null)
 				throw new ArgumentNullException("assembly");
 
-			if (!m_CachedAssemblies.Add(assembly))
-				return;
+			m_CacheSection.Enter();
 
-			foreach (var type in assembly.GetTypes())
+			try
 			{
-				if (!type.IsClass || type.IsAbstract || type.IsInterface)
-					continue;
+				if (!m_CachedAssemblies.Add(assembly))
+					return;
 
-				IEnumerable<TAttribute> attributes = type.GetCustomAttributes<TAttribute>(true);
-				foreach (TAttribute attribute in attributes)
-					CacheType(attribute.InterfaceBinding, type);
+				foreach (var type in assembly.GetTypes())
+				{
+					if (!type.IsClass || type.IsAbstract || type.IsInterface)
+						continue;
+
+					IEnumerable<TAttribute> attributes = type.GetCustomAttributes<TAttribute>(true);
+					foreach (TAttribute attribute in attributes)
+						CacheType(attribute.InterfaceBinding, type);
+				}
+			}
+			finally
+			{
+				m_CacheSection.Leave();
 			}
 		}
 
@@ -130,7 +159,7 @@ namespace ICD.Connect.UI.Mvp
 			if (!type.IsAssignableTo(interfaceType))
 				throw new ArgumentException(string.Format("{0} is not of type {1}", type, interfaceType));
 
-			m_InterfaceToConcrete.Add(interfaceType, type);
+			m_CacheSection.Execute(() => m_InterfaceToConcrete.Add(interfaceType, type));
 		}
 
 		#endregion
