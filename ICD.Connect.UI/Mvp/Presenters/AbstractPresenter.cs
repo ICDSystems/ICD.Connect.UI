@@ -27,6 +27,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 
 		private readonly INavigationController m_Navigation;
 		private readonly IViewFactory m_ViewFactory;
+		private readonly SafeCriticalSection m_ViewSection;
 
 		private ILoggerService m_CachedLogger;
 
@@ -47,7 +48,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <summary>
 		/// Gets the state of the view visibility.
 		/// </summary>
-		public bool IsViewVisible { get { return m_View != null && m_View.IsVisible; } }
+		public bool IsViewVisible { get { return m_ViewSection.Execute(() => m_View != null && m_View.IsVisible); } }
 
 		/// <summary>
 		/// Returns true if this presenter is part of a collection of components.
@@ -73,6 +74,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 
 			m_Navigation = nav;
 			m_ViewFactory = views;
+			m_ViewSection = new SafeCriticalSection();
 		}
 
 		#region Methods
@@ -85,11 +87,20 @@ namespace ICD.Connect.UI.Mvp.Presenters
 			OnViewPreVisibilityChanged = null;
 			OnViewVisibilityChanged = null;
 
-			if (m_View == null)
-				return;
+			m_ViewSection.Enter();
 
-			Unsubscribe(m_View);
-			m_View.Dispose();
+			try
+			{
+				if (m_View == null)
+					return;
+
+				Unsubscribe(m_View);
+				m_View.Dispose();
+			}
+			finally
+			{
+				m_ViewSection.Leave();
+			}
 		}
 
 		/// <summary>
@@ -116,22 +127,31 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <param name="view"></param>
 		public virtual void SetView(T view)
 		{
-			if (view == m_View)
-				return;
+			m_ViewSection.Enter();
 
-			// Special case - Can't set an SRL count to 0 (yay) so hide when cleaning up items.
-			if (view == null && m_View != null)
-				ShowView(false);
+			try
+			{
+				if (view == m_View)
+					return;
 
-			if (m_View != null)
-				Unsubscribe(m_View);
+				// Special case - Can't set an SRL count to 0 (yay) so hide when cleaning up items.
+				if (view == null && m_View != null)
+					ShowView(false);
 
-			m_View = view;
+				if (m_View != null)
+					Unsubscribe(m_View);
 
-			if (m_View != null)
-				Subscribe(m_View);
+				m_View = view;
 
-			RefreshIfVisible();
+				if (m_View != null)
+					Subscribe(m_View);
+
+				RefreshIfVisible();
+			}
+			finally
+			{
+				m_ViewSection.Leave();
+			}
 		}
 
 		/// <summary>
@@ -140,11 +160,20 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <param name="visible"></param>
 		public void ShowView(bool visible)
 		{
-			// Don't bother creating the view just to hide it.
-			if (m_View == null && !visible)
-				return;
+			m_ViewSection.Enter();
 
-			GetView().Show(visible);
+			try
+			{
+				// Don't bother creating the view just to hide it.
+				if (m_View == null && !visible)
+					return;
+
+				GetView().Show(visible);
+			}
+			finally
+			{
+				m_ViewSection.Leave();
+			}
 		}
 
 		/// <summary>
@@ -223,14 +252,23 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		[CanBeNull]
 		private T GetView(bool instantiate)
 		{
-			// Get default view from the factory
-			if (m_View == null && instantiate)
-			{
-				T view = InstantiateView();
-				SetView(view);
-			}
+			m_ViewSection.Enter();
 
-			return m_View;
+			try
+			{
+				// Get default view from the factory
+				if (m_View == null && instantiate)
+				{
+					T view = InstantiateView();
+					SetView(view);
+				}
+
+				return m_View;
+			}
+			finally
+			{
+				m_ViewSection.Leave();
+			}
 		}
 
 		/// <summary>
@@ -240,7 +278,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		[NotNull]
 		private T InstantiateView()
 		{
-			if (IsComponent)
+            if (IsComponent)
 				throw new InvalidOperationException(string.Format("{0} can not create its own view.", GetType().Name));
 
 			T view = m_ViewFactory.GetNewView<T>();
