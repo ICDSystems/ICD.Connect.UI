@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+ - Added LazyLoadPresenter overload for simpler casting
+
+### Changed
+ - Fixed string formatting bug when getting presenter via binding
+ - Significantly improved thread safety when instantiating presenters via bindings
+ - Improved thread safety when instantiating views via presenters
+
 ## [6.0.0] - 2019-02-21
 ### Added
  - Added view/presenter bindings for automatically mapping interfaces to concretes
