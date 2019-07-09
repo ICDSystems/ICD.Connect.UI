@@ -79,6 +79,8 @@ namespace ICD.Connect.UI.Controls.Lists
 
 			ushort join = GetAnalogJoinWithParentOffset(AnalogScrollToItemJoin);
 
+			// Hack to bypass the cache
+			SmartObject.SendInputAnalog(join, (ushort)(item + 2));
 			SmartObject.SendInputAnalog(join, (ushort)(item + 1));
 		}
 
