@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [5.1.1] - 2019-07-09
+### Changed
+ - Fixed a bug in ScrollToItem method in AbstractVProList by sending a false command then the real command in order to bypass the cache
+
 ## [5.1.0] - 2019-04-05
 ### Added
  - Added method to replace newlines with HTML line breaks
