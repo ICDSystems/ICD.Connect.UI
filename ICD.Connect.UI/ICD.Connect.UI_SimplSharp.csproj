@@ -87,6 +87,7 @@
     <Compile Include="Controls\Guages\AbstractVtProGuage.cs" />
     <Compile Include="Controls\Guages\VtProGuage.cs" />
     <Compile Include="Controls\IVtProParent.cs" />
+    <Compile Include="Controls\Lists\ButtonListItem.cs" />
     <Compile Include="EventArguments\KeyboardKeyEventArgs.cs" />
     <Compile Include="IIndexed.cs" />
     <Compile Include="Controls\IJoinOffsets.cs" />

@@ -1,4 +1,6 @@
-﻿using ICD.Common.Properties;
+﻿using System;
+using System.Collections.Generic;
+using ICD.Common.Properties;
 using ICD.Common.Utils;
 using ICD.Connect.Panels.Devices;
 
@@ -105,6 +107,39 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// <param name="index"></param>
 		/// <param name="icon"></param>
 		public abstract void SetItemIcon(ushort index, string icon);
+
+		/// <summary>
+		/// Sets the button items.
+		/// </summary>
+		/// <param name="items"></param>
+		public void SetItems(IList<ButtonListItem> items)
+		{
+			if (items == null)
+				throw new ArgumentNullException("items");
+
+			m_SetIconsSection.Enter();
+			m_SetLabelsSection.Enter();
+
+			try
+			{
+				ushort min = (ushort)Math.Min(items.Count, MaxSize);
+
+				SetNumberOfItems(min);
+
+				for (ushort index = 0; index < min; index++)
+				{
+					ButtonListItem item = items[index];
+
+					SetItemLabel(index, item.Label);
+					SetItemIcon(index, item.Icon);
+				}
+			}
+			finally
+			{
+				m_SetIconsSection.Leave();
+				m_SetLabelsSection.Leave();
+			}
+		}
 
 		#endregion
 	}
