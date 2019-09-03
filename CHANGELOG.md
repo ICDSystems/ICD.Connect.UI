@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
  - Added ButtonListItem struct and methods for updating button list labels and icons in one pass
  
+### Changed
+ - Potential performance improvements when populating lists
+
 ## [6.1.0] - 2019-07-09
 ### Added
  - Added LazyLoadPresenter overload for simpler casting

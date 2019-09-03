@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ICD.Common.Properties;
 using ICD.Common.Utils.EventArguments;
 using ICD.Common.Utils.Extensions;
@@ -116,11 +117,11 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// </summary>
 		/// <param name="labels"></param>
 		[PublicAPI]
-		public void SetItemLabels(string[] labels)
+		public void SetItemLabels(IList<string> labels)
 		{
-			SetNumberOfItems((ushort)labels.Length);
+			SetNumberOfItems((ushort)labels.Count);
 
-			for (ushort index = 0; index < labels.Length; index++)
+			for (ushort index = 0; index < labels.Count; index++)
 				SetItemLabel(index, labels[index]);
 		}
 

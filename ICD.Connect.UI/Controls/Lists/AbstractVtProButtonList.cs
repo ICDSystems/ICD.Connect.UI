@@ -55,15 +55,20 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// Sets the button labels.
 		/// </summary>
 		/// <param name="labels"></param>
-		public void SetItemLabels(string[] labels)
+		public void SetItemLabels(IList<string> labels)
 		{
+			if (labels == null)
+				throw new ArgumentNullException("labels");
+
 			m_SetLabelsSection.Enter();
 
 			try
 			{
-				SetNumberOfItems((ushort)labels.Length);
+				ushort min = (ushort)Math.Min(labels.Count, MaxSize);
 
-				for (ushort index = 0; index < labels.Length; index++)
+				SetNumberOfItems(min);
+
+				for (ushort index = 0; index < min; index++)
 					SetItemLabel(index, labels[index]);
 			}
 			finally
@@ -84,15 +89,20 @@ namespace ICD.Connect.UI.Controls.Lists
 		/// </summary>
 		/// <param name="icons"></param>
 		[PublicAPI]
-		public void SetItemIcons(string[] icons)
+		public void SetItemIcons(IList<string> icons)
 		{
+			if (icons == null)
+				throw new ArgumentNullException("icons");
+
 			m_SetIconsSection.Enter();
 
 			try
 			{
-				SetNumberOfItems((ushort)icons.Length);
+				ushort min = (ushort)Math.Min(icons.Count, MaxSize);
 
-				for (ushort index = 0; index < icons.Length; index++)
+				SetNumberOfItems(min);
+
+				for (ushort index = 0; index < min; index++)
 					SetItemIcon(index, icons[index]);
 			}
 			finally
