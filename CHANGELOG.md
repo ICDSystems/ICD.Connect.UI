@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [6.2.0] - 2019-09-16
 ### Added
  - Added ButtonListItem struct and methods for updating button list labels and icons in one pass
  
