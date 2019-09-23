@@ -95,7 +95,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 			{
 				// Update the model cache to match the given models
 				if (!UpdateModelCache(models))
-					return m_Presenters.ToArray(m_Presenters.Count);
+					return m_Presenters.ToArray();
 
 				// Build the views (may be fewer than models due to list max size)
 				IEnumerable<TView> views = m_ViewFactory((ushort)m_Models.Count);
@@ -120,7 +120,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 					BindMvpTriad(model, presenter, view);
 				}
 
-				return m_Presenters.ToArray(m_Presenters.Count);
+				return m_Presenters.ToArray();
 			}
 			finally
 			{
@@ -176,6 +176,11 @@ namespace ICD.Connect.UI.Mvp.Presenters
 
 		#region Private Methods
 
+		/// <summary>
+		/// Returns true if the cache changed.
+		/// </summary>
+		/// <param name="models"></param>
+		/// <returns></returns>
 		private bool UpdateModelCache(IEnumerable<TModel> models)
 		{
 			if (models == null)
@@ -186,10 +191,10 @@ namespace ICD.Connect.UI.Mvp.Presenters
 			try
 			{
 				// Gather all of the models
-				IList<TModel> modelsArray = models as IList<TModel> ?? models.ToArray();
+				ICollection<TModel> modelsArray = models as ICollection<TModel> ?? models.ToArray();
 
 				// Check if anything has actually changed
-				if (modelsArray.SequenceEqual(m_Models))
+				if (modelsArray.Count == m_Models.Count && modelsArray.SequenceEqual(m_Models))
 					return false;
 
 				m_Models.Clear();
@@ -326,14 +331,8 @@ namespace ICD.Connect.UI.Mvp.Presenters
 
 			try
 			{
-				Queue<TPresenter> pool;
-				if (!m_PresenterPool.TryGetValue(key, out pool))
-				{
-					pool = new Queue<TPresenter>();
-					m_PresenterPool[key] = pool;
-				}
-
-				pool.Enqueue(presenter);
+				m_PresenterPool.GetOrAddNew(key)
+				               .Enqueue(presenter);
 			}
 			finally
 			{
@@ -342,6 +341,8 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		}
 
 		#endregion
+
+		#region Enumerable
 
 		public IEnumerator<TPresenter> GetEnumerator()
 		{
@@ -352,5 +353,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		{
 			return GetEnumerator();
 		}
+
+		#endregion
 	}
 }

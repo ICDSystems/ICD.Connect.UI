@@ -36,6 +36,9 @@ namespace ICD.Connect.UI.Mvp.Views
 		/// <param name="panel"></param>
 		protected AbstractViewFactory(IPanelDevice panel)
 		{
+			if (panel == null)
+				throw new ArgumentNullException("panel");
+
 			m_Panel = panel;
 		}
 
@@ -48,7 +51,8 @@ namespace ICD.Connect.UI.Mvp.Views
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public T GetNewView<T>() where T : class, IView
+		public T GetNewView<T>()
+			where T : class, IView
 		{
 			T view = InstantiateView<T>();
 			view.Initialize();
@@ -66,6 +70,12 @@ namespace ICD.Connect.UI.Mvp.Views
 		public T GetNewView<T>(ISmartObject smartObject, IVtProParent parent, ushort index)
 			where T : class, IView
 		{
+			if (smartObject == null)
+				throw new ArgumentNullException("smartObject");
+
+			if (parent == null)
+				throw new ArgumentNullException("parent");
+
 			T view = InstantiateView<T>(smartObject, parent, index);
 			view.Initialize();
 			return view;
@@ -82,6 +92,12 @@ namespace ICD.Connect.UI.Mvp.Views
 		public IEnumerable<T> LazyLoadSrlViews<T>(VtProSubpageReferenceList list, List<T> childViews, ushort count)
 			where T : class, IView
 		{
+			if (list == null)
+				throw new ArgumentNullException("list");
+
+			if (childViews == null)
+				throw new ArgumentNullException("childViews");
+
 			count = Math.Min(count, list.MaxSize);
 			list.SetNumberOfItems(count);
 

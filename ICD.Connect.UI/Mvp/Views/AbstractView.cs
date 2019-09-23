@@ -36,6 +36,8 @@ namespace ICD.Connect.UI.Mvp.Views
 
 		private IVtProControl m_CachedPage;
 
+		#region Properties
+
 		/// <summary>
 		/// Returns true if the view is visible.
 		/// </summary>
@@ -61,6 +63,8 @@ namespace ICD.Connect.UI.Mvp.Views
 		/// Gets the wrapped panel.
 		/// </summary>
 		public ISigInputOutput Panel { get { return m_Panel; } }
+
+		#endregion
 
 		#region Constructors
 
