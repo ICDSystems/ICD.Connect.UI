@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ICD.Common.Properties;
 using ICD.Common.Utils.EventArguments;
 using ICD.Common.Utils.Extensions;
 using ICD.Connect.Panels;
@@ -34,30 +35,23 @@ namespace ICD.Connect.UI.Mvp.Views
 		private readonly IVtProParent m_Parent;
 		private readonly ushort m_Index;
 
-		private IVtProControl m_CachedPage;
-
 		#region Properties
 
 		/// <summary>
 		/// Returns true if the view is visible.
 		/// </summary>
-		public bool IsVisible { get { return Page.IsVisible; } }
+		public bool IsVisible { get { return Page == null || Page.IsVisible; } }
 
 		/// <summary>
 		/// Returns true if the view is enabled.
 		/// </summary>
-		public bool IsEnabled { get { return Page.IsEnabled; } }
+		public bool IsEnabled { get { return Page == null || Page.IsEnabled; } }
 
 		/// <summary>
 		/// Gets the page control.
 		/// </summary>
-		public IVtProControl Page
-		{
-			get
-			{
-				return m_CachedPage ?? (m_CachedPage = GetChildren().FirstOrDefault(c => c is VtProSubpage || c is VtProPage));
-			}
-		}
+		[CanBeNull]
+		public IVtProControl Page { get; private set; }
 
 		/// <summary>
 		/// Gets the wrapped panel.
@@ -100,6 +94,9 @@ namespace ICD.Connect.UI.Mvp.Views
 		public void Initialize()
 		{
 			InstantiateControls(m_Panel, m_Parent, m_Index);
+
+			Page = GetChildren().FirstOrDefault(c => c is VtProSubpage || c is VtProPage);
+
 			SubscribeControls();
 		}
 
@@ -123,6 +120,9 @@ namespace ICD.Connect.UI.Mvp.Views
 		/// <param name="visible"></param>
 		public virtual void Show(bool visible)
 		{
+			if (Page == null)
+				throw new ArgumentException("Unable to set visibility of view with no page");
+
 			if (visible == IsVisible)
 				return;
 
@@ -147,6 +147,9 @@ namespace ICD.Connect.UI.Mvp.Views
 		/// <param name="enabled"></param>
 		public void Enable(bool enabled)
 		{
+			if (Page == null)
+				throw new ArgumentException("Unable to set enabled state of view with no page");
+
 			if (enabled == IsEnabled)
 				return;
 
@@ -194,8 +197,7 @@ namespace ICD.Connect.UI.Mvp.Views
 		                                                 List<T> viewList, ushort count)
 			where T : class, IView
 		{
-			foreach (T view in factory.LazyLoadSrlViews(subpageReferenceList, viewList, count))
-				yield return view;
+			return factory.LazyLoadSrlViews(subpageReferenceList, viewList, count);
 		}
 
 		/// <summary>
