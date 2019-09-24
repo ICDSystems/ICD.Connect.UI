@@ -3,8 +3,6 @@ using ICD.Common.Properties;
 using ICD.Common.Utils;
 using ICD.Common.Utils.EventArguments;
 using ICD.Common.Utils.Extensions;
-using ICD.Common.Utils.Services;
-using ICD.Common.Utils.Services.Logging;
 using ICD.Connect.UI.Mvp.Views;
 
 namespace ICD.Connect.UI.Mvp.Presenters
@@ -29,8 +27,6 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		private readonly IViewFactory m_ViewFactory;
 		private readonly SafeCriticalSection m_ViewSection;
 
-		private ILoggerService m_CachedLogger;
-
 		private T m_View;
 
 		#region Properties
@@ -54,8 +50,6 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// Returns true if this presenter is part of a collection of components.
 		/// </summary>
 		public abstract bool IsComponent { get; }
-
-		protected ILoggerService Logger { get { return m_CachedLogger ?? (m_CachedLogger = ServiceProvider.TryGetService<ILoggerService>()); } }
 
 		#endregion
 
