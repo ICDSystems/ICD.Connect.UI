@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using ICD.Common.Utils;
 using ICD.Connect.Panels;
 
-namespace ICD.Connect.UI.Controls.Guages
+namespace ICD.Connect.UI.Controls.Gauges
 {
 	public sealed class VtProCircularGauge : AbstractVtProGauge
 	{

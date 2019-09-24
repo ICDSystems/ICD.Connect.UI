@@ -1,7 +1,7 @@
 ﻿using ICD.Common.Properties;
 using ICD.Connect.Panels;
 
-namespace ICD.Connect.UI.Controls.Guages
+namespace ICD.Connect.UI.Controls.Gauges
 {
 	public sealed class VtProGauge : AbstractVtProGauge
 	{

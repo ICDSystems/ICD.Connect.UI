@@ -8,7 +8,7 @@ using ICD.Connect.Panels.EventArguments;
 using ICD.Connect.Protocol.Sigs;
 using ICD.Connect.UI.Controls.Buttons;
 
-namespace ICD.Connect.UI.Controls.Guages
+namespace ICD.Connect.UI.Controls.Gauges
 {
 	public abstract class AbstractVtProGauge : AbstractVtProButton
 	{
