@@ -10,7 +10,7 @@ using ICD.Connect.UI.Controls.Buttons;
 
 namespace ICD.Connect.UI.Controls.Guages
 {
-	public abstract class AbstractVtProGuage : AbstractVtProButton
+	public abstract class AbstractVtProGauge : AbstractVtProButton
 	{
 		public event EventHandler<UShortEventArgs> OnTouched;
 
@@ -45,7 +45,7 @@ namespace ICD.Connect.UI.Controls.Guages
 		/// Constructor.
 		/// </summary>
 		/// <param name="panel"></param>
-		protected AbstractVtProGuage(ISigInputOutput panel)
+		protected AbstractVtProGauge(ISigInputOutput panel)
 			: this(panel, null)
 		{
 		}
@@ -55,7 +55,7 @@ namespace ICD.Connect.UI.Controls.Guages
 		/// </summary>
 		/// <param name="panel"></param>
 		/// <param name="parent"></param>
-		protected AbstractVtProGuage(ISigInputOutput panel, IVtProParent parent)
+		protected AbstractVtProGauge(ISigInputOutput panel, IVtProParent parent)
 			: base(panel, parent)
 		{
 			m_SetValueSection = new SafeCriticalSection();

@@ -3,14 +3,14 @@ using ICD.Connect.Panels;
 
 namespace ICD.Connect.UI.Controls.Guages
 {
-	public sealed class VtProGuage : AbstractVtProGuage
+	public sealed class VtProGauge : AbstractVtProGauge
 	{
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="panel"></param>
 		[PublicAPI]
-		public VtProGuage(ISigInputOutput panel)
+		public VtProGauge(ISigInputOutput panel)
 			: base(panel)
 		{
 		}
@@ -20,7 +20,7 @@ namespace ICD.Connect.UI.Controls.Guages
 		/// </summary>
 		/// <param name="panel"></param>
 		/// <param name="parent"></param>
-		public VtProGuage(ISigInputOutput panel, IVtProParent parent)
+		public VtProGauge(ISigInputOutput panel, IVtProParent parent)
 			: base(panel, parent)
 		{
 		}
