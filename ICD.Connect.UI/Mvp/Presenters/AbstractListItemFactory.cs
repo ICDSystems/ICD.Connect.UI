@@ -37,6 +37,9 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		private readonly Action<TPresenter> m_Subscribe;
 		private readonly Action<TPresenter> m_Unsubscribe;
 
+		// Organize the existing presenters for recycling in the least destructive way possible
+		private readonly Dictionary<NullObject<TModel>, Queue<TPresenter>> m_ModelToPresenters;
+
 		/// <summary>
 		/// Constructor.
 		/// </summary>
@@ -59,6 +62,8 @@ namespace ICD.Connect.UI.Mvp.Presenters
 
 			m_NavigationController = navigationController;
 			m_ViewFactory = viewFactory;
+
+			m_ModelToPresenters = new Dictionary<NullObject<TModel>, Queue<TPresenter>>();
 		}
 
 		#region Methods
@@ -101,10 +106,8 @@ namespace ICD.Connect.UI.Mvp.Presenters
 				IEnumerable<TView> views = m_ViewFactory((ushort)m_Models.Count);
 				IList<TView> viewsArray = views as IList<TView> ?? views.ToArray();
 
-				// Return presenters that are outside of the current view count back to the pool
-				ReturnPresentersToPool(viewsArray.Count);
-
 				// Build the presenters
+				m_Presenters.Clear();
 				for (int index = 0; index < viewsArray.Count; index++)
 				{
 					TView view = viewsArray[index];
@@ -113,12 +116,18 @@ namespace ICD.Connect.UI.Mvp.Presenters
 					TModel model = m_Models[index];
 
 					// Get the presenter
-					Type key = GetPresenterTypeForModel(model);
-					TPresenter presenter = LazyLoadPresenterFromPool(key, index);
+					TPresenter presenter = LazyLoadPresenterFromPool(model);
+					m_Presenters.Add(presenter);
 
 					// Bind
 					BindMvpTriad(model, presenter, view);
 				}
+
+				// Return unused presenters back to the pool
+				ReturnPresentersToPool();
+
+				// Update the model -> presenter lookups for recycling
+				UpdateModelToPresentersCache();
 
 				return m_Presenters.ToArray();
 			}
@@ -197,6 +206,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 				if (modelsArray.Count == m_Models.Count && modelsArray.SequenceEqual(m_Models))
 					return false;
 
+				// Now update to the models
 				m_Models.Clear();
 				m_Models.AddRange(modelsArray);
 
@@ -209,48 +219,58 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		}
 
 		/// <summary>
-		/// Retrieves or generates a presenter from the pool and adds it to the cache at the given index.
+		/// Builds a cache of model to presenter to avoid destructive subsequent updates.
 		/// </summary>
-		/// <param name="presenterType"></param>
-		/// <param name="index"></param>
-		/// <returns></returns>
-		private TPresenter LazyLoadPresenterFromPool(Type presenterType, int index)
+		private void UpdateModelToPresentersCache()
 		{
-			if (presenterType == null)
-				throw new ArgumentNullException("presenterType");
-
-			if (index < 0)
-				throw new ArgumentOutOfRangeException("index");
-
 			m_CacheSection.Enter();
 
 			try
 			{
-				// Does the cache already contain the correct presenter type at the given index?
-				TPresenter existing = m_Presenters.Count > index ? m_Presenters[index] : null;
-				if (existing != null && existing.GetType().IsAssignableTo(presenterType))
-					return existing;
-
-				// Return the existing presenter of the wrong type to the pool
-				if (existing != null)
-					ReturnPresenterToPool(index);
-
-				// Get the pool for the given type
-				Queue<TPresenter> pool;
-				if (!m_PresenterPool.TryGetValue(presenterType, out pool))
+				for (int index = 0; index < m_Presenters.Count; index++)
 				{
-					pool = new Queue<TPresenter>();
-					m_PresenterPool[presenterType] = pool;
-				}
+					TModel model = m_Models[index];
+					TPresenter presenter = m_Presenters[index];
 
+// ReSharper disable RedundantCast - The 2008 compiler gets very unhappy without this cast
+					m_ModelToPresenters.GetOrAddNew((NullObject<TModel>)model, () => new Queue<TPresenter>())
+					                   .Enqueue(presenter);
+// ReSharper restore RedundantCast
+				}
+			}
+			finally
+			{
+				m_CacheSection.Leave();
+			}
+		}
+
+		/// <summary>
+		/// Retrieves or generates a presenter from the pool and adds it to the cache.
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
+		private TPresenter LazyLoadPresenterFromPool(TModel model)
+		{
+			m_CacheSection.Enter();
+
+			try
+			{
+				TPresenter presenter;
+
+				// Does the cache already contain a presenter for the given model?
+				Queue<TPresenter> queue;
+				if (m_ModelToPresenters.TryGetValue(model, out queue) && queue.Dequeue(out presenter))
+					return presenter;
+
+				// Get the pool for the given model
+				Type presenterType = GetPresenterTypeForModel(model);
+				
 				// Create a new presenter if the pool is empty
-				TPresenter presenter =
-					pool.Dequeue(out presenter)
+				Queue<TPresenter> pool;
+				presenter =
+					m_PresenterPool.TryGetValue(presenterType, out pool) && pool.Dequeue(out presenter)
 						? presenter
 						: m_NavigationController.GetNewPresenter(presenterType) as TPresenter;
-
-				// Insert the presenter into the cache
-				m_Presenters.Insert(index, presenter);
 
 				// Call the subscription action
 				if (m_Subscribe != null)
@@ -265,45 +285,22 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		}
 
 		/// <summary>
-		/// Loops over the presenters starting at the given index, clears the views and moves the
-		/// presenters from the cache to the pool.
+		/// Loops over the unused presenters and moves them back into to the pool.
 		/// </summary>
-		private void ReturnPresentersToPool(int startIndex)
-		{
-			if (startIndex < 0)
-				throw new ArgumentOutOfRangeException("startIndex");
-
-			m_CacheSection.Enter();
-
-			try
-			{
-				for (int index = m_Presenters.Count - 1; index >= startIndex; index--)
-					ReturnPresenterToPool(index);
-			}
-			finally
-			{
-				m_CacheSection.Leave();
-			}
-		}
-
-		/// <summary>
-		/// Removes the presenter at the given index and puts it back into the pool.
-		/// </summary>
-		/// <param name="index"></param>
-		private void ReturnPresenterToPool(int index)
+		private void ReturnPresentersToPool()
 		{
 			m_CacheSection.Enter();
 
 			try
 			{
-				if (index < 0 || index >= m_Presenters.Count)
-					throw new ArgumentOutOfRangeException("index");
+				foreach (Queue<TPresenter> queue in m_ModelToPresenters.Values)
+				{
+					TPresenter presenter;
+					while (queue.Dequeue(out presenter))
+						ReturnPresenterToPool(presenter);
+				}
 
-				TPresenter presenter = m_Presenters[index];
-
-				ReturnPresenterToPool(presenter);
-
-				m_Presenters.RemoveAt(index);
+				m_ModelToPresenters.Clear();
 			}
 			finally
 			{
@@ -323,7 +320,10 @@ namespace ICD.Connect.UI.Mvp.Presenters
 			if (m_Unsubscribe != null)
 				m_Unsubscribe(presenter);
 
+			// Clear the view first
 			presenter.ClearView();
+			// Now clear the model
+			BindMvpTriad(default(TModel), presenter, default(TView));
 
 			Type key = presenter.GetType();
 
@@ -331,7 +331,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 
 			try
 			{
-				m_PresenterPool.GetOrAddNew(key)
+				m_PresenterPool.GetOrAddNew(key, () => new Queue<TPresenter>())
 				               .Enqueue(presenter);
 			}
 			finally
