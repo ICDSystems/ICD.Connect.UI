@@ -162,7 +162,11 @@ namespace ICD.Connect.UI.Mvp.Presenters
 				if (m_View == null && !visible)
 					return;
 
-				GetView().Show(visible);
+				T view = GetView();
+				if (view == null)
+					throw new InvalidOperationException("Presenter has no view");
+
+				view.Show(visible);
 			}
 			finally
 			{
@@ -176,7 +180,24 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <param name="enabled"></param>
 		public void SetViewEnabled(bool enabled)
 		{
-			GetView().Enable(enabled);
+			m_ViewSection.Enter();
+
+			try
+			{
+				// Don't bother creating the view just to disable it.
+				if (m_View == null && !enabled)
+					return;
+
+				T view = GetView();
+				if (view == null)
+					throw new InvalidOperationException("Presenter has no view");
+
+				view.Enable(enabled);
+			}
+			finally
+			{
+				m_ViewSection.Leave();
+			}
 		}
 
 		/// <summary>
@@ -190,14 +211,6 @@ namespace ICD.Connect.UI.Mvp.Presenters
 			// Don't refresh if we currently have no view.
 			if (view != null)
 				Refresh(view);
-		}
-
-		/// <summary>
-		/// Updates the view.
-		/// </summary>
-		/// <param name="view"></param>
-		protected virtual void Refresh(T view)
-		{
 		}
 
 		/// <summary>
@@ -237,6 +250,14 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		#endregion
 
 		#region Private Methods
+
+		/// <summary>
+		/// Updates the view.
+		/// </summary>
+		/// <param name="view"></param>
+		protected virtual void Refresh(T view)
+		{
+		}
 
 		/// <summary>
 		/// Gets the view for the presenter.
