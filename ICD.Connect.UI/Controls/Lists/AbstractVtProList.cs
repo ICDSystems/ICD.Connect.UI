@@ -156,7 +156,7 @@ namespace ICD.Connect.UI.Controls.Lists
 		private void UnsubscribeDigitalFeedback()
 		{
 			if (DigitalIsMovingOutputJoin != 0)
-				Panel.UnregisterOutputSigChangeCallback(DigitalIsMovingOutputJoin, eSigType.Digital, IsMovingChange);
+				SmartObject.UnregisterOutputSigChangeCallback(DigitalIsMovingOutputJoin, eSigType.Digital, IsMovingChange);
 		}
 
 		/// <summary>
@@ -167,7 +167,7 @@ namespace ICD.Connect.UI.Controls.Lists
 			UnsubscribeDigitalFeedback();
 
 			if (DigitalIsMovingOutputJoin != 0)
-				Panel.RegisterOutputSigChangeCallback(DigitalIsMovingOutputJoin, eSigType.Digital, IsMovingChange);
+				SmartObject.RegisterOutputSigChangeCallback(DigitalIsMovingOutputJoin, eSigType.Digital, IsMovingChange);
 		}
 
 		/// <summary>
