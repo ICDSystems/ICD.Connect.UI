@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace ICD.Connect.UI.Tests.Controls.Lists
 {
     [TestFixture]
-    public sealed class VtProSpinnerListTest : AbstractVtProSmartObjectTest<VtProSpinnerList>
+    public sealed class VtProSpinnerListTest : AbstractVtProSmartControlTest<VtProSpinnerList>
     {
         protected override VtProSpinnerList Instantiate(ushort smartObjectId, IPanelDevice panel, IVtProParent parent)
         {

@@ -9,7 +9,7 @@ using ICD.Connect.UI.EventArguments;
 
 namespace ICD.Connect.UI.Controls.Keypads
 {
-	public sealed class VtProSimpleKeypad : AbstractVtProSmartObject
+	public sealed class VtProSimpleKeypad : AbstractVtProSmartControl
 	{
 		private const ushort SIG_RANGE_START = 1;
 		private const ushort SIG_RANGE_END = 12;

@@ -9,7 +9,7 @@ using ICD.Connect.UI.EventArguments;
 
 namespace ICD.Connect.UI.Controls.Keypads
 {
-	public sealed class VtProDPad : AbstractVtProSmartObject
+	public sealed class VtProDPad : AbstractVtProSmartControl
 	{
 		private const ushort UP = 1;
 		private const ushort DOWN = 2;

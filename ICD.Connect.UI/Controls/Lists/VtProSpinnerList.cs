@@ -11,7 +11,7 @@ using ICD.Connect.Protocol.Sigs;
 namespace ICD.Connect.UI.Controls.Lists
 {
 	[PublicAPI]
-	public sealed class VtProSpinnerList : AbstractVtProSmartObject
+	public sealed class VtProSpinnerList : AbstractVtProSmartControl
 	{
 		// Bool input
 		//private const ushort DIGITAL_DISABLE_REDRAW_JOIN = 1;

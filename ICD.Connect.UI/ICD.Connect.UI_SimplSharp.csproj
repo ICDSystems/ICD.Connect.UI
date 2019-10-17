@@ -77,7 +77,7 @@
     <Compile Include="Attributes\PresenterBindingAttribute.cs" />
     <Compile Include="Attributes\ViewBindingAttribute.cs" />
     <Compile Include="Controls\AbstractVtProControl.cs" />
-    <Compile Include="Controls\AbstractVtProSmartObject.cs" />
+    <Compile Include="Controls\AbstractVtProSmartControl.cs" />
     <Compile Include="Controls\Buttons\AbstractVtProButton.cs" />
     <Compile Include="Controls\Buttons\AbstractVtProAdvancedButton.cs" />
     <Compile Include="Controls\Buttons\VtProAdvancedButton.cs" />

@@ -4,7 +4,7 @@ using ICD.Connect.Panels.SmartObjects;
 
 namespace ICD.Connect.UI.Controls
 {
-	public abstract class AbstractVtProSmartObject : AbstractVtProControl<IPanelDevice>
+	public abstract class AbstractVtProSmartControl : AbstractVtProControl<IPanelDevice>
 	{
 		/// <summary>
 		/// Gets the smart object.
@@ -18,7 +18,7 @@ namespace ICD.Connect.UI.Controls
 		/// </summary>
 		/// <param name="smartObjectId"></param>
 		/// <param name="panel"></param>
-		protected AbstractVtProSmartObject(uint smartObjectId, IPanelDevice panel)
+		protected AbstractVtProSmartControl(uint smartObjectId, IPanelDevice panel)
 			: this(smartObjectId, panel, null)
 		{
 		}
@@ -29,7 +29,7 @@ namespace ICD.Connect.UI.Controls
 		/// <param name="smartObjectId"></param>
 		/// <param name="panel"></param>
 		/// <param name="parent"></param>
-		protected AbstractVtProSmartObject(uint smartObjectId, IPanelDevice panel, IVtProParent parent)
+		protected AbstractVtProSmartControl(uint smartObjectId, IPanelDevice panel, IVtProParent parent)
 			: base(panel, parent)
 		{
 			if (panel == null)

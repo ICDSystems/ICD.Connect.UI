@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace ICD.Connect.UI.Tests.Controls.Buttons
 {
     [TestFixture]
-    public sealed class VtProTabButtonTest : AbstractVtProSmartObjectTest<VtProTabButton>
+    public sealed class VtProTabButtonTest : AbstractVtProSmartControlTest<VtProTabButton>
     {
         protected override VtProTabButton Instantiate(ushort smartObjectId, IPanelDevice panel, IVtProParent parent)
         {

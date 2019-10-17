@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace ICD.Connect.UI.Tests.Controls.Lists
 {
-    public abstract class AbstractVtProListTest<T> : AbstractVtProSmartObjectTest<T>
+    public abstract class AbstractVtProListTest<T> : AbstractVtProSmartControlTest<T>
     where T : AbstractVtProList
     {
         /// <summary>

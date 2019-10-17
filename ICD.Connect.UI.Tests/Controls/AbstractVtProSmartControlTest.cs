@@ -5,8 +5,8 @@ using NUnit.Framework;
 
 namespace ICD.Connect.UI.Tests.Controls
 {
-    public abstract class AbstractVtProSmartObjectTest<T> : AbstractVtProControlTest<T, IPanelDevice>
-        where T : AbstractVtProSmartObject
+    public abstract class AbstractVtProSmartControlTest<T> : AbstractVtProControlTest<T, IPanelDevice>
+        where T : AbstractVtProSmartControl
     {
         [Test]
         public void VisibilityDigitalJoinTest()

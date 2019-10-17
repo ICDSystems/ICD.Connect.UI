@@ -9,7 +9,7 @@ using ICD.Connect.Protocol.Sigs;
 
 namespace ICD.Connect.UI.Controls.Lists
 {
-	public abstract class AbstractVtProList : AbstractVtProSmartObject
+	public abstract class AbstractVtProList : AbstractVtProSmartControl
 	{
 		/// <summary>
 		/// Raised when the user starts or stops scrolling the list.

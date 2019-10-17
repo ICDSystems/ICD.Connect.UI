@@ -11,7 +11,7 @@ using ICD.Connect.Protocol.Sigs;
 
 namespace ICD.Connect.UI.Controls.Buttons
 {
-	public sealed class VtProTabButton : AbstractVtProSmartObject
+	public sealed class VtProTabButton : AbstractVtProSmartControl
 	{
 		public event EventHandler<UShortEventArgs> OnButtonPressed;
 		public event EventHandler<UShortEventArgs> OnButtonReleased;

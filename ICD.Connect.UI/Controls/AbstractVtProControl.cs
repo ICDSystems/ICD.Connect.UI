@@ -6,7 +6,7 @@ using ICD.Connect.Panels;
 namespace ICD.Connect.UI.Controls
 {
 	/// <summary>
-	/// IVtProControlis the base class for all VTPro controls.
+	/// AbstractVtProControl is the base class for all VTPro controls.
 	/// </summary>
 	public abstract class AbstractVtProControl<T> : IVtProControl
 		where T : class, ISigInputOutput
