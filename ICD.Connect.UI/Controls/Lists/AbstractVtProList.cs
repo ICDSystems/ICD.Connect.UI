@@ -5,6 +5,7 @@ using ICD.Common.Utils.EventArguments;
 using ICD.Common.Utils.Extensions;
 using ICD.Connect.Panels.Devices;
 using ICD.Connect.Panels.EventArguments;
+using ICD.Connect.Panels.SmartObjects;
 using ICD.Connect.Protocol.Sigs;
 
 namespace ICD.Connect.UI.Controls.Lists
@@ -128,46 +129,30 @@ namespace ICD.Connect.UI.Controls.Lists
 
 		#endregion
 
-		#region Private Methods
+		#region SmartObject Callbacks
 
 		/// <summary>
-		/// Subscribe to the panel events.
+		/// Subscribe to the smart object events.
 		/// </summary>
-		protected override void SubscribePanelFeedback()
+		/// <param name="smartObject"></param>
+		protected override void Subscribe(ISmartObject smartObject)
 		{
-			base.SubscribePanelFeedback();
-
-			SubscribeDigitalFeedback();
-		}
-
-		/// <summary>
-		/// Unsubscribe from the panel events.
-		/// </summary>
-		protected override void UnsubscribePanelFeedback()
-		{
-			base.UnsubscribePanelFeedback();
-
-			UnsubscribeDigitalFeedback();
-		}
-
-		/// <summary>
-		/// Unsubscribes from the previous subscribed join.
-		/// </summary>
-		private void UnsubscribeDigitalFeedback()
-		{
-			if (DigitalIsMovingOutputJoin != 0)
-				SmartObject.UnregisterOutputSigChangeCallback(DigitalIsMovingOutputJoin, eSigType.Digital, IsMovingChange);
-		}
-
-		/// <summary>
-		/// Unsubscribes from the previous subscribed join and subscribes to the current join.
-		/// </summary>
-		private void SubscribeDigitalFeedback()
-		{
-			UnsubscribeDigitalFeedback();
+			base.Subscribe(smartObject);
 
 			if (DigitalIsMovingOutputJoin != 0)
 				SmartObject.RegisterOutputSigChangeCallback(DigitalIsMovingOutputJoin, eSigType.Digital, IsMovingChange);
+		}
+
+		/// <summary>
+		/// Unsubscribe from the smart object events.
+		/// </summary>
+		/// <param name="smartObject"></param>
+		protected override void Unsubscribe(ISmartObject smartObject)
+		{
+			base.Unsubscribe(smartObject);
+
+			if (DigitalIsMovingOutputJoin != 0)
+				SmartObject.UnregisterOutputSigChangeCallback(DigitalIsMovingOutputJoin, eSigType.Digital, IsMovingChange);
 		}
 
 		/// <summary>
