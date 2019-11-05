@@ -83,6 +83,9 @@ namespace ICD.Connect.UI.Mvp.Presenters
 			if (type == null)
 				throw new ArgumentNullException("type");
 
+			if (type.IsAssignableTo<IComponentPresenter>())
+				throw new ArgumentException("GetNewPresenter must be used for component presenters");
+
 			m_CacheSection.Enter();
 
 			try
@@ -114,6 +117,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 				throw new ArgumentNullException("type");
 
 			return s_InterfaceToConcrete.GetAssignableInterfaces(type)
+			                            .Where(t => !t.IsAssignableTo<IComponentPresenter>())
 			                            .Select(presenterType => LazyLoadPresenter(presenterType));
 		}
 

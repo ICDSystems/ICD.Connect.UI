@@ -49,7 +49,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <summary>
 		/// Returns true if this presenter is part of a collection of components.
 		/// </summary>
-		public abstract bool IsComponent { get; }
+		private bool IsComponent { get { return this is IComponentPresenter; } }
 
 		#endregion
 

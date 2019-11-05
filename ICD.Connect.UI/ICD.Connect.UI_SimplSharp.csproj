@@ -116,6 +116,7 @@
     <None Include="ObfuscationSettings.cs" />
     <Compile Include="Mvp\BindingMap.cs" />
     <Compile Include="Mvp\Presenters\AbstractNavigationController.cs" />
+    <Compile Include="Mvp\Presenters\IComponentPresenter.cs" />
     <Compile Include="Mvp\Presenters\INavigationController.cs" />
     <Compile Include="Mvp\Presenters\IPresenter.cs" />
     <Compile Include="Mvp\Views\AbstractViewFactory.cs" />
