@@ -99,6 +99,8 @@ namespace ICD.Connect.UI.Mvp.Views
 				throw new ArgumentNullException("childViews");
 
 			count = Math.Min(count, list.MaxSize);
+
+			childViews.Capacity = list.MaxSize;
 			list.SetNumberOfItems(count);
 
 			ISmartObject smartObject = list.SmartObject;
