@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ICD.Common.Properties;
 using ICD.Common.Utils;
 using ICD.Connect.Panels;
+using ICD.Connect.UI.Utils;
 
 namespace ICD.Connect.UI.Controls.TextControls
 {
@@ -21,6 +22,9 @@ namespace ICD.Connect.UI.Controls.TextControls
 		private Dictionary<ushort, bool> m_DigitalLabelsCache;
 
 		#region Properties
+
+		[PublicAPI]
+		public bool MultilineSupport { get; set; }
 
 		[PublicAPI]
 		public ushort IndirectTextJoin { get; set; }
@@ -114,6 +118,9 @@ namespace ICD.Connect.UI.Controls.TextControls
 					return;
 
 				SerialLabelsCache[join] = text;
+
+				if (MultilineSupport)
+					text = HtmlUtils.ReplaceNewlines(text);
 
 				Panel.SendInputSerial(join, text);
 			}
