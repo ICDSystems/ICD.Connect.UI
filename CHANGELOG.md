@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [6.4.0] - 2019-11-20
+### Added
+ - Added a MultilineSupport bool property to VTPro labels for automatic newline handling
+
+### Changed
+ - Improved validation to prevent the unintentional lazy-loading of component presenters
+
 ## [6.3.1] - 2019-10-17
 ### Changed
  - Fixed a bug that was preventing list moving feedback from working
