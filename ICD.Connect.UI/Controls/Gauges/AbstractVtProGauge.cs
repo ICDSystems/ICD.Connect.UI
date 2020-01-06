@@ -171,7 +171,7 @@ namespace ICD.Connect.UI.Controls.Gauges
 		}
 
 		/// <summary>
-		/// Called when the guage is touched.
+		/// Called when the gauge is touched.
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
