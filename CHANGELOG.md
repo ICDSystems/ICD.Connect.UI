@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+ - Fixed deadlock related to AbstractPresenter showing views inside critical sections
+
 ## [6.4.0] - 2019-11-20
 ### Added
  - Added a MultilineSupport bool property to VTPro labels for automatic newline handling

@@ -121,6 +121,8 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <param name="view"></param>
 		public virtual void SetView(T view)
 		{
+			bool hide = false;
+
 			m_ViewSection.Enter();
 
 			try
@@ -130,7 +132,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 
 				// Special case - Can't set an SRL count to 0 (yay) so hide when cleaning up items.
 				if (view == null && m_View != null)
-					ShowView(false);
+					hide = true;
 
 				if (m_View != null)
 					Unsubscribe(m_View);
@@ -139,13 +141,16 @@ namespace ICD.Connect.UI.Mvp.Presenters
 
 				if (m_View != null)
 					Subscribe(m_View);
-
-				RefreshIfVisible();
 			}
 			finally
 			{
 				m_ViewSection.Leave();
 			}
+
+			if (hide)
+				ShowView(false);
+
+			RefreshIfVisible();
 		}
 
 		/// <summary>
@@ -154,6 +159,8 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <param name="visible"></param>
 		public void ShowView(bool visible)
 		{
+			T view;
+
 			m_ViewSection.Enter();
 
 			try
@@ -162,16 +169,16 @@ namespace ICD.Connect.UI.Mvp.Presenters
 				if (m_View == null && !visible)
 					return;
 
-				T view = GetView();
+				view = GetView();
 				if (view == null)
 					throw new InvalidOperationException("Presenter has no view");
-
-				view.Show(visible);
 			}
 			finally
 			{
 				m_ViewSection.Leave();
 			}
+
+			view.Show(visible);
 		}
 
 		/// <summary>
@@ -180,6 +187,8 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <param name="enabled"></param>
 		public void SetViewEnabled(bool enabled)
 		{
+			T view;
+
 			m_ViewSection.Enter();
 
 			try
@@ -188,16 +197,16 @@ namespace ICD.Connect.UI.Mvp.Presenters
 				if (m_View == null && !enabled)
 					return;
 
-				T view = GetView();
+				view = GetView();
 				if (view == null)
 					throw new InvalidOperationException("Presenter has no view");
-
-				view.Enable(enabled);
 			}
 			finally
 			{
 				m_ViewSection.Leave();
 			}
+
+			view.Enable(enabled);
 		}
 
 		/// <summary>
@@ -267,23 +276,24 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		[CanBeNull]
 		private T GetView(bool instantiate)
 		{
+			T view;
+
 			m_ViewSection.Enter();
 
 			try
 			{
-				// Get default view from the factory
 				if (m_View == null && instantiate)
-				{
-					T view = InstantiateView();
-					SetView(view);
-				}
-
-				return m_View;
+					view = InstantiateView();
+				else
+					view = m_View;
 			}
 			finally
 			{
 				m_ViewSection.Leave();
 			}
+
+			SetView(view);
+			return view;
 		}
 
 		/// <summary>
