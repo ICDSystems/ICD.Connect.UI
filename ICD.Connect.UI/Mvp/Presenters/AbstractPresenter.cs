@@ -3,6 +3,8 @@ using ICD.Common.Properties;
 using ICD.Common.Utils;
 using ICD.Common.Utils.EventArguments;
 using ICD.Common.Utils.Extensions;
+using ICD.Common.Utils.Services;
+using ICD.Common.Utils.Services.Logging;
 using ICD.Connect.UI.Mvp.Views;
 
 namespace ICD.Connect.UI.Mvp.Presenters
@@ -218,8 +220,18 @@ namespace ICD.Connect.UI.Mvp.Presenters
 			T view = GetView();
 
 			// Don't refresh if we currently have no view.
-			if (view != null)
+			if (view == null)
+				return;
+
+			try
+			{
 				Refresh(view);
+			}
+			catch (Exception e)
+			{
+				ServiceProvider.GetService<ILoggerService>()
+				               .AddEntry(eSeverity.Error, e, "{0} Failed to Refresh - {1}", GetType().Name, e.Message);
+			}
 		}
 
 		/// <summary>
