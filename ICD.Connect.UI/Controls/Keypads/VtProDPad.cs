@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using ICD.Common.Properties;
+using ICD.Common.Utils;
 using ICD.Common.Utils.Extensions;
+using ICD.Common.Utils.Timers;
 using ICD.Connect.Panels.Devices;
 using ICD.Connect.Panels.EventArguments;
 using ICD.Connect.Panels.SmartObjects;
@@ -17,8 +20,28 @@ namespace ICD.Connect.UI.Controls.Keypads
 		private const ushort RIGHT = 4;
 		private const ushort CENTER = 5;
 
+		/// <summary>
+		/// Raised when a button is pressed.
+		/// </summary>
 		public event EventHandler<DPadEventArgs> OnButtonPressed;
+
+		/// <summary>
+		/// Raised when a button is released.
+		/// </summary>
 		public event EventHandler<DPadEventArgs> OnButtonReleased;
+
+		/// <summary>
+		/// Raised when a button is held.
+		/// </summary>
+		public event EventHandler<DPadEventArgs> OnButtonHeld;
+
+		private readonly Dictionary<DPadEventArgs.eDirection, SafeTimer> m_HoldTimers;
+
+		/// <summary>
+		/// Gets/sets the hold duration in milliseconds.
+		/// </summary>
+		[PublicAPI]
+		public long HoldDuration { get; set; }
 
 		#region Constructors
 
@@ -31,6 +54,13 @@ namespace ICD.Connect.UI.Controls.Keypads
 		public VtProDPad(uint smartObjectId, IPanelDevice panel, IVtProParent parent)
 			: base(smartObjectId, panel, parent)
 		{
+			m_HoldTimers = new Dictionary<DPadEventArgs.eDirection, SafeTimer>();
+
+			foreach (DPadEventArgs.eDirection direction in EnumUtils.GetValues<DPadEventArgs.eDirection>())
+			{
+				DPadEventArgs.eDirection directionClosure = direction;
+				m_HoldTimers.Add(direction, SafeTimer.Stopped(() => HoldCallback(directionClosure)));
+			}
 		}
 
 		#endregion
@@ -44,6 +74,7 @@ namespace ICD.Connect.UI.Controls.Keypads
 		{
 			OnButtonPressed = null;
 			OnButtonReleased = null;
+			OnButtonHeld = null;
 
 			base.Dispose();
 		}
@@ -55,6 +86,10 @@ namespace ICD.Connect.UI.Controls.Keypads
 		[PublicAPI]
 		public void Press(DPadEventArgs.eDirection direction)
 		{
+			long holdDuration = HoldDuration;
+			if (holdDuration > 0)
+				m_HoldTimers[direction].Reset(holdDuration);
+
 			if (IsVisibleRecursive)
 				OnButtonPressed.Raise(this, new DPadEventArgs(direction));
 		}
@@ -66,6 +101,8 @@ namespace ICD.Connect.UI.Controls.Keypads
 		[PublicAPI]
 		public void Release(DPadEventArgs.eDirection direction)
 		{
+			m_HoldTimers[direction].Stop();
+
 			if (IsVisibleRecursive)
 				OnButtonReleased.Raise(this, new DPadEventArgs(direction));
 		}
@@ -75,6 +112,22 @@ namespace ICD.Connect.UI.Controls.Keypads
 		#region Private Methods
 
 		/// <summary>
+		/// Called when a hold timer elapses.
+		/// </summary>
+		/// <param name="direction"></param>
+		private void HoldCallback(DPadEventArgs.eDirection direction)
+		{
+			m_HoldTimers[direction].Stop();
+
+			if (IsVisibleRecursive)
+				OnButtonHeld.Raise(this, new DPadEventArgs(direction));
+		}
+
+		#endregion
+
+		#region SmartObject Callbacks
+
+		/// <summary>
 		/// Subscribe to the smart object events.
 		/// </summary>
 		/// <param name="smartObject"></param>
@@ -82,11 +135,11 @@ namespace ICD.Connect.UI.Controls.Keypads
 		{
 			base.Subscribe(smartObject);
 
-			smartObject.RegisterOutputSigChangeCallback(UP, eSigType.Digital, UpClicked);
-			smartObject.RegisterOutputSigChangeCallback(DOWN, eSigType.Digital, DownClicked);
-			smartObject.RegisterOutputSigChangeCallback(LEFT, eSigType.Digital, LeftClicked);
-			smartObject.RegisterOutputSigChangeCallback(RIGHT, eSigType.Digital, RightClicked);
-			smartObject.RegisterOutputSigChangeCallback(CENTER, eSigType.Digital, CenterClicked);
+			smartObject.RegisterOutputSigChangeCallback(UP, eSigType.Digital, UpPressed);
+			smartObject.RegisterOutputSigChangeCallback(DOWN, eSigType.Digital, DownPressed);
+			smartObject.RegisterOutputSigChangeCallback(LEFT, eSigType.Digital, LeftPressed);
+			smartObject.RegisterOutputSigChangeCallback(RIGHT, eSigType.Digital, RightPressed);
+			smartObject.RegisterOutputSigChangeCallback(CENTER, eSigType.Digital, CenterPressed);
 		}
 
 		/// <summary>
@@ -97,59 +150,59 @@ namespace ICD.Connect.UI.Controls.Keypads
 		{
 			base.Unsubscribe(smartObject);
 
-			smartObject.RegisterOutputSigChangeCallback(UP, eSigType.Digital, UpClicked);
-			smartObject.RegisterOutputSigChangeCallback(DOWN, eSigType.Digital, DownClicked);
-			smartObject.RegisterOutputSigChangeCallback(LEFT, eSigType.Digital, LeftClicked);
-			smartObject.RegisterOutputSigChangeCallback(RIGHT, eSigType.Digital, RightClicked);
-			smartObject.RegisterOutputSigChangeCallback(CENTER, eSigType.Digital, CenterClicked);
+			smartObject.RegisterOutputSigChangeCallback(UP, eSigType.Digital, UpPressed);
+			smartObject.RegisterOutputSigChangeCallback(DOWN, eSigType.Digital, DownPressed);
+			smartObject.RegisterOutputSigChangeCallback(LEFT, eSigType.Digital, LeftPressed);
+			smartObject.RegisterOutputSigChangeCallback(RIGHT, eSigType.Digital, RightPressed);
+			smartObject.RegisterOutputSigChangeCallback(CENTER, eSigType.Digital, CenterPressed);
 		}
 
 		/// <summary>
-		/// Called when the up button is clicked.
+		/// Called when the up button is pressed.
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void UpClicked(object parent, SigInfoEventArgs args)
+		private void UpPressed(object parent, SigInfoEventArgs args)
 		{
 			Press(DPadEventArgs.eDirection.Up, args);
 		}
 
 		/// <summary>
-		/// Called when the down button is clicked.
+		/// Called when the down button is pressed.
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void DownClicked(object parent, SigInfoEventArgs args)
+		private void DownPressed(object parent, SigInfoEventArgs args)
 		{
 			Press(DPadEventArgs.eDirection.Down, args);
 		}
 
 		/// <summary>
-		/// Called when the left button is clicked.
+		/// Called when the left button is pressed.
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void LeftClicked(object parent, SigInfoEventArgs args)
+		private void LeftPressed(object parent, SigInfoEventArgs args)
 		{
 			Press(DPadEventArgs.eDirection.Left, args);
 		}
 
 		/// <summary>
-		/// Called when the right button is clicked.
+		/// Called when the right button is pressed.
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void RightClicked(object parent, SigInfoEventArgs args)
+		private void RightPressed(object parent, SigInfoEventArgs args)
 		{
 			Press(DPadEventArgs.eDirection.Right, args);
 		}
 
 		/// <summary>
-		/// Called when the center button is clicked.
+		/// Called when the center button is pressed.
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <param name="args"></param>
-		private void CenterClicked(object parent, SigInfoEventArgs args)
+		private void CenterPressed(object parent, SigInfoEventArgs args)
 		{
 			Press(DPadEventArgs.eDirection.Center, args);
 		}
