@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+ - Added OnButtonHeld event to VtProDPad
+
 ## [6.4.1] - 2020-01-20
 ### Changed
  - Fixed deadlock related to AbstractPresenter showing views inside critical sections
