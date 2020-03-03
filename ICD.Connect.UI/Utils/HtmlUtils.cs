@@ -46,7 +46,7 @@ namespace ICD.Connect.UI.Utils
 		public static string ReplaceNewlines(string text)
 		{
 			if (text == null)
-				return text;
+				return null;
 
 			text = text.Replace(IcdEnvironment.NewLine, LINE_BREAK);
 			text = text.Replace("\n", LINE_BREAK);
