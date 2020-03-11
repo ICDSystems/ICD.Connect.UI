@@ -77,7 +77,7 @@ namespace ICD.Connect.UI.Controls.Pages
 		}
 
 		/// <summary>
-		/// Enables/disables the button. Throws InvalidOperationException if there is no enable join.
+		/// Enables/disables the control. Throws InvalidOperationException if there is no enable join.
 		/// </summary>
 		public override void Enable(bool state)
 		{
