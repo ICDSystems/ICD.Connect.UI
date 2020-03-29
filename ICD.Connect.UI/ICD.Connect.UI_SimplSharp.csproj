@@ -84,6 +84,7 @@
     <Compile Include="Controls\Buttons\VtProButton.cs" />
     <Compile Include="Controls\Buttons\VtProMultiModeButton.cs" />
     <Compile Include="Controls\Buttons\VtProTabButton.cs" />
+    <Compile Include="Controls\EmbeddedApps\VtProEnhancedEmbeddedVideo.cs" />
     <Compile Include="Controls\Gauges\AbstractVtProGauge.cs" />
     <Compile Include="Controls\Gauges\VtProCircularGauge.cs" />
     <Compile Include="Controls\Gauges\VtProGauge.cs" />
