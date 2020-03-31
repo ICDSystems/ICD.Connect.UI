@@ -11,6 +11,13 @@ using ICD.Connect.Protocol.Sigs;
 
 namespace ICD.Connect.UI.Controls.EmbeddedApps
 {
+	/// <summary>
+	/// Control of the VTPro Enhanced Embedded Video object via Smart Object Id
+	/// </summary>
+	/// <remarks>
+	/// Note: On/Off control should be enabled on the VTPro side, and utilized here
+	/// to work around Crestron issues when switching soruces
+	/// </remarks>
 	public sealed class VtProEnhancedEmbeddedVideo : AbstractVtProSmartControl
 	{
 		#region Constants
@@ -206,6 +213,13 @@ namespace ICD.Connect.UI.Controls.EmbeddedApps
 			SmartObject.SendInputAnalog(JOIN_ANALOG_INPUT_SOURCE, source);
 
 			m_SourceCache = source;
+
+			// If video is currently playing, send on/off low momentarily
+			// This is a workaround for the source sometimes not switching
+			if (!m_OnOffCache)
+				return;
+			SmartObject.SendInputDigital(JOIN_DIGITAL_INPUT_ON_OFF, false);
+			SmartObject.SendInputDigital(JOIN_DIGITAL_INPUT_ON_OFF, true);
 		}
 
 		/// <summary>
