@@ -29,11 +29,15 @@ namespace ICD.Connect.UI.Controls.EmbeddedApps
 		private const uint JOIN_DIGITAL_OUTPUT_VIDEO_PLAYING = 3;
 		private const uint JOIN_DIGITAL_OUTPUT_SNAPSHOT_SHOWING = 4;
 		private const uint JOIN_ANALOG_INPUT_SOURCE = 1;
-		private const uint JOIN_ANALOG_INPUT_VIDEO_SOURCE_TYPE_START = 50;
-		private const uint JOIN_ANALOG_INPUT_VIDEO_SNAPSHOT_REFRESH_TIME_START = 150;
-		private const uint JOIN_SERIAL_INPUT_VIDEO_URL_START = 50;
 
-		private const uint JOIN_SERIAL_INPUT_VIDEO_SNAPSHOT_URL_START = 150;
+		/// <summary>
+		/// Start Joins decemented by 1, due to 1-based source indexing
+		/// </summary>
+		private const uint JOIN_ANALOG_INPUT_VIDEO_SOURCE_TYPE_START = 50 - 1;
+		private const uint JOIN_ANALOG_INPUT_VIDEO_SNAPSHOT_REFRESH_TIME_START = 150 - 1;
+		private const uint JOIN_SERIAL_INPUT_VIDEO_URL_START = 50 - 1;
+
+		private const uint JOIN_SERIAL_INPUT_VIDEO_SNAPSHOT_URL_START = 150 - 1;
 
 		#endregion
 
@@ -198,10 +202,12 @@ namespace ICD.Connect.UI.Controls.EmbeddedApps
 			SmartObject.SendInputDigital(JOIN_DIGITAL_INPUT_ON_OFF, state);
 
 			m_OnOffCache = state;
+			IcdConsole.PrintLine(eConsoleColor.Magenta, "EEV: Setting OnOff State: {0}", state);
 		}
 
 		/// <summary>
 		/// Sets the source for the control
+		/// Sources are 1-based indexed
 		/// </summary>
 		/// <param name="source"></param>
 		[PublicAPI]
@@ -210,70 +216,82 @@ namespace ICD.Connect.UI.Controls.EmbeddedApps
 			if (m_SourceCache == source)
 				return;
 
+			// If video is currently playing, send on/off low momentarily
+			// This is a workaround for the source sometimes not switching
+			SmartObject.SendInputDigital(JOIN_DIGITAL_INPUT_ON_OFF, false);
+
 			SmartObject.SendInputAnalog(JOIN_ANALOG_INPUT_SOURCE, source);
 
 			m_SourceCache = source;
+
+			IcdConsole.PrintLine(eConsoleColor.Magenta, "EEV: Setting Source to {0}", source);
 
 			// If video is currently playing, send on/off low momentarily
 			// This is a workaround for the source sometimes not switching
 			if (!m_OnOffCache)
 				return;
-			SmartObject.SendInputDigital(JOIN_DIGITAL_INPUT_ON_OFF, false);
+
 			SmartObject.SendInputDigital(JOIN_DIGITAL_INPUT_ON_OFF, true);
+
+			IcdConsole.PrintLine(eConsoleColor.Magenta, "EEV: Toggling On/Off State after Source Select");
 		}
 
 		/// <summary>
 		/// Sets the source type for the source at the specified index
+		/// Sources are 1-based indexed
 		/// </summary>
-		/// <param name="index"></param>
+		/// <param name="source"></param>
 		/// <param name="sourceType"></param>
 		[PublicAPI]
-		public void SetVideoSourceType(ushort index, ushort sourceType)
+		public void SetVideoSourceType(ushort source, ushort sourceType)
 		{
-			if (!IsIndexInRange(index))
+			if (!IsSourceInRange(source))
 				throw new IndexOutOfRangeException("index");
 
 			m_VideoSourceTypeCacheSection.Enter();
 			try
 			{
 				ushort currentValue;
-				if (m_VideoSourceTypeCache.TryGetValue(index, out currentValue) && currentValue == sourceType)
+				if (m_VideoSourceTypeCache.TryGetValue(source, out currentValue) && currentValue == sourceType)
 					return;
 
-				uint join = JOIN_ANALOG_INPUT_VIDEO_SOURCE_TYPE_START + index;
+				uint join = JOIN_ANALOG_INPUT_VIDEO_SOURCE_TYPE_START + source;
 				SmartObject.SendInputAnalog(join, sourceType);
 
-				m_VideoSourceTypeCache[index] = sourceType;
+				m_VideoSourceTypeCache[source] = sourceType;
 			}
 			finally
 			{
 				m_VideoSourceTypeCacheSection.Leave();
 			}
+
+			IcdConsole.PrintLine(eConsoleColor.Magenta, "EEV: Setting Source {0} type to {1}", source, sourceType);
 		}
 
 		/// <summary>
 		/// Sets the snapshot refresh interval for the source at the specified index
 		/// Snapshot time is in seconds, 0 indicates no snapshot refresh
+		/// Sources are 1-based indexed
 		/// </summary>
-		/// <param name="index"></param>
+		/// <param name="source"></param>
 		/// <param name="snapshotRefreshTime"></param>
 		[PublicAPI]
-		public void SetVideoSnapshotRefreshTime(ushort index, ushort snapshotRefreshTime)
+		public void SetVideoSnapshotRefreshTime(ushort source, ushort snapshotRefreshTime)
 		{
-			if (!IsIndexInRange(index))
+			if (!IsSourceInRange(source))
 				throw new IndexOutOfRangeException("index");
 
 			m_VideoSnapshotRefreshTimeCacheSection.Enter();
 			try
 			{
 				ushort currentValue;
-				if (m_VideoSnapshotRefreshTimeCache.TryGetValue(index, out currentValue) && currentValue == snapshotRefreshTime)
+				if (m_VideoSnapshotRefreshTimeCache.TryGetValue(source, out currentValue) && currentValue == snapshotRefreshTime)
 					return;
 
-				uint join = JOIN_ANALOG_INPUT_VIDEO_SNAPSHOT_REFRESH_TIME_START + index;
+				uint join = JOIN_ANALOG_INPUT_VIDEO_SNAPSHOT_REFRESH_TIME_START + source;
 				SmartObject.SendInputAnalog(join, snapshotRefreshTime);
 
-				m_VideoSnapshotRefreshTimeCache[index] = snapshotRefreshTime;
+				m_VideoSnapshotRefreshTimeCache[source] = snapshotRefreshTime;
 			}
 			finally
 			{
@@ -283,13 +301,14 @@ namespace ICD.Connect.UI.Controls.EmbeddedApps
 
 		/// <summary>
 		/// Sets the streaming URL for the source at the specified index
+		/// Sources are 1-based indexed
 		/// </summary>
-		/// <param name="index"></param>
+		/// <param name="source"></param>
 		/// <param name="url"></param>
 		[PublicAPI]
-		public void SetVideoUrl(ushort index, [CanBeNull] string url)
+		public void SetVideoUrl(ushort source, [CanBeNull] string url)
 		{
-			if (!IsIndexInRange(index))
+			if (!IsSourceInRange(source))
 				throw new IndexOutOfRangeException("index");
 
 			url = url ?? String.Empty;
@@ -298,29 +317,44 @@ namespace ICD.Connect.UI.Controls.EmbeddedApps
 			try
 			{
 				string currentValue;
-				if (m_VideoUrlCache.TryGetValue(index, out currentValue) && currentValue.Equals(url, StringComparison.Ordinal))
+				if (m_VideoUrlCache.TryGetValue(source, out currentValue) && currentValue.Equals(url, StringComparison.Ordinal))
 					return;
 
-				uint join = JOIN_SERIAL_INPUT_VIDEO_URL_START + index;
+				bool turnBackOn = false;
+				// If video is currently playing, send on/off low momentarily
+				// This is a workaround for the source sometimes not switching
+				if (m_OnOffCache && m_SourceCache == source)
+				{
+					SmartObject.SendInputDigital(JOIN_DIGITAL_INPUT_ON_OFF, false);
+					turnBackOn = true;
+				}
+
+				uint join = JOIN_SERIAL_INPUT_VIDEO_URL_START + source;
 				SmartObject.SendInputSerial(join, url);
 
-				m_VideoUrlCache[index] = url;
+				m_VideoUrlCache[source] = url;
+
+				if (turnBackOn)
+					SmartObject.SendInputDigital(JOIN_DIGITAL_INPUT_ON_OFF, true);
 			}
 			finally
 			{
 				m_VideoUrlCacheSection.Leave();
 			}
+
+			IcdConsole.PrintLine(eConsoleColor.Magenta, "EEV: Setting Source {0} url to {1}", source, url);
 		}
 
 		/// <summary>
 		/// Sets the snapshot URL for the source at the specified index
+		/// Sources are 1-based indexed
 		/// </summary>
-		/// <param name="index"></param>
+		/// <param name="source"></param>
 		/// <param name="url"></param>
 		[PublicAPI]
-		public void SetVideoSnapshotUrl(ushort index, [CanBeNull] string url)
+		public void SetVideoSnapshotUrl(ushort source, [CanBeNull] string url)
 		{
-			if (!IsIndexInRange(index))
+			if (!IsSourceInRange(source))
 				throw new IndexOutOfRangeException("index");
 
 			url = url ?? String.Empty;
@@ -329,13 +363,13 @@ namespace ICD.Connect.UI.Controls.EmbeddedApps
 			try
 			{
 				string currentValue;
-				if (m_VideoSnapshotUrlCache.TryGetValue(index, out currentValue) && currentValue.Equals(url, StringComparison.Ordinal))
+				if (m_VideoSnapshotUrlCache.TryGetValue(source, out currentValue) && currentValue.Equals(url, StringComparison.Ordinal))
 					return;
 
-				uint join = JOIN_SERIAL_INPUT_VIDEO_SNAPSHOT_URL_START + index;
+				uint join = JOIN_SERIAL_INPUT_VIDEO_SNAPSHOT_URL_START + source;
 				SmartObject.SendInputSerial(join, url);
 
-				m_VideoSnapshotUrlCache[index] = url;
+				m_VideoSnapshotUrlCache[source] = url;
 			}
 			finally
 			{
@@ -343,9 +377,14 @@ namespace ICD.Connect.UI.Controls.EmbeddedApps
 			}
 		}
 
-		private bool IsIndexInRange(ushort index)
+		/// <summary>
+		/// Check if the source is in range of MaxSources
+		/// </summary>
+		/// <param name="source"></param>
+		/// <returns></returns>
+		private bool IsSourceInRange(ushort source)
 		{
-			return index < MaxSources;
+			return source <= MaxSources;
 		}
 
 		#endregion
