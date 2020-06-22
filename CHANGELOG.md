@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [6.5.1] - 2020-06-22
 ### Changed
  - Failing gracefully and logging when a presenter fails to refresh
 
