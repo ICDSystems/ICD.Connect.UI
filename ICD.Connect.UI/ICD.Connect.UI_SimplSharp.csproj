@@ -114,7 +114,7 @@
     <Compile Include="Controls\VtProSound.cs" />
     <Compile Include="EventArguments\DPadEventArgs.cs" />
     <Compile Include="EventArguments\SimpleKeypadEventArgs.cs" />
-    <None Include="ObfuscationSettings.cs" />
+    <Compile Include="ObfuscationSettings.cs" />
     <Compile Include="Mvp\BindingMap.cs" />
     <Compile Include="Mvp\Presenters\AbstractNavigationController.cs" />
     <Compile Include="Mvp\Presenters\IComponentPresenter.cs" />
