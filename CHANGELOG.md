@@ -41,6 +41,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - AbstractViewFactory provides a default method for instantiating a view by interface
  - AbstractNavigationController provides a default method for instantiating a presenter by interface
 
+## [5.1.2] - 2020-09-03
+### Changed
+ - Fixed a StackOverflow exception related to nested SingleVisibilityNodes
+
 ## [5.1.1] - 2019-07-09
 ### Changed
  - Fixed a bug in ScrollToItem method in AbstractVProList by sending a false command then the real command in order to bypass the cache
