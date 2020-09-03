@@ -20,7 +20,7 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 		/// <param name="visibility"></param>
 		protected override void NodeOnChildPreVisibilityChanged(IVisibilityNode parent, IPresenter presenter, bool visibility)
 		{
-			if (presenter.IsViewVisible)
+			if (visibility)
 			{
 				HideExcept(null as IPresenter);
 				HideExcept(parent);
@@ -30,7 +30,7 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 		}
 
 		/// <summary>
-		/// Called when a child presenter visibility is about to change.
+		/// Called when a child presenter visibility is about to change visibility.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
