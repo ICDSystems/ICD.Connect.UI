@@ -47,6 +47,13 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 		/// </summary>
 		/// <returns></returns>
 		IEnumerable<IPresenter> GetPresenters();
+
+		/// <summary>
+		/// Returns true if this node contains the given child node recursively.
+		/// </summary>
+		/// <param name="node"></param>
+		/// <returns></returns>
+		bool ContainsNodeRecursive(IVisibilityNode node);
 	}
 
 	/// <summary>
