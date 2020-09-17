@@ -56,6 +56,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
  - AbstractViewFactory provides a default method for instantiating a view by interface
  - AbstractNavigationController provides a default method for instantiating a presenter by interface
 
+## [5.1.3] - 2020-09-17
+### Changed
+ - Fixed a bug where SingleVisibility nodes did not correctly account for deeply nested children when updating visibility
+
 ## [5.1.2] - 2020-09-03
 ### Changed
  - Fixed a StackOverflow exception related to nested SingleVisibilityNodes
