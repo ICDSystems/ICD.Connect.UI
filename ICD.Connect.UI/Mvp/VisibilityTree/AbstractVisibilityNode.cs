@@ -127,6 +127,25 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 			return m_PresentersSection.Execute(() => m_Presenters.ToArray());
 		}
 
+		/// <summary>
+		/// Returns true if this node contains the given child node recursively.
+		/// </summary>
+		/// <param name="node"></param>
+		/// <returns></returns>
+		public bool ContainsNodeRecursive(IVisibilityNode node)
+		{
+			m_NodesSection.Enter();
+
+			try
+			{
+				return m_Nodes.Contains(node) || m_Nodes.Any(n => n.ContainsNodeRecursive(node));
+			}
+			finally
+			{
+				m_NodesSection.Leave();
+			}
+		}
+
 		#endregion
 
 		#region Private Methods
