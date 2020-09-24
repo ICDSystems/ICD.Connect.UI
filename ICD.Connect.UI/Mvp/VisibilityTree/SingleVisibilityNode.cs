@@ -63,7 +63,7 @@ namespace ICD.Connect.UI.Mvp.VisibilityTree
 		/// <param name="ignoreNode"></param>
 		private void HideExcept(IVisibilityNode ignoreNode)
 		{
-			foreach (IVisibilityNode node in GetNodes().Where(n => n != ignoreNode && !n.ContainsNodeRecursive(ignoreNode)))
+			foreach (IVisibilityNode node in GetNodes().Where(n => ignoreNode != null && n != ignoreNode && !n.ContainsNodeRecursive(ignoreNode)))
 				node.Hide();
 		}
 
