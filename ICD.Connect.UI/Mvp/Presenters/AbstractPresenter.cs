@@ -36,7 +36,7 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// <summary>
 		/// Gets the navigation controller.
 		/// </summary>
-		protected INavigationController Navigation { get { return m_Navigation; } }
+		public INavigationController Navigation { get { return m_Navigation; } }
 
 		/// <summary>
 		/// Gets the view factory.
