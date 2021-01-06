@@ -19,7 +19,7 @@ namespace ICD.Connect.UI.Mvp
 	public sealed class BindingMap<TAttribute>
 		where TAttribute : Attribute, IUiBindingAttribute
 	{
-		private readonly Dictionary<Type, Type> m_InterfaceToConcrete;
+		private readonly BiDictionary<Type, Type> m_InterfaceToConcrete;
 		private readonly IcdHashSet<Assembly> m_CachedAssemblies;
 		private readonly SafeCriticalSection m_CacheSection;
 
@@ -28,12 +28,78 @@ namespace ICD.Connect.UI.Mvp
 		/// </summary>
 		public BindingMap()
 		{
-			m_InterfaceToConcrete = new Dictionary<Type, Type>();
+			m_InterfaceToConcrete = new BiDictionary<Type, Type>();
 			m_CachedAssemblies = new IcdHashSet<Assembly>();
 			m_CacheSection = new SafeCriticalSection();
 		}
 
 		#region Methods
+
+		/// <summary>
+		/// Gets the interface type for the given concrete type.
+		/// </summary>
+		/// <returns></returns>
+		public Type GetInterfaceType(Type concrete)
+		{
+			if (concrete == null)
+				throw new ArgumentNullException("concrete");
+
+			if (concrete.IsInterface)
+				throw new ArgumentException("Type must be concrete");
+
+			m_CacheSection.Enter();
+
+			try
+			{
+				Assembly assembly = concrete.GetAssembly();
+				if (!m_CachedAssemblies.Contains(assembly))
+					CacheAssembly(assembly);
+
+				Type boundInterface;
+				if (m_InterfaceToConcrete.TryGetKey(concrete, out boundInterface))
+					return boundInterface;
+			}
+			finally
+			{
+				m_CacheSection.Leave();
+			}
+
+			string message = string.Format("No interface found for {0}", concrete.Name);
+			throw new KeyNotFoundException(message);
+		}
+
+		/// <summary>
+		/// Gets the concrete type for the given bound interface type.
+		/// </summary>
+		/// <returns></returns>
+		public Type GetConcreteType(Type boundInterface)
+		{
+			if (boundInterface == null)
+				throw new ArgumentNullException("boundInterface");
+
+			if (!boundInterface.IsInterface)
+				throw new ArgumentException("Type must be an interface");
+
+			m_CacheSection.Enter();
+
+			try
+			{
+				Assembly assembly = boundInterface.GetAssembly();
+				if (!m_CachedAssemblies.Contains(assembly))
+					CacheAssembly(assembly);
+
+				Type concrete;
+				if (m_InterfaceToConcrete.TryGetValue(boundInterface, out concrete))
+					return concrete;
+			}
+			finally
+			{
+				m_CacheSection.Leave();
+			}
+
+			string message = string.Format("No binding found for {0}", boundInterface.Name);
+			throw new KeyNotFoundException(message);
+		}
 
 		/// <summary>
 		/// Creates the concrete instance for the given bound interface type.
@@ -56,6 +122,9 @@ namespace ICD.Connect.UI.Mvp
 		{
 			if (boundInterface == null)
 				throw new ArgumentNullException("boundInterface");
+
+			if (!boundInterface.IsInterface)
+				throw new ArgumentException("Type must be an interface");
 
 			Type concrete = GetConcreteType(boundInterface);
 			return ReflectionUtils.CreateInstance(concrete, parameters);
@@ -90,36 +159,6 @@ namespace ICD.Connect.UI.Mvp
 
 		#region Private Methods
 
-		/// <summary>
-		/// Gets the concrete type for the given bound interface type.
-		/// </summary>=
-		/// <returns></returns>
-		private Type GetConcreteType(Type boundInterface)
-		{
-			if (boundInterface == null)
-				throw new ArgumentNullException("boundInterface");
-
-			m_CacheSection.Enter();
-
-			try
-			{
-				Assembly assembly = boundInterface.GetAssembly();
-				if (!m_CachedAssemblies.Contains(assembly))
-					CacheAssembly(assembly);
-
-				Type concrete;
-				if (m_InterfaceToConcrete.TryGetValue(boundInterface, out concrete))
-					return concrete;
-			}
-			finally
-			{
-				m_CacheSection.Leave();
-			}
-
-			string message = string.Format("No binding found for {0}", boundInterface.Name);
-			throw new KeyNotFoundException(message);
-		}
-
 		private void CacheAssembly(Assembly assembly)
 		{
 			if (assembly == null)
@@ -152,6 +191,9 @@ namespace ICD.Connect.UI.Mvp
 		{
 			if (interfaceType == null)
 				throw new ArgumentNullException("interfaceType");
+
+			if (!interfaceType.IsInterface)
+				throw new ArgumentException("Interface Type must be an interface");
 
 			if (type == null)
 				throw new ArgumentNullException("type");

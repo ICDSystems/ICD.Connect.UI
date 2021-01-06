@@ -37,6 +37,20 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		/// </summary>
 		/// <returns></returns>
 		IEnumerable<T> LazyLoadPresenters<T>() where T : IPresenter;
+
+		/// <summary>
+		/// Gets the concrete presenter type for the given interface.
+		/// </summary>
+		/// <param name="presenterInterface"></param>
+		/// <returns></returns>
+		Type GetPresenterType(Type presenterInterface);
+
+		/// <summary>
+		/// Gets the interface presenter type for the given concrete type.
+		/// </summary>
+		/// <param name="presenterConcrete"></param>
+		/// <returns></returns>
+		Type GetInterfaceType(Type presenterConcrete);
 	}
 
 	/// <summary>
