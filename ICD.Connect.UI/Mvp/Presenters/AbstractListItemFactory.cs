@@ -263,14 +263,14 @@ namespace ICD.Connect.UI.Mvp.Presenters
 					return presenter;
 
 				// Get the pool for the given model
-				Type presenterType = GetPresenterTypeForModel(model);
+				Type presenterInterface = GetPresenterTypeForModel(model);
 				
 				// Create a new presenter if the pool is empty
 				Queue<TPresenter> pool;
 				presenter =
-					m_PresenterPool.TryGetValue(presenterType, out pool) && pool.Dequeue(out presenter)
+					m_PresenterPool.TryGetValue(presenterInterface, out pool) && pool.Dequeue(out presenter)
 						? presenter
-						: m_NavigationController.GetNewPresenter(presenterType) as TPresenter;
+						: m_NavigationController.GetNewPresenter(presenterInterface) as TPresenter;
 
 				// Call the subscription action
 				if (m_Subscribe != null)
@@ -325,7 +325,8 @@ namespace ICD.Connect.UI.Mvp.Presenters
 			// Now clear the model
 			BindMvpTriad(default(TModel), presenter, default(TView));
 
-			Type key = presenter.GetType();
+			Type presenterType = presenter.GetType();
+			Type key = m_NavigationController.GetInterfaceType(presenterType);
 
 			m_CacheSection.Enter();
 
