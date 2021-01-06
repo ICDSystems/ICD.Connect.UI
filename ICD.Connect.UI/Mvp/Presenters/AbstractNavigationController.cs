@@ -56,6 +56,26 @@ namespace ICD.Connect.UI.Mvp.Presenters
 		}
 
 		/// <summary>
+		/// Gets the concrete presenter type for the given interface type.
+		/// </summary>
+		/// <param name="presenterInterface"></param>
+		/// <returns></returns>
+		public Type GetPresenterType(Type presenterInterface)
+		{
+			return s_InterfaceToConcrete.GetConcreteType(presenterInterface);
+		}
+
+		/// <summary>
+		/// Gets the interface presenter type for the given concrete type.
+		/// </summary>
+		/// <param name="presenterConcrete"></param>
+		/// <returns></returns>
+		public Type GetInterfaceType(Type presenterConcrete)
+		{
+			return s_InterfaceToConcrete.GetInterfaceType(presenterConcrete);
+		}
+
+		/// <summary>
 		/// Instantiates a new presenter of the given type.
 		/// </summary>
 		/// <param name="type"></param>

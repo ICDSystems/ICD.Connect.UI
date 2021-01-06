@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
  - Improved validation to prevent the unintentional lazy-loading of component presenters
 
+## [6.3.2] - 2021-01-06
+### Changed
+ - Fixed a memory leak resulting from bad presenter pooling
+
 ## [6.3.1] - 2019-10-17
 ### Changed
  - Fixed a bug that was preventing list moving feedback from working
