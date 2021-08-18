@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [7.0.0] - 2021-08-18
+### Changed
+ - Updated dependencies
+
 ## [6.7.0] - 2021-01-14
 ### Added
  - Added VtProInternetExplorer control
