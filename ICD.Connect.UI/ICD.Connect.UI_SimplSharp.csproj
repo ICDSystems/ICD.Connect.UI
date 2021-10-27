@@ -71,11 +71,20 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionMapPlugin.cs" />
     <Compile Include="Attributes\AbstractUiAttribute.cs" />
     <Compile Include="Attributes\AbstractUiBindingAttribute.cs" />
     <Compile Include="Attributes\IUiBindingAttribute.cs" />
     <Compile Include="Attributes\PresenterBindingAttribute.cs" />
     <Compile Include="Attributes\ViewBindingAttribute.cs" />
+    <Compile Include="ButtonActions\Attributes\ActionMapPluginAttribute.cs" />
+    <Compile Include="ButtonActions\Attributes\ButtonActionSettingsAttribute.cs" />
+    <Compile Include="ButtonActions\Factories\AbstractButtonActionMapFactory.cs" />
+    <Compile Include="ButtonActions\Factories\ButtonActionRootFactory.cs" />
+    <Compile Include="ButtonActions\Factories\IButtonActionMapFactory.cs" />
+    <Compile Include="ButtonActions\HardButton\AbstractHardButtonActionMapComponent.cs" />
+    <Compile Include="ButtonActions\HardButton\AbstractHardButtonActionMapComponentSettings.cs" />
+    <Compile Include="ButtonActions\HardButton\IHardButtonActionMapComponentSettings.cs" />
     <Compile Include="Controls\AbstractVtProControl.cs" />
     <Compile Include="Controls\AbstractVtProSmartControl.cs" />
     <Compile Include="Controls\Buttons\AbstractVtProButton.cs" />
@@ -92,6 +101,16 @@
     <Compile Include="Controls\IVtProParent.cs" />
     <Compile Include="Controls\Lists\ButtonListItem.cs" />
     <Compile Include="EventArguments\KeyboardKeyEventArgs.cs" />
+    <Compile Include="ButtonActions\Actions\AbstractButtonAction.cs" />
+    <Compile Include="ButtonActions\Actions\AbstractButtonActionSettings.cs" />
+    <Compile Include="ButtonActions\Actions\ButtonActionMapUtils.cs" />
+    <Compile Include="ButtonActions\Actions\IButtonAction.cs" />
+    <Compile Include="ButtonActions\Actions\IButtonActionSettings.cs" />
+    <Compile Include="ButtonActions\Actions\RemapButtonAction.cs" />
+    <Compile Include="ButtonActions\Actions\RemapButtonActionSettings.cs" />
+    <Compile Include="ButtonActions\Actions\TapAndHoldButtonActionMap.cs" />
+    <Compile Include="ButtonActions\Actions\TapAndHoldButtonActionSettings.cs" />
+    <Compile Include="ButtonActions\HardButton\IHardButtonUserInterface.cs" />
     <Compile Include="IIndexed.cs" />
     <Compile Include="Controls\IJoinOffsets.cs" />
     <Compile Include="Controls\Images\VtProDynamicIconObject.cs" />
@@ -141,6 +160,10 @@
     <None Include="Properties\ControlSystem.cfg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ICD.Common.Logging\ICD.Common.Logging\ICD.Common.Logging_SimplSharp.csproj">
+      <Project>{8093AE94-7250-411E-9C55-68AB2B5D705A}</Project>
+      <Name>ICD.Common.Logging_SimplSharp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ICD.Common.Utils\ICD.Common.Utils\ICD.Common.Utils_SimplSharp.csproj">
       <Project>{CB4055C6-D59E-479E-9C56-2C92335A7D9A}</Project>
       <Name>ICD.Common.Utils_SimplSharp</Name>
