@@ -97,6 +97,12 @@ namespace ICD.Connect.UI.ButtonActions.Actions
 		public string Name { get; protected set; }
 
 		/// <summary>
+		/// If this action map should be serialized out to settings
+		/// False for default button actions added automatically
+		/// </summary>
+		public bool Serialize { get; set; }
+
+		/// <summary>
 		/// Settings class the action map uses
 		/// </summary>
 		public Type SettingsClass { get { return typeof(TSettings); } }

@@ -28,16 +28,15 @@ namespace ICD.Connect.UI.ButtonActions.HardButton
 			m_Factory = factory;
 		}
 
+		[PublicAPI]
 		public bool ButtonAction(eHardButton button, eButtonAction action)
 		{
-			IButtonAction binding = null;
+			IButtonAction binding;
 
 			if (!TryGetButtonActionMap(button, out binding))
 				return false;
 
-			binding.ButtonAction(action);
-
-			return true;
+			return binding.ButtonAction(action);
 		}
 
 		#region ButtonActionMap
@@ -137,11 +136,22 @@ namespace ICD.Connect.UI.ButtonActions.HardButton
 
 		#region DefaultActionMaps
 
+		/// <summary>
+		/// Adds the default button actions
+		/// Called on LoadSettings
+		/// </summary>
+		/// <param name="deviceFactory"></param>
 		protected void AddDefaultActionMaps(IDeviceFactory deviceFactory)
 		{
 			TryAddButtonActionMapRange(GetDefaultActionMaps(deviceFactory));
 		}
 
+		/// <summary>
+		/// Gets the default button actions
+		/// Called as part of LoadSettings, and added to the action map range
+		/// </summary>
+		/// <param name="deviceFactory"></param>
+		/// <returns></returns>
 		protected abstract IEnumerable<KeyValuePair<eHardButton, IButtonAction>> GetDefaultActionMaps(IDeviceFactory deviceFactory);
 
 		#endregion
@@ -161,8 +171,12 @@ namespace ICD.Connect.UI.ButtonActions.HardButton
 
 				buttonAction.LoadSettings(buttonActionSetting, Factory, deviceFactory);
 
+				buttonAction.Serialize = true;
+
 				SetButtonActionMap(button, buttonAction);
 			}
+
+			AddDefaultActionMaps(deviceFactory);
 		}
 
 		public virtual void CopySettings([NotNull] IHardButtonActionMapComponentSettings settings)
@@ -172,6 +186,7 @@ namespace ICD.Connect.UI.ButtonActions.HardButton
 
 			IEnumerable<KeyValuePair<eHardButton, IButtonActionSettings>> actionMapSettings =
 				GetButtonActionMaps()
+					.Where(kvp => kvp.Value.Serialize)
 					.Select(
 					        kvp =>
 					        new KeyValuePair<eHardButton, IButtonActionSettings>(kvp.Key,

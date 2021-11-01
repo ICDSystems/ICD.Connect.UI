@@ -38,19 +38,25 @@ namespace ICD.Connect.UI.ButtonActions.Actions
 	public interface IButtonAction
 	{
 		/// <summary>
-		/// Name for the ActionMap
+		/// Name for the Button Action
 		/// </summary>
 		[CanBeNull]
 		string Name { get; }
 
 		/// <summary>
-		/// Settings class the action map uses
+		/// If this action map should be serialized out to settings
+		/// False for default button actions added automatically
+		/// </summary>
+		bool Serialize { get; set; }
+
+		/// <summary>
+		/// Settings class the button action uses
 		/// </summary>
 		Type SettingsClass { get; }
 
 		/// <summary>
 		/// Handle a button press/release/etc
-		/// This is what the ActionMap "does"
+		/// This is what the button action "does"
 		/// </summary>
 		/// <param name="action"></param>
 		/// <returns>true if the action was executed, false if not</returns>
