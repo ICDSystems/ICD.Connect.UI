@@ -112,18 +112,18 @@ namespace ICD.Connect.UI.ButtonActions.Actions
 
 			if (TapAction != null)
 			{
-				IButtonActionSettings tapSettings = ButtonActionMapUtils.GetSettingsCopyForButtonActionMap(TapAction);
+				IButtonActionSettings tapSettings = ButtonActionUtils.GetSettingsCopyForButtonAction(TapAction);
 
 				settings.TapActionMapType = tapSettings.FactoryName;
-				settings.TapActionMapXml = ButtonActionMapUtils.GetXmlContentForSettings(tapSettings);
+				settings.TapActionMapXml = ButtonActionUtils.GetXmlContentForSettings(tapSettings);
 			}
 
 			if (HoldAction != null)
 			{
-				IButtonActionSettings holdSettings = ButtonActionMapUtils.GetSettingsCopyForButtonActionMap(HoldAction);
+				IButtonActionSettings holdSettings = ButtonActionUtils.GetSettingsCopyForButtonAction(HoldAction);
 
 				settings.HoldActionMapType = holdSettings.FactoryName;
-				settings.HoldActionMapXml = ButtonActionMapUtils.GetXmlContentForSettings(holdSettings);
+				settings.HoldActionMapXml = ButtonActionUtils.GetXmlContentForSettings(holdSettings);
 			}
 
 		}

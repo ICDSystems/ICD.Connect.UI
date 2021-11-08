@@ -8,7 +8,7 @@ namespace ICD.Connect.UI.ButtonActions.HardButton
 	public interface IHardButtonActionMapComponentSettings
 	{
 		void WriteXml(IcdXmlTextWriter writer);
-		void LoadFromXml(string xml);
+		void ParseXml(string xml);
 
 		IEnumerable<KeyValuePair<eHardButton, IButtonActionSettings>> GetActionMapSettings();
 

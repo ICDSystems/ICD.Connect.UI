@@ -5,7 +5,7 @@ using ICD.Common.Utils.Xml;
 
 namespace ICD.Connect.UI.ButtonActions.Actions
 {
-	public static class ButtonActionMapUtils
+	public static class ButtonActionUtils
 	{
 
 		public static string GetXmlContentForSettings(IButtonActionSettings settings)
@@ -22,14 +22,14 @@ namespace ICD.Connect.UI.ButtonActions.Actions
 			}
 		}
 
-		public static IButtonActionSettings GetSettingsForButtonActionMap(IButtonAction action)
+		public static IButtonActionSettings GetSettingsForButtonAction(IButtonAction action)
 		{
 			return ReflectionUtils.CreateInstance<IButtonActionSettings>(action.SettingsClass);
 		}
 
-		public static IButtonActionSettings GetSettingsCopyForButtonActionMap(IButtonAction action)
+		public static IButtonActionSettings GetSettingsCopyForButtonAction(IButtonAction action)
 		{
-			IButtonActionSettings settings = GetSettingsForButtonActionMap(action);
+			IButtonActionSettings settings = GetSettingsForButtonAction(action);
 			action.CopySettings(settings);
 			return settings;
 		}

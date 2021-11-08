@@ -138,7 +138,7 @@ namespace ICD.Connect.UI.ButtonActions.HardButton
 
 		/// <summary>
 		/// Adds the default button actions
-		/// Called on LoadSettings
+		/// Called on ApplySettings
 		/// </summary>
 		/// <param name="deviceFactory"></param>
 		protected void AddDefaultActionMaps(IDeviceFactory deviceFactory)
@@ -148,7 +148,7 @@ namespace ICD.Connect.UI.ButtonActions.HardButton
 
 		/// <summary>
 		/// Gets the default button actions
-		/// Called as part of LoadSettings, and added to the action map range
+		/// Called as part of ApplySettings, and added to the action map range
 		/// </summary>
 		/// <param name="deviceFactory"></param>
 		/// <returns></returns>
@@ -158,7 +158,7 @@ namespace ICD.Connect.UI.ButtonActions.HardButton
 
 		#region Settings
 
-		public virtual void LoadSettings(IHardButtonActionMapComponentSettings settings, IDeviceFactory deviceFactory)
+		public virtual void ApplySettings(IHardButtonActionMapComponentSettings settings, IDeviceFactory deviceFactory)
 		{
 			var actionMaps = settings.GetActionMapSettings();
 			foreach (var kvp in actionMaps)
@@ -190,7 +190,7 @@ namespace ICD.Connect.UI.ButtonActions.HardButton
 					.Select(
 					        kvp =>
 					        new KeyValuePair<eHardButton, IButtonActionSettings>(kvp.Key,
-					                                                             ButtonActionMapUtils.GetSettingsCopyForButtonActionMap
+					                                                             ButtonActionUtils.GetSettingsCopyForButtonAction
 						                                                             (kvp.Value)));
 
 			settings.SetActionMapSettings(actionMapSettings);

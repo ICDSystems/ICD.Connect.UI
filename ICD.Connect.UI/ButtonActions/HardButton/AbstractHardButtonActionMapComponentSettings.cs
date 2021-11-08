@@ -82,9 +82,9 @@ namespace ICD.Connect.UI.ButtonActions.HardButton
 			}
 		}
 
-		public void LoadFromXml(string xml)
+		public void ParseXml(string xml)
 		{
-			var actionMaps = XmlUtils.ReadListFromXml(xml, ACTION_MAP_ELEMENT, s => BuildControlFromXml(s));
+			var actionMaps = XmlUtils.ReadListFromXml(xml, ACTION_MAPS_ELEMENT , ACTION_MAP_ELEMENT, s => BuildControlFromXml(s));
 
 			SetActionMapSettings(actionMaps);
 		}
@@ -97,7 +97,7 @@ namespace ICD.Connect.UI.ButtonActions.HardButton
 			Type settingsType = ButtonActionRootFactory.GetSettingsTypeForFactoryName(factoryName);
 
 			IButtonActionSettings settings = ReflectionUtils.CreateInstance<IButtonActionSettings>(settingsType);
-			settings.ParseXml(XmlUtils.ReadElementContent(xml));
+			settings.ParseXml(xml);
 
 			return new KeyValuePair<eHardButton, IButtonActionSettings>(button, settings);
 			

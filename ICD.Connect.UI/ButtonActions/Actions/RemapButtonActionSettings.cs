@@ -1,8 +1,10 @@
 ﻿using ICD.Common.Utils.Xml;
 using ICD.Connect.Panels.HardButtons;
+using ICD.Connect.UI.ButtonActions.Attributes;
 
 namespace ICD.Connect.UI.ButtonActions.Actions
 {
+	[ButtonActionSettings("RemapButton", typeof(RemapButtonAction))]
 	public sealed class RemapButtonActionSettings : AbstractButtonActionSettings
 	{
 		private const string REMAP_AS_BUTTON_ELEMENT = "RemapAsButton";

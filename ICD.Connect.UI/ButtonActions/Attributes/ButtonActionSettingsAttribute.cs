@@ -4,7 +4,7 @@ using ICD.Common.Utils.Attributes;
 
 namespace ICD.Connect.UI.ButtonActions.Attributes
 {
-	[MeansImplicitUse]
+	[MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public sealed class ButtonActionSettingsAttribute : AbstractIcdAttribute
 	{

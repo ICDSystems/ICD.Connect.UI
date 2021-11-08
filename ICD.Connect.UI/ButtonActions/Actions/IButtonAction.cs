@@ -35,6 +35,7 @@ namespace ICD.Connect.UI.ButtonActions.Actions
 		void CopySettings([NotNull]TSettings settings);
 	}
 
+	[UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
 	public interface IButtonAction
 	{
 		/// <summary>

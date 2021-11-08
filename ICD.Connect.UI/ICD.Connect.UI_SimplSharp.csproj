@@ -77,6 +77,8 @@
     <Compile Include="Attributes\IUiBindingAttribute.cs" />
     <Compile Include="Attributes\PresenterBindingAttribute.cs" />
     <Compile Include="Attributes\ViewBindingAttribute.cs" />
+    <Compile Include="ButtonActions\Actions\NoActionButtonAction.cs" />
+    <Compile Include="ButtonActions\Actions\NoActionButtonActionSettings.cs" />
     <Compile Include="ButtonActions\Attributes\ActionMapPluginAttribute.cs" />
     <Compile Include="ButtonActions\Attributes\ButtonActionSettingsAttribute.cs" />
     <Compile Include="ButtonActions\Factories\AbstractButtonActionMapFactory.cs" />
@@ -103,12 +105,12 @@
     <Compile Include="EventArguments\KeyboardKeyEventArgs.cs" />
     <Compile Include="ButtonActions\Actions\AbstractButtonAction.cs" />
     <Compile Include="ButtonActions\Actions\AbstractButtonActionSettings.cs" />
-    <Compile Include="ButtonActions\Actions\ButtonActionMapUtils.cs" />
+    <Compile Include="ButtonActions\Actions\ButtonActionUtils.cs" />
     <Compile Include="ButtonActions\Actions\IButtonAction.cs" />
     <Compile Include="ButtonActions\Actions\IButtonActionSettings.cs" />
     <Compile Include="ButtonActions\Actions\RemapButtonAction.cs" />
     <Compile Include="ButtonActions\Actions\RemapButtonActionSettings.cs" />
-    <Compile Include="ButtonActions\Actions\TapAndHoldButtonActionMap.cs" />
+    <Compile Include="ButtonActions\Actions\TapAndHoldButtonAction.cs" />
     <Compile Include="ButtonActions\Actions\TapAndHoldButtonActionSettings.cs" />
     <Compile Include="ButtonActions\HardButton\IHardButtonUserInterface.cs" />
     <Compile Include="IIndexed.cs" />
