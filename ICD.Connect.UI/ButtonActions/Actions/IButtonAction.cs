@@ -1,6 +1,7 @@
 ﻿using System;
 using ICD.Common.Properties;
 using ICD.Connect.Panels.HardButtons;
+using ICD.Connect.Protocol.HardButtons;
 using ICD.Connect.Settings;
 using ICD.Connect.UI.ButtonActions.Factories;
 using ICD.Connect.UI.ButtonActions.HardButton;

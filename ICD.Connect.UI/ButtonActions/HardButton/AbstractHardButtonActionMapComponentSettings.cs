@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ICD.Common.Utils;
 using ICD.Common.Utils.Extensions;
 using ICD.Common.Utils.Xml;
-using ICD.Connect.Panels.HardButtons;
+using ICD.Connect.Protocol.HardButtons;
 using ICD.Connect.UI.ButtonActions.Actions;
 using ICD.Connect.UI.ButtonActions.Factories;
 

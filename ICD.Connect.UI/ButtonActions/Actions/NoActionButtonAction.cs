@@ -1,5 +1,5 @@
 ﻿using ICD.Common.Utils;
-using ICD.Connect.Panels.HardButtons;
+using ICD.Connect.Protocol.HardButtons;
 
 namespace ICD.Connect.UI.ButtonActions.Actions
 {

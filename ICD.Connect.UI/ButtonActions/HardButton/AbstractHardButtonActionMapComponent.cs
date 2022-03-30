@@ -4,7 +4,7 @@ using System.Linq;
 using ICD.Common.Properties;
 using ICD.Common.Utils;
 using ICD.Common.Utils.Extensions;
-using ICD.Connect.Panels.HardButtons;
+using ICD.Connect.Protocol.HardButtons;
 using ICD.Connect.Settings;
 using ICD.Connect.UI.ButtonActions.Actions;
 using ICD.Connect.UI.ButtonActions.Factories;
