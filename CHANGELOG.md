@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Changed
  - moved eHardButton to Protocol project
+ - Updated Crestron SDK to 2.18.96
 
 ## [7.1.0] - 2022-05-23
 ### Added
